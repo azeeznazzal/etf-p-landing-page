@@ -1,0 +1,710 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ETF-P | استثمر ١٠٠ دينار شهرياً في صناديق استثمار إسلامية متنوعة</title>
+  <meta name="description" content="منصة الاستثمار التراكمي في صناديق المؤشرات المتداولة (ETFs) الإسلامية للأردنيين. ابدأ بـ 100 دينار شهرياً بكل سهولة وأمان وشفافية.">
+  
+  <!-- Google Fonts: Tajawal & Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Tajawal:wght@300;400;500;700;800;900&display=swap" rel="stylesheet">
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            ar: ['Tajawal', 'sans-serif'],
+            en: ['Inter', 'sans-serif']
+          },
+          colors: {
+            brand: {
+              50: '#f0f9f5',
+              100: '#dcf0e7',
+              500: '#0d9488',
+              600: '#0f766e',
+              700: '#115e59',
+              800: '#134e4a',
+              900: '#042f2e'
+            },
+            accent: {
+              emerald: '#10b981',
+              gold: '#f59e0b',
+              navy: '#0f172a'
+            }
+          }
+        }
+      }
+    };
+  </script>
+
+  <style>
+    body {
+      font-family: 'Tajawal', sans-serif;
+      transition: background-color 0.3s ease, color 0.3s ease;
+    }
+    body.lang-en {
+      font-family: 'Inter', sans-serif;
+    }
+    .gradient-glow {
+      background: radial-gradient(circle at 50% 10%, rgba(13, 148, 136, 0.18) 0%, rgba(15, 23, 42, 0) 70%);
+    }
+    .card-glass {
+      background: rgba(255, 255, 255, 0.88);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(226, 232, 240, 0.85);
+    }
+    .dark .card-glass {
+      background: rgba(15, 23, 42, 0.8);
+      border: 1px solid rgba(51, 65, 85, 0.5);
+    }
+    .rtl-flip {
+      transform: scaleX(1);
+    }
+    html[dir="rtl"] .rtl-flip {
+      transform: scaleX(-1);
+    }
+  </style>
+</head>
+<body class="bg-slate-50 text-slate-900 antialiased min-h-screen selection:bg-brand-500 selection:text-white">
+  
+  <!-- Header / Navigation -->
+  <header class="sticky top-0 z-40 w-full border-b border-slate-200/80 bg-white/90 backdrop-blur-md">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 h-18 flex items-center justify-between py-3">
+      
+      <!-- Brand Logo -->
+      <a href="#" class="flex items-center gap-2.5 group">
+        <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-brand-700 via-brand-600 to-emerald-400 flex items-center justify-center text-white font-black text-xl shadow-md shadow-brand-500/20 group-hover:scale-105 transition-transform">
+          🌱
+        </div>
+        <div>
+          <div class="flex items-center gap-1.5">
+            <span class="font-extrabold text-xl tracking-tight text-slate-900">ETF-P</span>
+            <span class="text-xs px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800 font-semibold border border-emerald-200" data-i18n="badge_halal">حلال ١٠٠٪</span>
+          </div>
+          <p class="text-[11px] text-slate-500 font-medium" data-i18n="tagline">استثمار الأفراد في الأردن</p>
+        </div>
+      </a>
+
+      <!-- Navigation links (Desktop) -->
+      <nav class="hidden md:flex items-center gap-6 text-sm font-medium text-slate-600">
+        <a href="#about" class="hover:text-brand-600 transition" data-i18n="nav_about">ما هو الاستثمار الحلال؟</a>
+        <a href="#how-it-works" class="hover:text-brand-600 transition" data-i18n="nav_how">كيف يعمل؟</a>
+        <a href="#calculator" class="hover:text-brand-600 transition" data-i18n="nav_calc">حاسبة العوائد</a>
+        <a href="#interview-section" class="hover:text-brand-600 transition flex items-center gap-1.5 text-emerald-700 font-bold">
+          <span data-i18n="nav_interview">أبحاث السوق (Ticket #3)</span>
+          <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+        </a>
+        <a href="#insights" class="hover:text-brand-600 transition text-slate-500" data-i18n="nav_founder_dashboard">لوحة المؤسس</a>
+      </nav>
+
+      <!-- Right controls (Language Toggle + Waitlist CTA) -->
+      <div class="flex items-center gap-3">
+        <!-- Language Switcher Button -->
+        <button id="langToggleBtn" class="flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold rounded-lg border border-slate-200 hover:bg-slate-100 transition text-slate-700 shadow-sm" aria-label="Toggle language">
+          <i data-lucide="globe" class="w-3.5 h-3.5 text-brand-600"></i>
+          <span id="langLabel">English</span>
+        </button>
+
+        <!-- Waitlist Anchor Button -->
+        <a href="#waitlist-card" class="hidden sm:inline-flex items-center justify-center px-4 py-2 text-sm font-bold text-white bg-brand-600 hover:bg-brand-700 rounded-xl shadow-md shadow-brand-600/25 hover:shadow-lg transition active:scale-95" data-i18n="btn_join_waitlist">
+          انضم لقائمة الانتظار
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero Section with Background Glow -->
+  <section class="relative pt-12 pb-16 md:pt-20 md:pb-24 overflow-hidden gradient-glow">
+    <div class="max-w-5xl mx-auto px-4 sm:px-6 text-center">
+      
+      <!-- Country & Target Badge -->
+      <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-brand-50 border border-brand-200/80 text-brand-800 text-xs sm:text-sm font-semibold mb-6 shadow-sm">
+        <span>🇯🇴</span>
+        <span data-i18n="hero_badge">مخصص للمستثمرين في المملكة الأردنية الهاشمية</span>
+      </div>
+
+      <!-- Main Value Proposition Headline -->
+      <h1 class="text-3xl sm:text-5xl md:text-6xl font-black text-slate-900 tracking-tight leading-[1.2] mb-6">
+        <span data-i18n="hero_title_1">استثمر</span> 
+        <span class="text-brand-600 underline decoration-emerald-400 decoration-4 underline-offset-8" data-i18n="hero_title_highlight">١٠٠ دينار شهرياً</span> 
+        <span data-i18n="hero_title_2">في صناديق استثمار إسلامية متنوعة</span>
+      </h1>
+
+      <!-- Supporting Subheading -->
+      <p class="max-w-2xl mx-auto text-base sm:text-lg text-slate-600 leading-relaxed mb-10" data-i18n="hero_sub">
+        بديل حلال ومجدي لتآكل أموالك بفعل التضخم. نمّ ثروتك تدريجياً عبر الاستثمار التراكمي في أفضل الشركات العالمية المتوافقة مع الشريعة، دون تعقيدات حسابات التداول الأجنبية أو عمولات التحويل الباهظة.
+      </p>
+
+      <!-- Waitlist Hero Card / Form (Ticket #4 Focus) -->
+      <div id="waitlist-card" class="max-w-xl mx-auto card-glass rounded-2xl p-6 sm:p-8 shadow-xl border border-slate-200/80 text-start relative">
+        <div class="flex items-center justify-between mb-4">
+          <div>
+            <h3 class="text-lg font-bold text-slate-900" data-i18n="form_title">احجز مقعدك في النسخة التجريبية الأولى</h3>
+            <p class="text-xs text-slate-500" data-i18n="form_sub">سجل مجاناً واحصل على اشتراك ٣ أشهر بدون أي رسوم إدارة</p>
+          </div>
+          <span class="text-xs font-bold px-2.5 py-1 rounded-md bg-amber-100 text-amber-800 border border-amber-200 flex items-center gap-1">
+            <i data-lucide="sparkles" class="w-3.5 h-3.5"></i>
+            <span data-i18n="form_vip">أولوية مبكرة</span>
+          </span>
+        </div>
+
+        <form id="heroWaitlistForm" class="space-y-4">
+          <div>
+            <label for="fullName" class="block text-xs font-bold text-slate-700 mb-1" data-i18n="lbl_name">الاسم الكريم</label>
+            <input type="text" id="fullName" required placeholder="مثال: أحمد نزال" class="w-full px-4 py-2.5 rounded-xl border border-slate-300 text-sm focus:outline-none focus:ring-2 focus:ring-brand-500 bg-white">
+          </div>
+
+          <div>
+            <label for="email" class="block text-xs font-bold text-slate-700 mb-1" data-i18n="lbl_email">البريد الإلكتروني</label>
+            <input type="email" id="email" required placeholder="name@example.com" class="w-full px-4 py-2.5 rounded-xl border border-slate-300 text-sm focus:outline-none focus:ring-2 focus:ring-brand-500 bg-white" dir="ltr">
+          </div>
+
+          <div>
+            <div class="flex justify-between items-center mb-1">
+              <label for="phone" class="block text-xs font-bold text-slate-700" data-i18n="lbl_phone">رقم الواتساب / الهاتف (اختياري لمكالمة الاستطلاع)</label>
+              <span class="text-[11px] text-brand-600 font-medium" data-i18n="lbl_phone_note">لتسهيل التواصل السريع</span>
+            </div>
+            <input type="tel" id="phone" placeholder="079XXXXXXX" class="w-full px-4 py-2.5 rounded-xl border border-slate-300 text-sm focus:outline-none focus:ring-2 focus:ring-brand-500 bg-white" dir="ltr">
+          </div>
+
+          <!-- Discovery survey teaser checkbox -->
+          <div class="flex items-start gap-2.5 pt-1">
+            <input type="checkbox" id="interviewOptIn" checked class="mt-1 w-4 h-4 text-brand-600 rounded border-slate-300 focus:ring-brand-500">
+            <label for="interviewOptIn" class="text-xs text-slate-600 cursor-pointer" data-i18n="chk_survey_optin">
+              <strong>أنا مستعد للإجابة عن ٤ أسئلة سريعة (٤٥ ثانية)</strong> للمساعدة في توجيه المنتج والحصول على الأولوية في قائمة الانتظار.
+            </label>
+          </div>
+
+          <button type="submit" id="submitBtn" class="w-full py-3.5 px-6 rounded-xl font-bold text-white bg-brand-600 hover:bg-brand-700 shadow-lg shadow-brand-600/30 transition transform active:scale-98 flex items-center justify-center gap-2">
+            <span data-i18n="btn_submit_waitlist">انضم الآن واحصل على الأولوية</span>
+            <i data-lucide="arrow-left" class="w-4 h-4 rtl-flip"></i>
+          </button>
+        </form>
+
+        <!-- Social Proof Stats under Form -->
+        <div class="mt-5 pt-4 border-t border-slate-200/60 flex items-center justify-between text-xs text-slate-500 font-medium">
+          <div class="flex items-center gap-1.5">
+            <i data-lucide="shield-check" class="w-4 h-4 text-emerald-600"></i>
+            <span data-i18n="proof_privacy">بياناتك محمية وخصوصيتك مصونة</span>
+          </div>
+          <div class="flex items-center gap-1">
+            <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+            <span id="registeredCount" class="font-bold text-slate-800">142</span>
+            <span data-i18n="proof_joined">مستثمر سجلوا حتى الآن</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Trust Badges Bar -->
+      <div class="mt-12 grid grid-cols-2 md:grid-cols-4 gap-4 max-w-4xl mx-auto">
+        <div class="p-4 rounded-xl bg-white border border-slate-200 shadow-sm flex flex-col items-center text-center">
+          <div class="w-9 h-9 rounded-lg bg-emerald-50 text-emerald-700 flex items-center justify-center mb-2 font-bold text-lg">🕌</div>
+          <span class="text-xs font-bold text-slate-800" data-i18n="badge_shariah_title">توافق شرعي تام</span>
+          <span class="text-[11px] text-slate-500" data-i18n="badge_shariah_desc">معايير AAOIFI و MSCI الإسلامية</span>
+        </div>
+        <div class="p-4 rounded-xl bg-white border border-slate-200 shadow-sm flex flex-col items-center text-center">
+          <div class="w-9 h-9 rounded-lg bg-blue-50 text-blue-700 flex items-center justify-center mb-2 font-bold text-lg">🇯🇴</div>
+          <span class="text-xs font-bold text-slate-800" data-i18n="badge_jod_title">بالدينار الأردني</span>
+          <span class="text-[11px] text-slate-500" data-i18n="badge_jod_desc">ابدأ بـ 100 دينار دون رسوم تحويل دولية</span>
+        </div>
+        <div class="p-4 rounded-xl bg-white border border-slate-200 shadow-sm flex flex-col items-center text-center">
+          <div class="w-9 h-9 rounded-lg bg-purple-50 text-purple-700 flex items-center justify-center mb-2 font-bold text-lg">📊</div>
+          <span class="text-xs font-bold text-slate-800" data-i18n="badge_etf_title">صناديق مؤشرات عالمية</span>
+          <span class="text-[11px] text-slate-500" data-i18n="badge_etf_desc">توزيع للمخاطر على مئات الشركات</span>
+        </div>
+        <div class="p-4 rounded-xl bg-white border border-slate-200 shadow-sm flex flex-col items-center text-center">
+          <div class="w-9 h-9 rounded-lg bg-amber-50 text-amber-700 flex items-center justify-center mb-2 font-bold text-lg">⚖️</div>
+          <span class="text-xs font-bold text-slate-800" data-i18n="badge_reg_title">مسار تنظيمي واضح</span>
+          <span class="text-[11px] text-slate-500" data-i18n="badge_reg_desc">بالشراكة مع وسطاء مرخصين من JSC</span>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Problem vs Solution Section -->
+  <section id="about" class="py-16 bg-white border-t border-slate-200">
+    <div class="max-w-5xl mx-auto px-4 sm:px-6">
+      <div class="text-center max-w-2xl mx-auto mb-12">
+        <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900 mb-3" data-i18n="problem_title">لماذا يحتاج المستثمر في الأردن إلى ETF-P؟</h2>
+        <p class="text-sm sm:text-base text-slate-600" data-i18n="problem_sub">الفارق بين إبقاء مدخراتك في البنك وبين الاستثمار الذكي في الصناديق الإسلامية المتنوعة</p>
+      </div>
+
+      <div class="grid md:grid-cols-2 gap-8">
+        <!-- The Current Struggles -->
+        <div class="p-6 rounded-2xl bg-red-50/50 border border-red-200/80">
+          <div class="flex items-center gap-2 text-red-700 font-bold text-base mb-4">
+            <i data-lucide="alert-circle" class="w-5 h-5"></i>
+            <span data-i18n="pain_title">الواقع الحالي في الأردن:</span>
+          </div>
+          <ul class="space-y-3.5 text-sm text-slate-700">
+            <li class="flex items-start gap-2.5">
+              <span class="text-red-500 font-bold mt-0.5">✕</span>
+              <span data-i18n="pain_1"><strong>التضخم يأكل المدخرات:</strong> الودائع البنكية تعطي فوائد إما محرمة أو عوائد لا تجاري ارتفاع تكاليف المعيشة.</span>
+            </li>
+            <li class="flex items-start gap-2.5">
+              <span class="text-red-500 font-bold mt-0.5">✕</span>
+              <span data-i18n="pain_2"><strong>تكاليف الحوالات الباهظة:</strong> إرسال مبالغ صغيرة (١٠٠ دينار) لمنصات أجنبية يلتهم ٣٠-٤٠ دينار عمولات سويفت وفروقات صرف.</span>
+            </li>
+            <li class="flex items-start gap-2.5">
+              <span class="text-red-500 font-bold mt-0.5">✕</span>
+              <span data-i18n="pain_3"><strong>الغموض الشرعي:</strong> صعوبة معرفة ما إذا كانت أسهم الشركات الفردية نقية أم يشوبها ربا وممارسات محظورة.</span>
+            </li>
+            <li class="flex items-start gap-2.5">
+              <span class="text-red-500 font-bold mt-0.5">✕</span>
+              <span data-i18n="pain_4"><strong>المخاطرة العالية:</strong> الانجرار خلف تداول العملات الرقمية أو الفوركس والمضاربة التي أضرت بالكثيرين.</span>
+            </li>
+          </ul>
+        </div>
+
+        <!-- The ETF-P Solution -->
+        <div class="p-6 rounded-2xl bg-emerald-50/60 border border-emerald-200">
+          <div class="flex items-center gap-2 text-emerald-800 font-bold text-base mb-4">
+            <i data-lucide="check-circle-2" class="w-5 h-5 text-emerald-600"></i>
+            <span data-i18n="sol_title">الحل المبتكر مع ETF-P:</span>
+          </div>
+          <ul class="space-y-3.5 text-sm text-slate-700">
+            <li class="flex items-start gap-2.5">
+              <span class="text-emerald-600 font-bold mt-0.5">✓</span>
+              <span data-i18n="sol_1"><strong>استثمار تلقائي من ١٠٠ دينار:</strong> اشترك شهرياً باقتطاع مرن دون الحاجة لآلاف الدنانير.</span>
+            </li>
+            <li class="flex items-start gap-2.5">
+              <span class="text-emerald-600 font-bold mt-0.5">✓</span>
+              <span data-i18n="sol_2"><strong>صناديق مفحوصة شرعياً:</strong> نعتمد مؤشرات عالمية (مثل iShares MSCI World Islamic) الخالية من المعاملات الربوية وشركات الكحول والتبغ والأسلحة.</span>
+            </li>
+            <li class="flex items-start gap-2.5">
+              <span class="text-emerald-600 font-bold mt-0.5">✓</span>
+              <span data-i18n="sol_3"><strong>تنويع احترافي للمخاطر:</strong> بدلاً من شراء سهم واحد، ١٠٠ دينار تتوزع على مئات الشركات العالمية الناجحة.</span>
+            </li>
+            <li class="flex items-start gap-2.5">
+              <span class="text-emerald-600 font-bold mt-0.5">✓</span>
+              <span data-i18n="sol_4"><strong>تجربة محلية سهلة بالدينار:</strong> إيداع فوري وسهل، دعم باللغة العربية، وتقارير واضحة.</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Interactive Compound Wealth Calculator -->
+  <section id="calculator" class="py-16 bg-slate-50 border-t border-slate-200">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6">
+      <div class="text-center max-w-2xl mx-auto mb-10">
+        <span class="text-xs font-bold text-brand-600 uppercase tracking-wider" data-i18n="calc_badge">أداة تفاعلية</span>
+        <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900 mt-1" data-i18n="calc_title">حاسبة نمو الاستثمار الشهري التراكمي</h2>
+        <p class="text-sm text-slate-600 mt-2" data-i18n="calc_sub">شاهد كيف يمكن لـ ١٠٠ دينار شهرياً أن تصنع فارقاً حقيقياً في مستقبلك المالي</p>
+      </div>
+
+      <div class="card-glass rounded-2xl p-6 sm:p-8 shadow-md border border-slate-200">
+        <div class="grid md:grid-cols-2 gap-8 items-center">
+          
+          <!-- Sliders Form -->
+          <div class="space-y-6">
+            <div>
+              <div class="flex justify-between items-center mb-2">
+                <label for="calcAmount" class="text-xs font-bold text-slate-700" data-i18n="calc_lbl_amount">مبلغ الاستثمار الشهري:</label>
+                <span class="text-base font-extrabold text-brand-600"><span id="valAmount">100</span> <span data-i18n="currency_jod">دينار أردني</span></span>
+              </div>
+              <input type="range" id="calcAmount" min="25" max="500" step="25" value="100" class="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-brand-600">
+              <div class="flex justify-between text-[10px] text-slate-400 mt-1">
+                <span>25 د.أ</span>
+                <span>250 د.أ</span>
+                <span>500 د.أ</span>
+              </div>
+            </div>
+
+            <div>
+              <div class="flex justify-between items-center mb-2">
+                <label for="calcYears" class="text-xs font-bold text-slate-700" data-i18n="calc_lbl_years">المدة الزمنية (بالسنوات):</label>
+                <span class="text-base font-extrabold text-brand-600"><span id="valYears">5</span> <span data-i18n="calc_years_unit">سنوات</span></span>
+              </div>
+              <input type="range" id="calcYears" min="1" max="20" step="1" value="5" class="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-brand-600">
+              <div class="flex justify-between text-[10px] text-slate-400 mt-1">
+                <span>سنة واحدة</span>
+                <span>10 سنوات</span>
+                <span>20 سنة</span>
+              </div>
+            </div>
+
+            <div class="p-3 bg-brand-50/70 rounded-xl border border-brand-100 text-xs text-brand-800">
+              <span class="font-bold" data-i18n="calc_assumption_title">الفرضية المعتمدة:</span> 
+              <span data-i18n="calc_assumption_text">متوسط نمو سنوي مركب 8.5% (بناءً على الأداء التاريخي لصناديق المؤشرات المتداولة العالمية المتوافقة مع الشريعة خلال آخر ١٥ سنة). الاستثمار ينطوي على مخاطر تقلب السوق.</span>
+            </div>
+          </div>
+
+          <!-- Dynamic Output Card -->
+          <div class="bg-gradient-to-br from-slate-900 to-brand-950 rounded-2xl p-6 text-white shadow-xl flex flex-col justify-between">
+            <span class="text-xs font-semibold text-emerald-400 uppercase tracking-wide" data-i18n="calc_result_header">القيمة التقديرية لمحفظتك</span>
+            
+            <div class="my-6">
+              <div class="text-3xl sm:text-4xl font-black text-white tracking-tight">
+                <span id="totalPortfolioValue">7,523</span> <span class="text-lg text-emerald-400" data-i18n="currency_jod">د.أ</span>
+              </div>
+              <p class="text-xs text-slate-400 mt-1">
+                <span data-i18n="calc_gain_label">إجمالي الأرباح المركبة المتوقعة:</span> 
+                <span id="totalGains" class="font-bold text-emerald-400">+1,523 د.أ</span>
+              </p>
+            </div>
+
+            <div class="space-y-2 text-xs border-t border-slate-700/80 pt-4">
+              <div class="flex justify-between text-slate-300">
+                <span data-i18n="calc_invested_label">إجمالي ما دفعته من جيبك:</span>
+                <span id="totalInvestedAmount" class="font-bold text-white">6,000 د.أ</span>
+              </div>
+              <div class="flex justify-between text-slate-400">
+                <span data-i18n="calc_bank_diff">لو تركتها في حساب بنكي عادي:</span>
+                <span id="bankCashValue" class="text-slate-400">6,000 د.أ (تآكلت شرائياً)</span>
+              </div>
+            </div>
+
+            <a href="#waitlist-card" class="mt-6 w-full py-2.5 px-4 bg-emerald-500 hover:bg-emerald-600 text-slate-950 font-extrabold text-xs rounded-xl text-center transition block shadow" data-i18n="calc_cta_btn">
+              ابدأ بناء هذه المحفظة الآن
+            </a>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- How It Works (3 Simple Steps) -->
+  <section id="how-it-works" class="py-16 bg-white border-t border-slate-200">
+    <div class="max-w-5xl mx-auto px-4 sm:px-6">
+      <div class="text-center max-w-2xl mx-auto mb-12">
+        <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900" data-i18n="how_title">كيف تبدأ الاستثمار في ٣ خطوات سهلة؟</h2>
+        <p class="text-sm text-slate-600 mt-2" data-i18n="how_sub">صممنا التطبيق ليكون سهلاً، شفافاً، وبدون أي تعقيد فني</p>
+      </div>
+
+      <div class="grid md:grid-cols-3 gap-6">
+        <div class="p-6 rounded-2xl bg-slate-50 border border-slate-200 hover:border-brand-500 transition relative">
+          <div class="w-10 h-10 rounded-xl bg-brand-600 text-white font-bold flex items-center justify-center mb-4">1</div>
+          <h3 class="font-bold text-base text-slate-900 mb-2" data-i18n="step1_title">حدد مبلغك الشهري</h3>
+          <p class="text-xs text-slate-600 leading-relaxed" data-i18n="step1_desc">اختر المبلغ الذي يناسبك (يبدأ من ١٠٠ دينار) وحدد جدول الإيداع التلقائي من حسابك البنكي.</p>
+        </div>
+
+        <div class="p-6 rounded-2xl bg-slate-50 border border-slate-200 hover:border-brand-500 transition relative">
+          <div class="w-10 h-10 rounded-xl bg-brand-600 text-white font-bold flex items-center justify-center mb-4">2</div>
+          <h3 class="font-bold text-base text-slate-900 mb-2" data-i18n="step2_title">نستثمر لك في الصناديق الإسلامية</h3>
+          <p class="text-xs text-slate-600 leading-relaxed" data-i18n="step2_desc">يتم توجيه الأموال مباشرة لشراء حصص في أفضل صناديق المؤشرات الإسلامية العالمية المفحوصة والمطابقة للشريعة.</p>
+        </div>
+
+        <div class="p-6 rounded-2xl bg-slate-50 border border-slate-200 hover:border-brand-500 transition relative">
+          <div class="w-10 h-10 rounded-xl bg-brand-600 text-white font-bold flex items-center justify-center mb-4">3</div>
+          <h3 class="font-bold text-base text-slate-900 mb-2" data-i18n="step3_title">شاهد ثروتك تنمو وتراكم</h3>
+          <p class="text-xs text-slate-600 leading-relaxed" data-i18n="step3_desc">تابع أداء استثماراتك الشفافة لحظة بلحظة، مع إمكانية السحب أو زيادة الاستثمار في أي وقت دون قيود.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Customer Discovery / Interview Section (Ticket #3 Core Focus) -->
+  <section id="interview-section" class="py-16 bg-gradient-to-b from-brand-50/60 to-white border-t border-slate-200">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6">
+      <div class="card-glass rounded-2xl p-6 sm:p-10 border border-brand-200/80 shadow-lg text-center relative overflow-hidden">
+        
+        <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-100 text-emerald-800 text-xs font-bold mb-4">
+          <i data-lucide="target" class="w-3.5 h-3.5"></i>
+          <span data-i18n="disc_badge">استطلاع رأي المستثمر الأردني — دراسة 30-50 مقابلة</span>
+        </div>
+
+        <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900 mb-3" data-i18n="disc_title">
+          ساعدنا في تصميم التطبيق المناسب لك في الأردن
+        </h2>
+        <p class="max-w-xl mx-auto text-sm text-slate-600 leading-relaxed mb-6" data-i18n="disc_sub">
+          نجري حالياً مقابلات استطلاعية مع ٣٠-٥٠ مستثمر أردني لمعرفة أبرز العقبات (الرسوم، التحويلات، الامتثال الشرعي، الثقة). رأيك يصنع الفرق ويمنحك وصولاً مجانياً مميزاً مدى الحياة!
+        </p>
+
+        <!-- CTA Trigger for Survey Modal -->
+        <div class="flex flex-col sm:flex-row items-center justify-center gap-3">
+          <button id="openSurveyBtn" class="w-full sm:w-auto px-6 py-3 rounded-xl bg-brand-600 hover:bg-brand-700 text-white font-bold text-sm shadow-md transition flex items-center justify-center gap-2">
+            <i data-lucide="help-circle" class="w-4 h-4"></i>
+            <span data-i18n="disc_btn_survey">الإجابة على ٤ أسئلة استطلاعية (٤٥ ثانية)</span>
+          </button>
+          
+          <a href="https://wa.me/962790000000?text=مرحباً،%20أنا%20مهتم%20بمشروع%20ETF-P%20وأود%20إجراء%20محادثة%20قصيرة%20مع%20المؤسس" target="_blank" rel="noopener noreferrer" class="w-full sm:w-auto px-6 py-3 rounded-xl border border-slate-300 hover:bg-slate-50 text-slate-700 font-bold text-sm transition flex items-center justify-center gap-2">
+            <i data-lucide="message-square" class="w-4 h-4 text-emerald-600"></i>
+            <span data-i18n="disc_btn_founder">احجز مكالمة ١٥ دقيقة مع المؤسس</span>
+          </a>
+        </div>
+
+        <!-- Target Tracker Bar for Ticket #3 -->
+        <div class="mt-8 pt-6 border-t border-slate-200/80 max-w-lg mx-auto">
+          <div class="flex justify-between text-xs font-bold text-slate-600 mb-1.5">
+            <span data-i18n="disc_progress_label">هدف المقابلات الاستطلاعية (Ticket #3):</span>
+            <span><span id="interviewsDoneCount">34</span> / 50 <span data-i18n="disc_completed">مكتملة</span></span>
+          </div>
+          <div class="w-full h-3 bg-slate-200 rounded-full overflow-hidden">
+            <div id="interviewsProgressBar" class="h-full bg-gradient-to-r from-brand-600 to-emerald-400 rounded-full transition-all duration-1000" style="width: 68%;"></div>
+          </div>
+          <p class="text-[11px] text-slate-500 mt-2" data-i18n="disc_progress_note">بقي ١٦ مقعداً فقط للمشاركين في برنامج المؤسسين الأوائل</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Founder Insights & Analytics Dashboard (Ticket #3 & #4 Merged View) -->
+  <section id="insights" class="py-16 bg-slate-100 border-t border-slate-200">
+    <div class="max-w-5xl mx-auto px-4 sm:px-6">
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8">
+        <div>
+          <div class="inline-flex items-center gap-1 text-xs font-bold text-brand-700 bg-brand-50 px-2.5 py-0.5 rounded-md border border-brand-200 mb-1">
+            <i data-lucide="bar-chart-2" class="w-3.5 h-3.5"></i>
+            <span data-i18n="dash_tag">بيانات حية مباشرة</span>
+          </div>
+          <h2 class="text-2xl font-black text-slate-900" data-i18n="dash_title">لوحة نتائج أبحاث السوق واكتشاف العملاء</h2>
+          <p class="text-xs text-slate-500" data-i18n="dash_sub">ملخص إجابات المستثمرين الأردنيين على أسئلة المقابلات الاستطلاعية</p>
+        </div>
+
+        <div class="flex items-center gap-2">
+          <button id="exportCsvBtn" class="px-4 py-2 bg-white border border-slate-300 hover:bg-slate-50 text-slate-700 rounded-xl text-xs font-bold shadow-sm transition flex items-center gap-1.5">
+            <i data-lucide="download" class="w-3.5 h-3.5"></i>
+            <span data-i18n="dash_btn_export">تصدير الإجابات (CSV)</span>
+          </button>
+          <button id="resetDemoBtn" class="px-3 py-2 text-slate-400 hover:text-slate-600 text-xs font-semibold" title="إعادة تعيين البيانات التجريبية">
+            <i data-lucide="refresh-cw" class="w-3.5 h-3.5"></i>
+          </button>
+        </div>
+      </div>
+
+      <!-- Dashboard Grid -->
+      <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+        <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm">
+          <span class="text-xs text-slate-500 font-semibold" data-i18n="dash_card_waitlist">المسجلون في الانتظار</span>
+          <div class="text-2xl font-black text-slate-900 mt-1" id="dashWaitlistTotal">142</div>
+          <span class="text-[11px] text-emerald-600 font-bold">↑ 18 اليوم</span>
+        </div>
+
+        <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm">
+          <span class="text-xs text-slate-500 font-semibold" data-i18n="dash_card_interviews">مقابلات واستطلاعات مكتملة</span>
+          <div class="text-2xl font-black text-brand-600 mt-1" id="dashSurveyTotal">34</div>
+          <span class="text-[11px] text-slate-400" data-i18n="dash_card_goal">من أصل ٥٠ مستهدفاً</span>
+        </div>
+
+        <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm">
+          <span class="text-xs text-slate-500 font-semibold" data-i18n="dash_card_willingness">الاستعداد للاستثمار بـ 100 د.أ</span>
+          <div class="text-2xl font-black text-emerald-600 mt-1" id="dashWillingRate">82%</div>
+          <span class="text-[11px] text-slate-500" data-i18n="dash_card_confirmed">أكدوا الجدية والقدرة</span>
+        </div>
+
+        <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm">
+          <span class="text-xs text-slate-500 font-semibold" data-i18n="dash_card_preferred_fee">النموذج السعري المفضل</span>
+          <div class="text-2xl font-black text-amber-600 mt-1" id="dashPreferredFee">0.25%</div>
+          <span class="text-[11px] text-slate-500" data-i18n="dash_card_fee_sub">نسبة سنوية vs اشتراك شهري</span>
+        </div>
+      </div>
+
+      <!-- Ranked Insights & Findings (From Card #3 requirements) -->
+      <div class="grid md:grid-cols-2 gap-6">
+        
+        <!-- Ranked Pain Points -->
+        <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
+          <h3 class="text-sm font-extrabold text-slate-900 mb-4 flex items-center gap-2">
+            <i data-lucide="alert-triangle" class="w-4 h-4 text-amber-500"></i>
+            <span data-i18n="dash_pain_ranked">ترتيب أكبر العوائق أمام المستثمر الأردني:</span>
+          </h3>
+          <div class="space-y-4 text-xs" id="painPointsRankList">
+            <!-- Dynamic Pain Points rendered by app.js -->
+          </div>
+        </div>
+
+        <!-- Trust & Institution Preference -->
+        <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
+          <h3 class="text-sm font-extrabold text-slate-900 mb-4 flex items-center gap-2">
+            <i data-lucide="shield" class="w-4 h-4 text-brand-600"></i>
+            <span data-i18n="dash_trust_ranked">الجهة الأكثر ثوقاً لتقديم الخدمة:</span>
+          </h3>
+          <div class="space-y-4 text-xs" id="trustRankList">
+            <!-- Dynamic Trust items rendered by app.js -->
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="bg-slate-900 text-slate-400 py-12 border-t border-slate-800 text-xs">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6">
+      <div class="flex flex-col md:flex-row justify-between items-center gap-6">
+        
+        <div class="flex items-center gap-2.5">
+          <div class="w-8 h-8 rounded-lg bg-brand-600 flex items-center justify-center text-white font-bold text-base">🌱</div>
+          <div>
+            <span class="font-bold text-white text-sm">ETF-P Jordan</span>
+            <p class="text-[11px] text-slate-500" data-i18n="footer_rights">مشروع التكنولوجيا المالية لصناديق المؤشرات الإسلامية للأفراد</p>
+          </div>
+        </div>
+
+        <div class="flex items-center gap-6 text-slate-400">
+          <a href="#about" class="hover:text-white transition" data-i18n="nav_about">عن المشروع</a>
+          <a href="#calculator" class="hover:text-white transition" data-i18n="nav_calc">الحاسبة</a>
+          <a href="#interview-section" class="hover:text-white transition" data-i18n="nav_interview">البحث الاستطلاعي</a>
+          <a href="https://github.com/azeeznazzal/etf-p-landing-page" target="_blank" class="hover:text-white transition flex items-center gap-1">
+            <i data-lucide="github" class="w-3.5 h-3.5"></i>
+            <span>GitHub</span>
+          </a>
+        </div>
+
+      </div>
+
+      <div class="mt-8 pt-6 border-t border-slate-800/80 text-center text-slate-500 text-[11px] leading-relaxed">
+        <p data-i18n="footer_disclaimer">
+          إخلاء مسؤولية: هذا الموقع يمثل مرحلة التحقق والاستطلاع الأولي لمشروع ETF-P. لا يمثل استشارة مالية أو دعوة عامة للاكتتاب دون استكمال التراخيص القانونية الرسمية لدى هيئة الأوراق المالية الأردنية (JSC).
+        </p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Customer Discovery Survey Modal (Ticket #3 Implementation) -->
+  <div id="surveyModal" class="fixed inset-0 z-50 bg-slate-950/60 backdrop-blur-sm hidden items-center justify-center p-4">
+    <div class="bg-white rounded-2xl max-w-lg w-full p-6 sm:p-8 shadow-2xl border border-slate-200 relative animate-in fade-in zoom-in-95 duration-200 max-h-[90vh] overflow-y-auto">
+      
+      <!-- Modal Close Button -->
+      <button id="closeSurveyBtn" class="absolute top-4 left-4 rtl:left-auto rtl:right-4 text-slate-400 hover:text-slate-600 p-1">
+        <i data-lucide="x" class="w-5 h-5"></i>
+      </button>
+
+      <!-- Modal Header -->
+      <div class="text-center mb-6">
+        <div class="w-12 h-12 rounded-2xl bg-brand-50 text-brand-600 flex items-center justify-center mx-auto mb-3">
+          <i data-lucide="sparkles" class="w-6 h-6"></i>
+        </div>
+        <h3 class="text-xl font-black text-slate-900" data-i18n="modal_title">استطلاع المستثمر الأردني</h3>
+        <p class="text-xs text-slate-500 mt-1" data-i18n="modal_sub">٤ أسئلة سريعة تساعدنا في تصميم الخدمة وتمنحك أولوية VIP</p>
+      </div>
+
+      <form id="discoverySurveyForm" class="space-y-5 text-start">
+        
+        <!-- Question 1: Investment Capacity -->
+        <div>
+          <label class="block text-xs font-bold text-slate-800 mb-2" data-i18n="q1_title">
+            ١. هل أنت مستعد لاستثمار ١٠٠ دينار أردني شهرياً في محفظة استثمارية حلال؟
+          </label>
+          <div class="space-y-2 text-xs">
+            <label class="flex items-center gap-2 p-2.5 rounded-xl border border-slate-200 hover:bg-slate-50 cursor-pointer">
+              <input type="radio" name="q_capacity" value="yes_100" checked class="text-brand-600">
+              <span data-i18n="q1_opt1">نعم، ١٠٠ دينار شهرياً مبلغ مثالي ومناسب</span>
+            </label>
+            <label class="flex items-center gap-2 p-2.5 rounded-xl border border-slate-200 hover:bg-slate-50 cursor-pointer">
+              <input type="radio" name="q_capacity" value="more_200" class="text-brand-600">
+              <span data-i18n="q1_opt2">أستطيع استثمار مبالغ أكبر (٢٠٠ - ٥٠٠ د.أ شهرياً)</span>
+            </label>
+            <label class="flex items-center gap-2 p-2.5 rounded-xl border border-slate-200 hover:bg-slate-50 cursor-pointer">
+              <input type="radio" name="q_capacity" value="less_50" class="text-brand-600">
+              <span data-i18n="q1_opt3">أفضل البدء بمبلغ أصغر (٣٠ - ٥٠ د.أ شهرياً)</span>
+            </label>
+            <label class="flex items-center gap-2 p-2.5 rounded-xl border border-slate-200 hover:bg-slate-50 cursor-pointer">
+              <input type="radio" name="q_capacity" value="not_now" class="text-brand-600">
+              <span data-i18n="q1_opt4">غير متأكد، يعتمد على الأمان وسهولة السحب</span>
+            </label>
+          </div>
+        </div>
+
+        <!-- Question 2: Primary Blocker -->
+        <div>
+          <label class="block text-xs font-bold text-slate-800 mb-2" data-i18n="q2_title">
+            ٢. ما هو العائق الأكبر الذي يمنعك من الاستثمار في الأسهم العالمية حالياً؟
+          </label>
+          <div class="space-y-2 text-xs">
+            <label class="flex items-center gap-2 p-2.5 rounded-xl border border-slate-200 hover:bg-slate-50 cursor-pointer">
+              <input type="radio" name="q_blocker" value="shariah" checked class="text-brand-600">
+              <span data-i18n="q2_opt1">عدم التأكد من المشروعية الإسلامية والشرعية</span>
+            </label>
+            <label class="flex items-center gap-2 p-2.5 rounded-xl border border-slate-200 hover:bg-slate-50 cursor-pointer">
+              <input type="radio" name="q_blocker" value="fees_fx" class="text-brand-600">
+              <span data-i18n="q2_opt2">عمولات التحويل البنكي العالية وفروقات تصريف العملة</span>
+            </label>
+            <label class="flex items-center gap-2 p-2.5 rounded-xl border border-slate-200 hover:bg-slate-50 cursor-pointer">
+              <input type="radio" name="q_blocker" value="trust_loss" class="text-brand-600">
+              <span data-i18n="q2_opt3">الخوف من الخسارة وقلة الثقة في المنصات الأجنبية</span>
+            </label>
+            <label class="flex items-center gap-2 p-2.5 rounded-xl border border-slate-200 hover:bg-slate-50 cursor-pointer">
+              <input type="radio" name="q_blocker" value="complexity" class="text-brand-600">
+              <span data-i18n="q2_opt4">تعقيد منصات التداول وصعوبة فهم آلية عمل الصناديق</span>
+            </label>
+          </div>
+        </div>
+
+        <!-- Question 3: Institutional Trust -->
+        <div>
+          <label class="block text-xs font-bold text-slate-800 mb-2" data-i18n="q3_title">
+            ٣. من هي الجهة التي ستثق بوضع أموالك معها أكثر؟
+          </label>
+          <div class="space-y-2 text-xs">
+            <label class="flex items-center gap-2 p-2.5 rounded-xl border border-slate-200 hover:bg-slate-50 cursor-pointer">
+              <input type="radio" name="q_trust" value="jordan_fintech" checked class="text-brand-600">
+              <span data-i18n="q3_opt1">تطبيق أردني متخصص (Fintech) مرخص من هيئة الأوراق المالية</span>
+            </label>
+            <label class="flex items-center gap-2 p-2.5 rounded-xl border border-slate-200 hover:bg-slate-50 cursor-pointer">
+              <input type="radio" name="q_trust" value="traditional_bank" class="text-brand-600">
+              <span data-i18n="q3_opt2">بنك أردني تقليدي معروف</span>
+            </label>
+            <label class="flex items-center gap-2 p-2.5 rounded-xl border border-slate-200 hover:bg-slate-50 cursor-pointer">
+              <input type="radio" name="q_trust" value="intl_broker" class="text-brand-600">
+              <span data-i18n="q3_opt3">وسيط أجنبي دولي مرخص في أمريكا أو أوروبا</span>
+            </label>
+          </div>
+        </div>
+
+        <!-- Question 4: Pricing Preference -->
+        <div>
+          <label class="block text-xs font-bold text-slate-800 mb-2" data-i18n="q4_title">
+            ٤. أي من هذه النماذج السعرية تفضل؟
+          </label>
+          <div class="space-y-2 text-xs">
+            <label class="flex items-center gap-2 p-2.5 rounded-xl border border-slate-200 hover:bg-slate-50 cursor-pointer">
+              <input type="radio" name="q_pricing" value="percent_025" checked class="text-brand-600">
+              <span data-i18n="q4_opt1">عمولة سنوية رمزية ٠.٢٥٪ من إجمالي المحفظة</span>
+            </label>
+            <label class="flex items-center gap-2 p-2.5 rounded-xl border border-slate-200 hover:bg-slate-50 cursor-pointer">
+              <input type="radio" name="q_pricing" value="sub_monthly" class="text-brand-600">
+              <span data-i18n="q4_opt2">اشتراك شهري ثابت (٢ - ٣ دنانير شهرياً) بغض النظر عن الأرباح</span>
+            </label>
+          </div>
+        </div>
+
+        <!-- Optional Interview Scheduling Direct CTA -->
+        <div class="p-3.5 bg-brand-50 rounded-xl border border-brand-200">
+          <label class="flex items-start gap-2 cursor-pointer text-xs">
+            <input type="checkbox" id="interviewBookConsent" checked class="mt-0.5 w-4 h-4 text-brand-600 rounded">
+            <span class="text-slate-800" data-i18n="q5_interview_chat">
+              <strong>أنا مستعد لمكالمة هاتفية أو واتساب سريعة (١٥ دقيقة)</strong> مع مؤسس المشروع لمناقشة تجربتي وملاحظاتي.
+            </span>
+          </label>
+        </div>
+
+        <button type="submit" class="w-full py-3 px-4 rounded-xl bg-brand-600 hover:bg-brand-700 text-white font-bold text-sm shadow-md transition" data-i18n="modal_submit_btn">
+          حفظ الإجابات وتفعيل أولوية الدخول
+        </button>
+
+      </form>
+    </div>
+  </div>
+
+  <!-- Success Notification Toast -->
+  <div id="toastNotification" class="fixed bottom-5 right-5 left-5 sm:left-auto sm:w-96 z-50 bg-slate-900 text-white p-4 rounded-2xl shadow-2xl border border-slate-700 flex items-center gap-3 transform translate-y-24 transition-transform duration-300">
+    <div class="w-9 h-9 rounded-xl bg-emerald-500/20 text-emerald-400 flex items-center justify-center shrink-0">
+      <i data-lucide="check-circle" class="w-5 h-5"></i>
+    </div>
+    <div class="flex-1">
+      <h4 class="text-xs font-bold text-white" id="toastTitle">تم التسجيل بنجاح!</h4>
+      <p class="text-[11px] text-slate-300" id="toastMessage">أنت الآن رقم #143 على قائمة الانتظار</p>
+    </div>
+  </div>
+
+  <!-- External App Script -->
+  <script src="app.js"></script>
+</body>
+</html>
