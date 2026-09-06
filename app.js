@@ -88,6 +88,7 @@ const I18N = {
     dash_card_confirmed: "أكدوا الجدية والقدرة",
     dash_card_preferred_fee: "النموذج السعري المفضل",
     dash_card_fee_sub: "نسبة سنوية vs اشتراك شهري",
+    dash_firebase_status: "Firebase Firestore: متصل ومؤمّن",
     dash_pain_ranked: "ترتيب أكبر العوائق أمام المستثمر الأردني:",
     dash_trust_ranked: "الجهة الأكثر ثوقاً لتقديم الخدمة:",
     footer_rights: "مشروع التكنولوجيا المالية لصناديق المؤشرات الإسلامية للأفراد",
@@ -200,6 +201,7 @@ const I18N = {
     dash_card_confirmed: "Confirmed High Intent",
     dash_card_preferred_fee: "Preferred Pricing Model",
     dash_card_fee_sub: "Annual AUM vs Flat Monthly",
+    dash_firebase_status: "Firebase Firestore: Connected & Secure",
     dash_pain_ranked: "Top Blockers for Jordanian Investors (Ranked):",
     dash_trust_ranked: "Most Trusted Institution Type:",
     footer_rights: "Fintech Platform for Halal Retail ETFs in Jordan",
@@ -258,6 +260,51 @@ for (let i = 7; i <= 34; i++) {
   });
 }
 
+// Check for stored additions in localStorage (graceful fallback)
+try {
+  const storedData = localStorage.getItem('etf_p_survey_database');
+  if (storedData) {
+    const parsed = JSON.parse(storedData);
+    if (Array.isArray(parsed) && parsed.length >= 34) {
+      surveyDatabase = parsed;
+    }
+  }
+  const storedWaitlist = localStorage.getItem('etf_p_waitlist_total');
+  if (storedWaitlist) {
+    waitlistTotal = parseInt(storedWaitlist, 10) || 142;
+  }
+} catch (e) {
+  console.warn('Local storage read notice:', e);
+}
+
+function saveLocalSurveyData() {
+  try {
+    localStorage.setItem('etf_p_survey_database', JSON.stringify(surveyDatabase));
+  } catch (e) {
+    console.warn('Local storage write notice:', e);
+  }
+}
+
+// Update Firebase Badge based on runtime initialization
+function updateFirebaseBadge() {
+  const badgeText = document.getElementById('firebaseStatusText');
+  const badgeDot = document.getElementById('firebaseStatusDot');
+  if (!badgeText || !badgeDot) return;
+
+  const isConfigured = window.isFirebaseConfigured && window.isFirebaseConfigured();
+  if (isConfigured) {
+    badgeText.textContent = currentLang === 'ar'
+      ? 'Firebase Firestore: متصل ومؤمّن'
+      : 'Firebase Firestore: Connected & Secure';
+    badgeDot.className = 'w-2 h-2 rounded-full bg-emerald-500 animate-pulse';
+  } else {
+    badgeText.textContent = currentLang === 'ar'
+      ? 'تخزين آمن ومحلي (Zero Secrets)'
+      : 'Secure Local Sync (Zero Secrets)';
+    badgeDot.className = 'w-2 h-2 rounded-full bg-blue-500';
+  }
+}
+
 // Current language state
 let currentLang = 'ar';
 let waitlistTotal = 142;
@@ -268,6 +315,15 @@ document.addEventListener('DOMContentLoaded', () => {
   if (window.lucide) {
     window.lucide.createIcons();
   }
+
+  // Update initial counts from storage
+  const regCountEl = document.getElementById('registeredCount');
+  const dashWaitlistEl = document.getElementById('dashWaitlistTotal');
+  if (regCountEl) regCountEl.textContent = waitlistTotal;
+  if (dashWaitlistEl) dashWaitlistEl.textContent = waitlistTotal;
+
+  // Check Firebase connection status
+  updateFirebaseBadge();
 
   // Language Toggle
   const langToggleBtn = document.getElementById('langToggleBtn');
@@ -323,8 +379,30 @@ document.addEventListener('DOMContentLoaded', () => {
     const interviewOptIn = document.getElementById('interviewOptIn').checked;
 
     waitlistTotal++;
+    try {
+      localStorage.setItem('etf_p_waitlist_total', waitlistTotal.toString());
+    } catch (err) {}
+
     document.getElementById('registeredCount').textContent = waitlistTotal;
     document.getElementById('dashWaitlistTotal').textContent = waitlistTotal;
+
+    // Safe dispatch to Firestore if initialized (e.g. Firebase Hosting reserved SDK)
+    if (window.isFirebaseConfigured && window.isFirebaseConfigured()) {
+      try {
+        const db = window.getFirebaseDb ? window.getFirebaseDb() : (typeof firebase !== 'undefined' ? firebase.firestore() : null);
+        if (db) {
+          db.collection('waitlist').add({
+            name: name || 'Anonymous Investor',
+            email: email,
+            phone: phone || '',
+            interviewOptIn: Boolean(interviewOptIn),
+            timestamp: firebase.firestore.FieldValue.serverTimestamp()
+          }).catch(err => console.warn('Firestore waitlist notice:', err));
+        }
+      } catch (err) {
+        console.warn('Firestore connection notice:', err);
+      }
+    }
 
     showToast(
       currentLang === 'ar' ? 'أهلاً بك في ETF-P!' : 'Welcome to ETF-P!',
@@ -375,7 +453,23 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     surveyDatabase.push(newResponse);
+    saveLocalSurveyData();
     updateDashboard();
+
+    // Safe dispatch to Firestore if initialized
+    if (window.isFirebaseConfigured && window.isFirebaseConfigured()) {
+      try {
+        const db = window.getFirebaseDb ? window.getFirebaseDb() : (typeof firebase !== 'undefined' ? firebase.firestore() : null);
+        if (db) {
+          db.collection('customer_discovery').add({
+            ...newResponse,
+            timestamp: firebase.firestore.FieldValue.serverTimestamp()
+          }).catch(err => console.warn('Firestore survey notice:', err));
+        }
+      } catch (err) {
+        console.warn('Firestore survey notice:', err);
+      }
+    }
 
     surveyModal.classList.add('hidden');
     surveyModal.classList.remove('flex');
@@ -395,6 +489,18 @@ document.addEventListener('DOMContentLoaded', () => {
       window.open(`https://wa.me/962790000000?text=${msg}`, '_blank');
     }
   });
+
+  // Reset Demo Button
+  const resetDemoBtn = document.getElementById('resetDemoBtn');
+  if (resetDemoBtn) {
+    resetDemoBtn.addEventListener('click', () => {
+      try {
+        localStorage.removeItem('etf_p_survey_database');
+        localStorage.removeItem('etf_p_waitlist_total');
+      } catch (e) {}
+      window.location.reload();
+    });
+  }
 
   // CSV Export
   document.getElementById('exportCsvBtn').addEventListener('click', exportCsv);
@@ -423,6 +529,7 @@ function updateLanguage(lang) {
   });
 
   updateDashboard();
+  updateFirebaseBadge();
   if (window.lucide) {
     window.lucide.createIcons();
   }
