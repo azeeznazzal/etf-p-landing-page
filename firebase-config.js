@@ -1,15 +1,29 @@
 // Firebase Configuration for ETF-P (Halal ETF Investing in Jordan)
-// Ready for Firebase Hosting & Firestore on the Spark (Free Tier) Plan
+// Strictly ZERO secrets or API keys stored in client source code.
+//
+// On Firebase Hosting, project configuration is dynamically provided at runtime
+// by Firebase's reserved script `/__/firebase/init.js`.
+//
+// For local testing or GitHub Pages, client uses secure local persistence and graceful fallback.
 
-const firebaseConfig = {
-  apiKey: "AIzaSy_YOUR_API_KEY_HERE",
-  authDomain: "etf-p-waitlist.firebaseapp.com",
-  projectId: "etf-p-waitlist",
-  storageBucket: "etf-p-waitlist.appspot.com",
-  messagingSenderId: "1234567890",
-  appId: "1:1234567890:web:abcdef123456"
-};
+(function() {
+  // Helper to check if Firebase App and Firestore are initialized and active
+  window.isFirebaseConfigured = function() {
+    return typeof firebase !== 'undefined' && 
+           Array.isArray(firebase.apps) && 
+           firebase.apps.length > 0;
+  };
 
-window.isFirebaseConfigured = function() {
-  return firebaseConfig.apiKey !== "AIzaSy_YOUR_API_KEY_HERE";
-};
+  // Helper to get Firestore instance safely
+  window.getFirebaseDb = function() {
+    if (window.isFirebaseConfigured()) {
+      try {
+        return firebase.firestore();
+      } catch (e) {
+        console.warn('Firestore initialization warning:', e);
+        return null;
+      }
+    }
+    return null;
+  };
+})();
