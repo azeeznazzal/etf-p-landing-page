@@ -114,6 +114,11 @@ const I18N = {
     q4_opt1: "عمولة سنوية رمزية ٠.٢٥٪ من إجمالي المحفظة",
     q4_opt2: "اشتراك شهري ثابت (٢ - ٣ دنانير شهرياً) بغض النظر عن الأرباح",
     q5_interview_chat: "<strong>أنا مستعد لمكالمة هاتفية سريعة (١٥ دقيقة)</strong> مع مؤسس المشروع لمناقشة تجربتي وملاحظاتي.",
+    modal_contact_title: "بيانات التواصل (لحجز المكالمة وتأكيد أولوية الانتظار):",
+    modal_contact_note: "اختياري",
+    lbl_phone_short: "رقم الهاتف",
+    survey_toast_title: "شكراً لمساهمتك القيمة!",
+    survey_toast_message: "تم تسجيل إجاباتك بنجاح في دراسة أبحاث السوق.",
     modal_submit_btn: "حفظ الإجابات وتفعيل أولوية الدخول",
     modal_submitting_btn: "جاري حفظ الإجابات وتفعيل حسابك..."
   },
@@ -229,6 +234,11 @@ const I18N = {
     q4_opt1: "A low 0.25% annual AUM fee on portfolio value",
     q4_opt2: "A flat monthly subscription (2-3 JOD/month)",
     q5_interview_chat: "<strong>I am open to a quick 15-minute call</strong> with the founder to share my thoughts.",
+    modal_contact_title: "Contact Info (For call scheduling & priority waitlist):",
+    modal_contact_note: "Optional",
+    lbl_phone_short: "Phone Number",
+    survey_toast_title: "Thank you for your feedback!",
+    survey_toast_message: "Your responses have been recorded in our market research study.",
     modal_submit_btn: "Save Responses & Activate VIP Waitlist",
     modal_submitting_btn: "Saving Responses & Activating VIP..."
   }
@@ -306,6 +316,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const calcYears = document.getElementById('calcYears');
   const valAmount = document.getElementById('valAmount');
   const valYears = document.getElementById('valYears');
+  const valYearsUnit = document.getElementById('valYearsUnit');
 
   function updateCalculator() {
     if (!calcAmount || !calcYears) return;
@@ -322,6 +333,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (valAmount) valAmount.textContent = monthly.toLocaleString();
     if (valYears) valYears.textContent = years;
+    if (valYearsUnit) {
+      if (currentLang === 'ar') {
+        valYearsUnit.textContent = (years === 1 ? 'سنة' : (years === 2 ? 'سنتين' : (years <= 10 ? 'سنوات' : 'سنة')));
+      } else {
+        valYearsUnit.textContent = years === 1 ? 'Year' : 'Years';
+      }
+    }
 
     const totalPortfolioEl = document.getElementById('totalPortfolioValue');
     const totalGainsEl = document.getElementById('totalGains');
@@ -333,6 +351,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (totalInvestedEl) totalInvestedEl.textContent = totalInvested.toLocaleString() + (currentLang === 'ar' ? ' د.أ' : ' JOD');
     if (bankCashEl) bankCashEl.textContent = totalInvested.toLocaleString() + (currentLang === 'ar' ? ' د.أ (تآكلت شرائياً)' : ' JOD (Eroded by inflation)');
   }
+  window.updateCalculator = updateCalculator;
 
   if (calcAmount) calcAmount.addEventListener('input', updateCalculator);
   if (calcYears) calcYears.addEventListener('input', updateCalculator);
@@ -367,8 +386,8 @@ document.addEventListener('DOMContentLoaded', () => {
   async function finalizeWaitlistSubmission(data) {
     if (!data) return;
 
-    // Save to Firestore via secure API
-    if (window.saveWaitlistInvestor) {
+    // Save to Firestore via secure API if not already persisted
+    if (!data.firestoreSaved && window.saveWaitlistInvestor) {
       await window.saveWaitlistInvestor(data);
     }
 
@@ -401,32 +420,44 @@ document.addEventListener('DOMContentLoaded', () => {
 
       if (!email) return;
 
-      // Retain pending registration
-      pendingWaitlist = { name, email, phone, interviewOptIn };
-
-      // If user opted into the 4-question discovery survey:
-      // Open the survey modal immediately so they can answer, DO NOT increment counter yet!
-      if (interviewOptIn) {
-        openModal();
-        return;
-      }
-
-      // If survey opt-in is unchecked: user directly submits waitlist only
       if (submitBtn) {
         submitBtn.disabled = true;
-        const origText = submitBtn.querySelector('span')?.textContent;
-        if (submitBtn.querySelector('span')) {
-          submitBtn.querySelector('span').textContent = I18N[currentLang].btn_submitting_waitlist;
+        const submitSpan = submitBtn.querySelector('span');
+        const origText = submitSpan?.textContent;
+        if (submitSpan) {
+          submitSpan.textContent = I18N[currentLang].btn_submitting_waitlist;
         }
 
         try {
+          // Asynchronously dispatch lead to Firestore immediately so user info is never lost
+          let savePromise = Promise.resolve(false);
+          if (window.saveWaitlistInvestor) {
+            savePromise = window.saveWaitlistInvestor({ name, email, phone, interviewOptIn });
+          }
+
+          // Retain pending registration state
+          pendingWaitlist = { name, email, phone, interviewOptIn, firestoreSaved: true };
+
+          // If user opted into the 4-question discovery survey:
+          // Open the survey modal immediately so they can answer, DO NOT increment counter yet!
+          if (interviewOptIn) {
+            const modalEmail = document.getElementById('modalEmail');
+            const modalPhone = document.getElementById('modalPhone');
+            if (modalEmail) modalEmail.value = email;
+            if (modalPhone) modalPhone.value = phone;
+            openModal();
+            return;
+          }
+
+          // If survey opt-in is unchecked: finalize waitlist submission immediately
+          await savePromise;
           await finalizeWaitlistSubmission(pendingWaitlist);
           pendingWaitlist = null;
           heroWaitlistForm.reset();
         } finally {
           submitBtn.disabled = false;
-          if (submitBtn.querySelector('span')) {
-            submitBtn.querySelector('span').textContent = origText;
+          if (submitSpan && origText) {
+            submitSpan.textContent = origText;
           }
         }
       }
@@ -449,9 +480,11 @@ document.addEventListener('DOMContentLoaded', () => {
       const pricing = document.querySelector('input[name="q_pricing"]:checked')?.value || 'percent_025';
       const callConsent = document.getElementById('interviewBookConsent')?.checked || false;
 
-      const investorName = pendingWaitlist?.name || document.getElementById('fullName')?.value.trim() || 'Investor';
-      const investorEmail = pendingWaitlist?.email || document.getElementById('email')?.value.trim() || '';
-      const investorPhone = pendingWaitlist?.phone || document.getElementById('phone')?.value.trim() || '';
+      const modalEmail = document.getElementById('modalEmail')?.value.trim() || '';
+      const modalPhone = document.getElementById('modalPhone')?.value.trim() || '';
+      const investorEmail = pendingWaitlist?.email || modalEmail || document.getElementById('email')?.value.trim() || '';
+      const investorPhone = pendingWaitlist?.phone || modalPhone || document.getElementById('phone')?.value.trim() || '';
+      const investorName = pendingWaitlist?.name || document.getElementById('fullName')?.value.trim() || (investorEmail ? investorEmail.split('@')[0] : 'Anonymous Investor');
 
       // Secure dispatch to Firestore (Zero Secrets)
       const surveyPayload = {
@@ -466,9 +499,14 @@ document.addEventListener('DOMContentLoaded', () => {
       };
 
       try {
-        // Save waitlist registration if pending
-        if (pendingWaitlist && window.saveWaitlistInvestor) {
-          await window.saveWaitlistInvestor(pendingWaitlist);
+        // Save waitlist registration if not yet saved and email is provided
+        if (investorEmail && (!pendingWaitlist || !pendingWaitlist.firestoreSaved) && window.saveWaitlistInvestor) {
+          await window.saveWaitlistInvestor({
+            name: investorName,
+            email: investorEmail,
+            phone: investorPhone,
+            interviewOptIn: true
+          });
         }
 
         // Save survey responses to Firestore
@@ -490,16 +528,28 @@ document.addEventListener('DOMContentLoaded', () => {
         // Update dashboard aggregate charts
         updateDashboard();
 
-        // Increment the counter ONLY AFTER successful submission
-        waitlistTotal++;
-        try {
-          localStorage.setItem('etf_p_waitlist_total', waitlistTotal.toString());
-        } catch (err) {}
+        // Increment waitlist counter ONLY IF investor email was submitted
+        if (investorEmail) {
+          waitlistTotal++;
+          try {
+            localStorage.setItem('etf_p_waitlist_total', waitlistTotal.toString());
+          } catch (err) {}
 
-        const regCount = document.getElementById('registeredCount');
-        const dashWaitlist = document.getElementById('dashWaitlistTotal');
-        if (regCount) regCount.textContent = waitlistTotal;
-        if (dashWaitlist) dashWaitlist.textContent = waitlistTotal;
+          const regCount = document.getElementById('registeredCount');
+          const dashWaitlist = document.getElementById('dashWaitlistTotal');
+          if (regCount) regCount.textContent = waitlistTotal;
+          if (dashWaitlist) dashWaitlist.textContent = waitlistTotal;
+
+          showToast(
+            currentLang === 'ar' ? 'شكراً لمساهمتك القيمة!' : 'Thank you for your feedback!',
+            currentLang === 'ar' ? `أنت الآن رقم #${waitlistTotal} وتمت ترقيتك إلى فئة VIP مع ٣ أشهر مجانية بدون أي رسوم.` : `You are now #${waitlistTotal} and elevated to VIP tier with 3 months zero fees.`
+          );
+        } else {
+          showToast(
+            I18N[currentLang].survey_toast_title,
+            I18N[currentLang].survey_toast_message
+          );
+        }
 
         // Close modal
         closeModal();
@@ -508,11 +558,6 @@ document.addEventListener('DOMContentLoaded', () => {
         pendingWaitlist = null;
         if (heroWaitlistForm) heroWaitlistForm.reset();
         discoverySurveyForm.reset();
-
-        showToast(
-          currentLang === 'ar' ? 'شكراً لمساهمتك القيمة!' : 'Thank you for your feedback!',
-          currentLang === 'ar' ? `أنت الآن رقم #${waitlistTotal} وتمت ترقيتك إلى فئة VIP مع ٣ أشهر مجانية بدون أي رسوم.` : `You are now #${waitlistTotal} and elevated to VIP tier with 3 months zero fees.`
-        );
       } finally {
         if (modalSubmitBtn) {
           modalSubmitBtn.disabled = false;
@@ -522,21 +567,45 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // Close Survey Modal handler: if user closes modal without submitting survey, finalize waitlist registration
+  // Modal Dismissal Handler
+  async function handleModalDismiss() {
+    closeModal();
+    if (pendingWaitlist) {
+      const waitlistToFinalize = pendingWaitlist;
+      pendingWaitlist = null;
+      await finalizeWaitlistSubmission(waitlistToFinalize);
+      if (heroWaitlistForm) heroWaitlistForm.reset();
+    }
+  }
+
+  // Close Survey Modal handlers (X button, backdrop click, Escape key)
   if (closeSurveyBtn) {
-    closeSurveyBtn.addEventListener('click', async () => {
-      closeModal();
-      if (pendingWaitlist) {
-        await finalizeWaitlistSubmission(pendingWaitlist);
-        pendingWaitlist = null;
-        if (heroWaitlistForm) heroWaitlistForm.reset();
+    closeSurveyBtn.addEventListener('click', handleModalDismiss);
+  }
+
+  if (surveyModal) {
+    surveyModal.addEventListener('click', (e) => {
+      if (e.target === surveyModal) {
+        handleModalDismiss();
       }
     });
   }
 
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && surveyModal && !surveyModal.classList.contains('hidden')) {
+      handleModalDismiss();
+    }
+  });
+
   // Survey Open button
   if (openSurveyBtn) {
     openSurveyBtn.addEventListener('click', () => {
+      const emailVal = document.getElementById('email')?.value.trim();
+      const phoneVal = document.getElementById('phone')?.value.trim();
+      const modalEmail = document.getElementById('modalEmail');
+      const modalPhone = document.getElementById('modalPhone');
+      if (modalEmail && emailVal) modalEmail.value = emailVal;
+      if (modalPhone && phoneVal) modalPhone.value = phoneVal;
       openModal();
     });
   }
@@ -547,6 +616,12 @@ document.addEventListener('DOMContentLoaded', () => {
       e.preventDefault();
       const callConsentInput = document.getElementById('interviewBookConsent');
       if (callConsentInput) callConsentInput.checked = true;
+      const emailVal = document.getElementById('email')?.value.trim();
+      const phoneVal = document.getElementById('phone')?.value.trim();
+      const modalEmail = document.getElementById('modalEmail');
+      const modalPhone = document.getElementById('modalPhone');
+      if (modalEmail && emailVal) modalEmail.value = emailVal;
+      if (modalPhone && phoneVal) modalPhone.value = phoneVal;
       openModal();
     });
   }
@@ -577,6 +652,9 @@ function updateLanguage(lang) {
     }
   });
 
+  if (window.updateCalculator) {
+    window.updateCalculator();
+  }
   updateDashboard();
   if (window.lucide) {
     window.lucide.createIcons();

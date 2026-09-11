@@ -325,7 +325,7 @@
             <div>
               <div class="flex justify-between items-center mb-2">
                 <label for="calcYears" class="text-xs font-bold text-slate-700" data-i18n="calc_lbl_years">المدة الزمنية (بالسنوات):</label>
-                <span class="text-base font-extrabold text-brand-600"><span id="valYears">5</span> <span data-i18n="calc_years_unit">سنوات</span></span>
+                <span class="text-base font-extrabold text-brand-600"><span id="valYears">5</span> <span id="valYearsUnit" data-i18n="calc_years_unit">سنوات</span></span>
               </div>
               <input type="range" id="calcYears" min="1" max="30" step="1" value="5" class="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-brand-600">
               <div class="flex justify-between text-[10px] text-slate-400 mt-1">
@@ -667,6 +667,24 @@
               <input type="radio" name="q_pricing" value="sub_monthly" class="text-brand-600">
               <span data-i18n="q4_opt2">اشتراك شهري ثابت (٢ - ٣ دنانير شهرياً) بغض النظر عن الأرباح</span>
             </label>
+          </div>
+        </div>
+
+        <!-- Optional Contact Information for Direct Modal Entries / 15-Min Call -->
+        <div id="modalContactInfo" class="p-3.5 bg-brand-50/60 rounded-xl border border-brand-200/80 space-y-2.5">
+          <div class="flex items-center justify-between">
+            <span class="text-xs font-bold text-slate-800" data-i18n="modal_contact_title">بيانات التواصل (لحجز المكالمة وتأكيد أولوية الانتظار):</span>
+            <span class="text-[10px] text-brand-600 font-medium" data-i18n="modal_contact_note">اختياري</span>
+          </div>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+            <div>
+              <label for="modalEmail" class="block text-[11px] font-semibold text-slate-600 mb-1" data-i18n="lbl_email">البريد الإلكتروني</label>
+              <input type="email" id="modalEmail" placeholder="name@example.com" class="w-full px-3 py-2 rounded-lg border border-slate-300 text-xs focus:ring-2 focus:ring-brand-500 bg-white" dir="ltr">
+            </div>
+            <div>
+              <label for="modalPhone" class="block text-[11px] font-semibold text-slate-600 mb-1" data-i18n="lbl_phone_short">رقم الهاتف</label>
+              <input type="tel" id="modalPhone" placeholder="079XXXXXXX" class="w-full px-3 py-2 rounded-lg border border-slate-300 text-xs focus:ring-2 focus:ring-brand-500 bg-white" dir="ltr">
+            </div>
           </div>
         </div>
 
