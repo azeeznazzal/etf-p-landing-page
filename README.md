@@ -35,21 +35,19 @@ A zero-budget, high-converting bilingual web application designed for Jordanian 
 
 ---
 
-## 🚀 Zero-Budget Deployment
+## 🚀 Live Production & Infrastructure
 
-### 1. GitHub Pages (Active)
-- Live repository: `azeeznazzal/etf-p-landing-page`
-- URL: `https://azeeznazzal.github.io/etf-p-landing-page/`
+### Official Production URL (Firebase Hosting)
+- **Live URL:** [https://etf-p-jordan.web.app/](https://etf-p-jordan.web.app/)
+- **Infrastructure:** Google Cloud / Firebase Hosting (Spark Free Tier) with global Google Edge CDN.
+- **Database:** Cloud Firestore (`nam5`) with write-only security rules and zero hardcoded secrets.
 
-### 2. Firebase Hosting (Spark Free Tier)
-To deploy to Firebase Hosting for free:
+### Source Control Repository
+- **GitHub Repo:** [https://github.com/azeeznazzal/etf-p-landing-page](https://github.com/azeeznazzal/etf-p-landing-page)
+- **Primary Branch:** `main`
+
+### Deployment Command
 ```bash
-# Login to Firebase
-firebase login
-
-# Initialize hosting (already configured via firebase.json)
-firebase init hosting
-
-# Deploy
-firebase deploy --only hosting
+npx -y firebase-tools deploy --only hosting
 ```
+
