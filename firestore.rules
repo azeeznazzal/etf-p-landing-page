@@ -1,14 +1,23 @@
 rules_version = '2';
+
 service cloud.firestore {
   match /databases/{database}/documents {
-    // Allow anyone to submit to waitlist and customer discovery
+    // Waitlist submissions: Public create with basic validation, strictly no public reads
     match /waitlist/{document=**} {
-      allow create: if request.resource.data.email is string;
+      allow create: if request.resource.data.email is string 
+                    && request.resource.data.email.size() > 3;
       allow read, update, delete: if request.auth != null;
     }
+
+    // Customer discovery responses: Public create, strictly no public reads
     match /customer_discovery/{document=**} {
       allow create: if true;
       allow read, update, delete: if request.auth != null;
+    }
+
+    // Default deny for all other paths
+    match /{document=**} {
+      allow read, write: if false;
     }
   }
 }

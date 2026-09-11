@@ -1,5 +1,7 @@
 {
   "projects": {
-    "default": "etf-p-waitlist"
-  }
+    "default": "etf-p-jordan"
+  },
+  "targets": {},
+  "etags": {}
 }
