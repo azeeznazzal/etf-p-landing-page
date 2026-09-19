@@ -127,6 +127,7 @@ const I18N = {
     calc_sub: "شاهد كيف يمكن لـ ١٠٠ دينار شهرياً أن تصنع فارقاً حقيقياً في مستقبلك المالي عبر سحر التراكم",
     calc_lbl_amount: "مبلغ الاستثمار الشهري:",
     currency_jod: "دينار أردني",
+    currency_jod_short: "د.أ",
     calc_amt_min: "25 د.أ",
     calc_amt_mid: "250 د.أ",
     calc_amt_max: "500 د.أ",
@@ -334,6 +335,7 @@ const I18N = {
     calc_sub: "See how investing 100 JOD/month can transform your financial future through compounding power",
     calc_lbl_amount: "Monthly Investment:",
     currency_jod: "JOD",
+    currency_jod_short: "JOD",
     calc_amt_min: "25 JOD",
     calc_amt_mid: "250 JOD",
     calc_amt_max: "500 JOD",
@@ -446,8 +448,15 @@ for (let i = 7; i <= 34; i++) {
   });
 }
 
-// Current language & waitlist state
+// Current language & waitlist state (persisted in localStorage)
 let currentLang = 'ar';
+try {
+  const savedLang = localStorage.getItem('etf_p_lang');
+  if (savedLang === 'en' || savedLang === 'ar') {
+    currentLang = savedLang;
+  }
+} catch (e) {}
+
 let waitlistTotal = 142;
 
 // Temporary holder for pending waitlist registration during survey modal flow
@@ -463,8 +472,67 @@ try {
   console.warn('Local storage read notice:', e);
 }
 
-// DOM Elements Initialization
-document.addEventListener('DOMContentLoaded', () => {
+// Global Language Toggle Function
+window.toggleLanguage = function() {
+  currentLang = currentLang === 'ar' ? 'en' : 'ar';
+  try {
+    localStorage.setItem('etf_p_lang', currentLang);
+  } catch (e) {}
+  updateLanguage(currentLang);
+};
+
+// Global Bulletproof Tab Activation Function
+window.activateTabById = function(targetId, setFocus = false) {
+  if (!targetId) return;
+  const eduTabBtns = Array.from(document.querySelectorAll('.edu-tab-btn'));
+  const eduTabPanels = Array.from(document.querySelectorAll('.edu-tab-panel'));
+
+  eduTabBtns.forEach(b => {
+    const isTarget = b.getAttribute('data-tab') === targetId;
+    if (isTarget) {
+      b.classList.add('active', 'bg-white', 'text-brand-700', 'shadow-sm');
+      b.classList.remove('text-slate-600');
+      b.setAttribute('aria-selected', 'true');
+      b.setAttribute('tabindex', '0');
+      if (setFocus) b.focus();
+    } else {
+      b.classList.remove('active', 'bg-white', 'text-brand-700', 'shadow-sm');
+      b.classList.add('text-slate-600');
+      b.setAttribute('aria-selected', 'false');
+      b.setAttribute('tabindex', '-1');
+    }
+  });
+
+  eduTabPanels.forEach(panel => {
+    if (panel.id === targetId) {
+      panel.classList.remove('hidden');
+      panel.classList.add('block');
+      panel.style.display = 'block';
+    } else {
+      panel.classList.add('hidden');
+      panel.classList.remove('block');
+      panel.style.display = 'none';
+    }
+  });
+
+  if (window.lucide) {
+    window.lucide.createIcons();
+  }
+};
+
+// Global Delegated Tab Click Listener (fail-safe for touch, inner spans, and fast taps)
+document.addEventListener('click', (e) => {
+  const tabBtn = e.target.closest('.edu-tab-btn');
+  if (tabBtn) {
+    const targetId = tabBtn.getAttribute('data-tab');
+    if (targetId && window.activateTabById) {
+      window.activateTabById(targetId);
+    }
+  }
+});
+
+// Resilient App Initialization
+function initApp() {
   // Initialize Lucide Icons
   if (window.lucide) {
     window.lucide.createIcons();
@@ -476,12 +544,11 @@ document.addEventListener('DOMContentLoaded', () => {
   if (regCountEl) regCountEl.textContent = waitlistTotal;
   if (dashWaitlistEl) dashWaitlistEl.textContent = waitlistTotal;
 
-  // Language Toggle
+  // Language Toggle Button Listener
   const langToggleBtn = document.getElementById('langToggleBtn');
   if (langToggleBtn) {
     langToggleBtn.addEventListener('click', () => {
-      currentLang = currentLang === 'ar' ? 'en' : 'ar';
-      updateLanguage(currentLang);
+      window.toggleLanguage();
     });
   }
 
@@ -555,46 +622,16 @@ document.addEventListener('DOMContentLoaded', () => {
   if (calcYears) calcYears.addEventListener('input', updateCalculator);
   updateCalculator();
 
-  // Educational Tabs Switching Logic with ARIA & Keyboard Support
+  // Educational Tabs Keyboard Support
   const eduTabContainer = document.querySelector('[role="tablist"]');
   const eduTabBtns = Array.from(document.querySelectorAll('.edu-tab-btn'));
-  const eduTabPanels = document.querySelectorAll('.edu-tab-panel');
-
-  function activateTab(btn, setFocus = false) {
-    if (!btn) return;
-    const targetId = btn.getAttribute('data-tab');
-    if (!targetId) return;
-
-    eduTabBtns.forEach(b => {
-      b.classList.remove('active', 'bg-white', 'text-brand-700', 'shadow-sm');
-      b.classList.add('text-slate-600');
-      b.setAttribute('aria-selected', 'false');
-      b.setAttribute('tabindex', '-1');
-    });
-
-    btn.classList.add('active', 'bg-white', 'text-brand-700', 'shadow-sm');
-    btn.classList.remove('text-slate-600');
-    btn.setAttribute('aria-selected', 'true');
-    btn.setAttribute('tabindex', '0');
-    if (setFocus) btn.focus();
-
-    eduTabPanels.forEach(panel => {
-      if (panel.id === targetId) {
-        panel.classList.remove('hidden');
-        panel.classList.add('block');
-      } else {
-        panel.classList.add('hidden');
-        panel.classList.remove('block');
+  eduTabBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const targetId = btn.getAttribute('data-tab');
+      if (targetId && window.activateTabById) {
+        window.activateTabById(targetId);
       }
     });
-
-    if (window.lucide) {
-      window.lucide.createIcons();
-    }
-  }
-
-  eduTabBtns.forEach(btn => {
-    btn.addEventListener('click', () => activateTab(btn));
   });
 
   if (eduTabContainer) {
@@ -617,7 +654,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
       if (nextIndex !== null) {
         e.preventDefault();
-        activateTab(eduTabBtns[nextIndex], true);
+        const targetId = eduTabBtns[nextIndex].getAttribute('data-tab');
+        if (targetId && window.activateTabById) {
+          window.activateTabById(targetId, true);
+        }
       }
     });
   }
@@ -893,12 +933,24 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Initial Dashboard Render
   updateDashboard();
-});
+
+  // Restore saved language if not default
+  if (currentLang !== 'ar') {
+    updateLanguage(currentLang);
+  }
+}
+
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', initApp);
+} else {
+  initApp();
+}
 
 // Update Language
 function updateLanguage(lang) {
   const dict = I18N[lang];
   if (!dict) return;
+  currentLang = lang;
 
   document.documentElement.lang = lang;
   document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
@@ -906,8 +958,27 @@ function updateLanguage(lang) {
     ? 'bg-slate-50 text-slate-900 antialiased min-h-screen selection:bg-brand-500 selection:text-white lang-en'
     : 'bg-slate-50 text-slate-900 antialiased min-h-screen selection:bg-brand-500 selection:text-white';
 
+  // Update Document Title & Description
+  document.title = lang === 'ar' 
+    ? 'ETF-P | استثمر ١٠٠ دينار شهرياً في صناديق المؤشرات المتداولة (ETFs)'
+    : 'ETF-P | Invest 100 JOD/Month in Diversified Global ETFs';
+
+  const metaDesc = document.querySelector('meta[name="description"]');
+  if (metaDesc) {
+    metaDesc.setAttribute('content', lang === 'ar'
+      ? 'منصة الاستثمار التراكمي طويل الأجل في صناديق المؤشرات المتداولة (ETFs) للأردنيين. ابدأ بـ 100 دينار شهرياً بكل سهولة وأمان وشفافية.'
+      : 'Retail wealth platform for long-term compound investing in global ETFs for Jordanians. Start with 100 JOD/month with zero hassle, security, and full transparency.');
+  }
+
+  // Update Button Label
   const langLabel = document.getElementById('langLabel');
   if (langLabel) langLabel.textContent = lang === 'ar' ? 'English' : 'العربية';
+
+  // Update Dynamic Placeholders
+  const nameInput = document.getElementById('fullName');
+  if (nameInput) {
+    nameInput.placeholder = lang === 'ar' ? 'مثال: أحمد نزال' : 'e.g. Ahmad Nazzal';
+  }
 
   // Apply all text translations
   document.querySelectorAll('[data-i18n]').forEach(el => {
@@ -930,6 +1001,7 @@ function updateLanguage(lang) {
     window.lucide.createIcons();
   }
 }
+window.updateLanguage = updateLanguage;
 
 // Update Market Discovery Insights Dashboard
 function updateDashboard() {
