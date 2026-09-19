@@ -472,8 +472,15 @@ try {
   console.warn('Local storage read notice:', e);
 }
 
-// Global Language Toggle Function
+// Global Language Toggle Function (with debounce protection against double-firing)
+let lastToggleTime = 0;
 window.toggleLanguage = function() {
+  const now = Date.now();
+  if (now - lastToggleTime < 300) {
+    return;
+  }
+  lastToggleTime = now;
+
   currentLang = currentLang === 'ar' ? 'en' : 'ar';
   try {
     localStorage.setItem('etf_p_lang', currentLang);
@@ -544,13 +551,7 @@ function initApp() {
   if (regCountEl) regCountEl.textContent = waitlistTotal;
   if (dashWaitlistEl) dashWaitlistEl.textContent = waitlistTotal;
 
-  // Language Toggle Button Listener
-  const langToggleBtn = document.getElementById('langToggleBtn');
-  if (langToggleBtn) {
-    langToggleBtn.addEventListener('click', () => {
-      window.toggleLanguage();
-    });
-  }
+  // Language Toggle is handled directly via onclick="toggleLanguage()" with debounce protection
 
   // Calculator Logic with 30 Years Upper Limit
   const calcAmount = document.getElementById('calcAmount');
