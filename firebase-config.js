@@ -1,4 +1,4 @@
-// Firebase Configuration for ETF-P (Halal ETF Investing in Jordan)
+// Firebase Configuration for ETF-P (Retail ETF Investing in Jordan)
 // Strictly ZERO secrets or API keys stored in client source code.
 //
 // 1. On Firebase Hosting: dynamically uses runtime init scripts provided by Firebase infrastructure.
@@ -149,7 +149,7 @@
       email: data.email || '',
       phone: data.phone || '',
       capacity: data.capacity || 'yes_100',
-      blocker: data.blocker || 'shariah',
+      blocker: data.blocker || 'etf_knowledge',
       trust: data.trust || 'jordan_fintech',
       pricing: data.pricing || 'percent_025',
       callConsent: Boolean(data.callConsent),

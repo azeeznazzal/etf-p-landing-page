@@ -1,11 +1,11 @@
-# ETF-P | Halal ETF Investing for Jordanians 🇯🇴
+# ETF-P | Retail ETF & Long-Term Compounding for Jordanians 🇯🇴
 
-> **"Invest 100 JOD/month in diversified Halal ETFs."**
-> **"استثمر ١٠٠ دينار شهرياً في صناديق استثمار إسلامية متنوعة."**
+> **"Invest 100 JOD/month in diversified global ETFs."**
+> **"استثمر ١٠٠ دينار شهرياً في صناديق المؤشرات المتداولة (ETFs)."**
 
 A zero-budget, high-converting bilingual web application designed for Jordanian retail investors. Built by unifying two key initiatives:
-1. **Waitlist & Landing Page:** Build Landing Page + Waitlist
-2. **Customer Discovery:** Conduct 30-50 User Interviews
+1. **Waitlist & Landing Page:** Build Landing Page + Waitlist with educational clarity on ETFs, long-term investing, and compounding wealth.
+2. **Customer Discovery:** Conduct 30-50 User Interviews to validate retail market demand.
 
 ---
 
@@ -16,14 +16,20 @@ A zero-budget, high-converting bilingual web application designed for Jordanian 
 - Instant toggle to English (LTR) with `Inter` typography.
 - Mobile-responsive design optimized for smartphones in Jordan.
 
-### 2. Interactive Compound Wealth Calculator
-- Demonstrates the tangible difference between parking 100 JOD/month in standard bank accounts vs. compounding at 8.5% annual return in Shariah-compliant global ETFs up to 30 years.
+### 2. Smart Investing Fundamentals (`#etf-explained`)
+- **What is an ETF:** Demystifying index funds as an investment basket (500+ companies) vs. single-stock risk.
+- **Long-Term Investing:** "Time in the market beats timing the market", Dollar-Cost Averaging (DCA), and turning market dips into discounts.
+- **Compounding Wealth:** The 3-phase financial snowball effect (Foundation → Acceleration → Exponential Growth) with real numbers.
+
+### 3. Interactive Compound Wealth Calculator (`#calculator`)
+- Demonstrates the tangible difference between parking 100 JOD/month in standard bank accounts vs. compounding at 8.5% annual return in global ETFs up to 30 years.
+- Dynamic compounding ratio breakdown bar showing principal deposits vs. compound gains over time.
 - Real-time calculations for total invested amount, projected portfolio value, and inflation comparison.
 
-### 3. Integrated Customer Discovery Engine
+### 4. Integrated Customer Discovery Engine
 - **2-Step Funnel:** Every waitlist registration is invited to a 45-second micro-survey answering the 5 core validation questions:
   1. *Investment Capacity:* Willingness to invest 100 JOD/month.
-  2. *Top Obstacles:* Shariah doubts, SWIFT bank fees, platform trust, or broker complexity.
+  2. *Top Obstacles:* Lack of ETF understanding, SWIFT bank fees, platform trust, or broker complexity.
   3. *Institutional Trust:* JSC-licensed Jordanian Fintech vs Traditional Bank vs International Broker.
   4. *Pricing Model:* 0.25% annual AUM fee vs 2-3 JOD/month fixed subscription.
   5. *1-on-1 Interview Opt-in:* Direct 15-minute call booking with the founder to hit the **30-50 interviews target**.
