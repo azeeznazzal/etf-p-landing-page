@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="ar" dir="rtl" class="scroll-smooth">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>ETF-P | استثمر ١٠٠ دينار شهرياً في صناديق المؤشرات المتداولة (ETFs)</title>
   <meta name="description" content="منصة الاستثمار التراكمي طويل الأجل في صناديق المؤشرات المتداولة (ETFs) للأردنيين. ابدأ بـ 100 دينار شهرياً بكل سهولة وأمان وشفافية.">
   
-  <!-- Google Fonts: Tajawal & Inter -->
+  <!-- Apple & Google Typography Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Tajawal:wght@300;400;500;700;800;900&display=swap" rel="stylesheet">
@@ -23,24 +23,37 @@
       theme: {
         extend: {
           fontFamily: {
-            ar: ['Tajawal', 'sans-serif'],
-            en: ['Inter', 'sans-serif']
+            ar: ['-apple-system', 'BlinkMacSystemFont', '"SF Pro Arabic"', '"SF Pro Display"', '"SF Pro Text"', 'Tajawal', 'system-ui', 'sans-serif'],
+            en: ['-apple-system', 'BlinkMacSystemFont', '"SF Pro Display"', '"SF Pro Text"', 'Inter', 'system-ui', 'sans-serif']
           },
           colors: {
             brand: {
-              50: '#f0f9f5',
-              100: '#dcf0e7',
+              50: '#f0fdf9',
+              100: '#ccfbf1',
+              200: '#99f6e4',
+              300: '#5eead4',
+              400: '#2dd4bf',
               500: '#0d9488',
               600: '#0f766e',
               700: '#115e59',
               800: '#134e4a',
               900: '#042f2e'
             },
-            accent: {
-              emerald: '#10b981',
-              gold: '#f59e0b',
-              navy: '#0f172a'
+            apple: {
+              bg: '#f5f5f7',
+              dark: '#1c1c1e',
+              gray: '#86868b',
+              lightGray: '#e5e5ea',
+              blue: '#0071e3',
+              green: '#34c759'
             }
+          },
+          borderRadius: {
+            'apple-sm': '10px',
+            'apple-md': '14px',
+            'apple-lg': '20px',
+            'apple-xl': '28px',
+            'apple-2xl': '36px'
           }
         }
       }
@@ -48,60 +61,306 @@
   </script>
 
   <style>
+    /* ==========================================================================
+       Apple Design Foundation & Fluid Motion System
+       Based on Apple WWDC Design Talks & Fluid Interface Principles
+       ========================================================================== */
+    
+    :root {
+      --apple-ease: cubic-bezier(0.16, 1, 0.3, 1);
+      --apple-spring: cubic-bezier(0.2, 0.8, 0.2, 1);
+      --apple-font-ar: -apple-system, BlinkMacSystemFont, "SF Pro Arabic", "SF Pro Display", "SF Pro Text", "Tajawal", system-ui, sans-serif;
+      --apple-font-en: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Inter", system-ui, sans-serif;
+    }
+
+    html {
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      text-rendering: optimizeLegibility;
+      scroll-behavior: smooth;
+    }
+
     body {
-      font-family: 'Tajawal', sans-serif;
+      font-family: var(--apple-font-ar);
+      background-color: #f5f5f7;
+      color: #1d1d1f;
       transition: background-color 0.3s ease, color 0.3s ease;
     }
+
     body.lang-en {
-      font-family: 'Inter', sans-serif;
+      font-family: var(--apple-font-en);
     }
-    .gradient-glow {
-      background: radial-gradient(circle at 50% 10%, rgba(13, 148, 136, 0.18) 0%, rgba(15, 23, 42, 0) 70%);
+
+    /* 1. Response & Latency Elimination (Apple Skill Principle #1) */
+    button, .apple-btn, a[role="button"], input[type="submit"] {
+      touch-action: manipulation;
+      -webkit-tap-highlight-color: transparent;
+      transition: transform 0.12s var(--apple-ease), background-color 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease, opacity 0.18s ease;
     }
+
+    button:active, .apple-btn:active, a[role="button"]:active {
+      transform: scale(0.97) !important;
+    }
+
+    /* 2. Apple Materials, Translucency & Vibrancy (Principles #7, #13) */
+    .apple-glass-header {
+      background: rgba(255, 255, 255, 0.78);
+      backdrop-filter: blur(20px) saturate(180%);
+      -webkit-backdrop-filter: blur(20px) saturate(180%);
+      border-bottom: 0.5px solid rgba(0, 0, 0, 0.08);
+    }
+
+    .apple-glass {
+      background: rgba(255, 255, 255, 0.82);
+      backdrop-filter: blur(24px) saturate(190%);
+      -webkit-backdrop-filter: blur(24px) saturate(190%);
+      border: 1px solid rgba(255, 255, 255, 0.9);
+      box-shadow: 0 4px 24px -1px rgba(0, 0, 0, 0.04), 0 0 0 1px rgba(0, 0, 0, 0.03);
+    }
+
     .card-glass {
-      background: rgba(255, 255, 255, 0.88);
+      background: rgba(255, 255, 255, 0.82);
+      backdrop-filter: blur(24px) saturate(190%);
+      -webkit-backdrop-filter: blur(24px) saturate(190%);
+      border: 1px solid rgba(255, 255, 255, 0.9);
+      box-shadow: 0 4px 24px -1px rgba(0, 0, 0, 0.04), 0 0 0 1px rgba(0, 0, 0, 0.03);
+    }
+
+    .apple-card {
+      background: #ffffff;
+      border-radius: 24px;
+      border: 1px solid rgba(0, 0, 0, 0.06);
+      box-shadow: 0 2px 10px -2px rgba(0, 0, 0, 0.03), 0 1px 3px rgba(0, 0, 0, 0.02);
+      transition: transform 0.28s var(--apple-ease), box-shadow 0.28s var(--apple-ease), border-color 0.28s ease;
+    }
+
+    .apple-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 14px 34px -4px rgba(0, 0, 0, 0.08), 0 0 0 1px rgba(13, 148, 136, 0.15);
+    }
+
+    /* Apple Dark Pro Card for Calculator & Timeline */
+    .apple-dark-card {
+      background: linear-gradient(180deg, #181c24 0%, #0e1117 100%);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      box-shadow: 0 24px 48px -12px rgba(0, 0, 0, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.12);
+      border-radius: 28px;
+    }
+
+    /* Apple Capsule Badge */
+    .apple-capsule {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 5px 14px;
+      border-radius: 9999px;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: -0.01em;
+      background: rgba(13, 148, 136, 0.08);
+      color: #0d9488;
+      border: 1px solid rgba(13, 148, 136, 0.18);
       backdrop-filter: blur(12px);
-      border: 1px solid rgba(226, 232, 240, 0.85);
+      -webkit-backdrop-filter: blur(12px);
     }
-    .dark .card-glass {
-      background: rgba(15, 23, 42, 0.8);
-      border: 1px solid rgba(51, 65, 85, 0.5);
+
+    /* 3. Apple Buttons with Tactile Depth (Principle #1) */
+    .apple-btn-primary {
+      background: linear-gradient(180deg, #0d9488 0%, #0f766e 100%);
+      color: #ffffff;
+      font-weight: 700;
+      border-radius: 16px;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      box-shadow: 0 4px 14px -1px rgba(13, 148, 136, 0.38), inset 0 1px 0 rgba(255, 255, 255, 0.28);
+      transition: transform 0.14s var(--apple-ease), box-shadow 0.2s ease, opacity 0.2s ease, background 0.2s ease;
     }
+
+    .apple-btn-primary:hover {
+      background: linear-gradient(180deg, #115e59 0%, #0d9488 100%);
+      box-shadow: 0 8px 24px -2px rgba(13, 148, 136, 0.48), inset 0 1px 0 rgba(255, 255, 255, 0.35);
+    }
+
+    .apple-btn-secondary {
+      background: rgba(0, 0, 0, 0.04);
+      color: #1f2937;
+      font-weight: 600;
+      border-radius: 16px;
+      border: 1px solid rgba(0, 0, 0, 0.08);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      transition: all 0.2s var(--apple-ease);
+    }
+
+    .apple-btn-secondary:hover {
+      background: rgba(0, 0, 0, 0.08);
+      border-color: rgba(0, 0, 0, 0.14);
+    }
+
+    /* 4. Apple Segmented Control (Tabs) */
+    .apple-segmented-track {
+      background: rgba(118, 118, 128, 0.12);
+      padding: 4px;
+      border-radius: 9999px;
+      display: flex;
+      gap: 3px;
+      border: 0.5px solid rgba(0, 0, 0, 0.04);
+    }
+
+    .edu-tab-btn {
+      border-radius: 9999px !important;
+      font-weight: 500;
+      border: none !important;
+      transition: all 0.22s var(--apple-ease);
+    }
+
+    .edu-tab-btn.active {
+      background: #ffffff !important;
+      color: #0f172a !important;
+      box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1), 0 1px 2px rgba(0, 0, 0, 0.05) !important;
+      font-weight: 700 !important;
+    }
+
+    /* 5. Apple Fluid Ambient Mesh Lighting */
+    .apple-mesh-glow {
+      background-color: #f5f5f7;
+      background-image: 
+        radial-gradient(at 50% 0%, rgba(13, 148, 136, 0.12) 0px, transparent 65%),
+        radial-gradient(at 88% 20%, rgba(16, 185, 129, 0.07) 0px, transparent 50%),
+        radial-gradient(at 12% 35%, rgba(14, 165, 233, 0.05) 0px, transparent 45%);
+    }
+
+    .gradient-glow {
+      background-color: #f5f5f7;
+      background-image: 
+        radial-gradient(at 50% 0%, rgba(13, 148, 136, 0.14) 0px, transparent 65%),
+        radial-gradient(at 88% 20%, rgba(16, 185, 129, 0.08) 0px, transparent 50%),
+        radial-gradient(at 12% 35%, rgba(14, 165, 233, 0.06) 0px, transparent 45%);
+    }
+
+    /* 6. Apple Typography: Optical Tracking & Leading (Principle #15) */
+    .apple-display-title {
+      letter-spacing: -0.03em;
+      line-height: 1.14;
+    }
+
+    .apple-section-title {
+      letter-spacing: -0.025em;
+      line-height: 1.2;
+    }
+
+    .apple-gradient-text {
+      background: linear-gradient(135deg, #0d9488 0%, #10b981 60%, #059669 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      display: inline-block;
+    }
+
+    .edu-tab-panel {
+      animation: appleTabTransition 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    @keyframes appleTabTransition {
+      from { opacity: 0; transform: translateY(6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* 7. Apple Fluid Range Sliders (Tactile 1:1 direct tracking) */
+    input[type="range"] {
+      -webkit-appearance: none;
+      appearance: none;
+      background: rgba(0, 0, 0, 0.08);
+      height: 6px;
+      border-radius: 9999px;
+      outline: none;
+      transition: background 0.2s ease;
+    }
+
+    input[type="range"]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      background: #ffffff;
+      cursor: pointer;
+      box-shadow: 0 3px 8px rgba(0, 0, 0, 0.18), 0 1px 2px rgba(0, 0, 0, 0.12), 0 0 0 0.5px rgba(0, 0, 0, 0.06);
+      transition: transform 0.14s var(--apple-ease), box-shadow 0.14s ease;
+    }
+
+    input[type="range"]:active::-webkit-slider-thumb {
+      transform: scale(1.18);
+      box-shadow: 0 5px 14px rgba(0, 0, 0, 0.25), 0 1px 3px rgba(0, 0, 0, 0.15);
+    }
+
+    input[type="range"]::-moz-range-thumb {
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      background: #ffffff;
+      cursor: pointer;
+      border: none;
+      box-shadow: 0 3px 8px rgba(0, 0, 0, 0.18), 0 1px 2px rgba(0, 0, 0, 0.12), 0 0 0 0.5px rgba(0, 0, 0, 0.06);
+      transition: transform 0.14s var(--apple-ease), box-shadow 0.14s ease;
+    }
+
+    input[type="range"]:active::-moz-range-thumb {
+      transform: scale(1.18);
+      box-shadow: 0 5px 14px rgba(0, 0, 0, 0.25), 0 1px 3px rgba(0, 0, 0, 0.15);
+    }
+
+    /* RTL flip utility */
     .rtl-flip {
       transform: scaleX(1);
     }
     html[dir="rtl"] .rtl-flip {
       transform: scaleX(-1);
     }
+
+    /* 8. Reduced Motion Accessibility (Principle #14) */
+    @media (prefers-reduced-motion: reduce) {
+      *, ::before, ::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+      }
+    }
+
+    @media (prefers-reduced-transparency: reduce) {
+      .apple-glass, .apple-glass-header, .card-glass {
+        background: #ffffff !important;
+        backdrop-filter: none !important;
+        -webkit-backdrop-filter: none !important;
+      }
+    }
   </style>
 </head>
-<body class="bg-slate-50 text-slate-900 antialiased min-h-screen selection:bg-brand-500 selection:text-white">
+<body class="bg-[#f5f5f7] text-[#1d1d1f] antialiased min-h-screen selection:bg-brand-500 selection:text-white">
   
-  <!-- Header / Navigation -->
-  <header class="sticky top-0 z-40 w-full border-b border-slate-200/80 bg-white/90 backdrop-blur-md">
-    <div class="max-w-6xl mx-auto px-4 sm:px-6 h-18 flex items-center justify-between py-3">
+  <!-- Apple Translucent Header / Navigation -->
+  <header class="sticky top-0 z-40 w-full apple-glass-header transition-all duration-200">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 h-18 flex items-center justify-between py-3.5">
       
-      <!-- Brand Logo -->
-      <a href="#" class="flex items-center gap-2.5 group">
-        <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-brand-700 via-brand-600 to-emerald-400 flex items-center justify-center text-white font-black text-xl shadow-md shadow-brand-500/20 group-hover:scale-105 transition-transform">
+      <!-- Brand Logo (Apple Squircle Icon) -->
+      <a href="#" class="flex items-center gap-3 group">
+        <div class="w-10 h-10 rounded-[12px] bg-gradient-to-tr from-brand-700 via-brand-600 to-emerald-400 flex items-center justify-center text-white font-black text-xl shadow-md shadow-brand-600/25 group-hover:scale-105 transition-transform duration-200 border border-white/20">
           🌱
         </div>
         <div>
-          <div class="flex items-center gap-1.5">
+          <div class="flex items-center gap-2">
             <span class="font-extrabold text-xl tracking-tight text-slate-900">ETF-P</span>
-            <span class="text-xs px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800 font-semibold border border-emerald-200" data-i18n="badge_tag">استثمار ذكي</span>
+            <span class="text-[11px] px-2.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-800 font-semibold border border-emerald-500/20" data-i18n="badge_tag">استثمار ذكي</span>
           </div>
           <p class="text-[11px] text-slate-500 font-medium" data-i18n="tagline">استثمار الأفراد في الأردن</p>
         </div>
       </a>
 
       <!-- Navigation links (Desktop) -->
-      <nav class="hidden md:flex items-center gap-6 text-sm font-medium text-slate-600">
-        <a href="#etf-explained" class="hover:text-brand-600 transition" data-i18n="nav_etf">ما هو الـ ETF؟</a>
-        <a href="#about" class="hover:text-brand-600 transition" data-i18n="nav_why">لماذا الآن؟</a>
-        <a href="#calculator" class="hover:text-brand-600 transition" data-i18n="nav_calc">حاسبة العوائد</a>
-        <a href="#how-it-works" class="hover:text-brand-600 transition" data-i18n="nav_how">كيف يعمل؟</a>
-        <a href="#interview-section" class="hover:text-brand-600 transition flex items-center gap-1.5 text-emerald-700 font-bold">
+      <nav class="hidden md:flex items-center gap-7 text-[13.5px] font-medium text-slate-600">
+        <a href="#etf-explained" class="hover:text-slate-900 transition-colors" data-i18n="nav_etf">ما هو الـ ETF؟</a>
+        <a href="#about" class="hover:text-slate-900 transition-colors" data-i18n="nav_why">لماذا الآن؟</a>
+        <a href="#calculator" class="hover:text-slate-900 transition-colors" data-i18n="nav_calc">حاسبة العوائد</a>
+        <a href="#how-it-works" class="hover:text-slate-900 transition-colors" data-i18n="nav_how">كيف يعمل؟</a>
+        <a href="#interview-section" class="hover:text-slate-900 transition-colors flex items-center gap-2 text-emerald-700 font-semibold">
           <span data-i18n="nav_interview">استطلاع المستثمرين</span>
           <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
         </a>
@@ -109,123 +368,123 @@
 
       <!-- Right controls (Language Toggle + Waitlist CTA) -->
       <div class="flex items-center gap-3">
-        <!-- Language Switcher Button -->
-        <button id="langToggleBtn" onclick="toggleLanguage()" class="flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold rounded-lg border border-slate-200 hover:bg-slate-100 transition text-slate-700 shadow-sm cursor-pointer" aria-label="Toggle language">
+        <!-- Language Switcher Capsule Button -->
+        <button id="langToggleBtn" onclick="toggleLanguage()" class="flex items-center gap-1.5 px-3.5 py-1.5 text-xs font-semibold rounded-full bg-slate-100/90 hover:bg-slate-200/90 border border-slate-200/60 transition-all text-slate-700 shadow-2xs cursor-pointer active:scale-95" aria-label="Toggle language">
           <i data-lucide="globe" class="w-3.5 h-3.5 text-brand-600"></i>
           <span id="langLabel">English</span>
         </button>
 
-        <!-- Waitlist Anchor Button -->
-        <a href="#waitlist-card" class="hidden sm:inline-flex items-center justify-center px-4 py-2 text-sm font-bold text-white bg-brand-600 hover:bg-brand-700 rounded-xl shadow-md shadow-brand-600/25 hover:shadow-lg transition active:scale-95" data-i18n="btn_join_waitlist">
+        <!-- Waitlist Capsule Anchor Button -->
+        <a href="#waitlist-card" class="apple-btn-primary hidden sm:inline-flex items-center justify-center px-4.5 py-2 text-xs font-bold rounded-full shadow-md shadow-brand-600/20 active:scale-95" data-i18n="btn_join_waitlist">
           انضم لقائمة الانتظار
         </a>
       </div>
     </div>
   </header>
 
-  <!-- Hero Section with Background Glow -->
-  <section class="relative pt-12 pb-16 md:pt-20 md:pb-24 overflow-hidden gradient-glow">
+  <!-- Hero Section with Apple Ambient Mesh Glow -->
+  <section class="relative pt-14 pb-16 md:pt-22 md:pb-26 overflow-hidden apple-mesh-glow">
     <div class="max-w-5xl mx-auto px-4 sm:px-6 text-center">
       
-      <!-- Country & Target Badge -->
-      <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-brand-50 border border-brand-200/80 text-brand-800 text-xs sm:text-sm font-semibold mb-6 shadow-sm">
+      <!-- Country & Target Capsule Badge -->
+      <div class="apple-capsule mb-6 shadow-2xs mx-auto">
         <span>🇯🇴</span>
         <span data-i18n="hero_badge">مخصص للمستثمرين في المملكة الأردنية الهاشمية</span>
       </div>
 
-      <!-- Main Value Proposition Headline -->
-      <h1 class="text-3xl sm:text-5xl md:text-6xl font-black text-slate-900 tracking-tight leading-[1.2] mb-6">
+      <!-- Main Value Proposition Headline with Apple Optical Sizing -->
+      <h1 class="text-3xl sm:text-5xl md:text-6xl font-black text-slate-900 tracking-tight leading-[1.18] mb-6 apple-display-title">
         <span data-i18n="hero_title_1">استثمر</span> 
-        <span class="text-brand-600 underline decoration-emerald-400 decoration-4 underline-offset-8" data-i18n="hero_title_highlight">١٠٠ دينار شهرياً</span> 
+        <span class="apple-gradient-text px-1" data-i18n="hero_title_highlight">١٠٠ دينار شهرياً</span> 
         <span data-i18n="hero_title_2">في صناديق المؤشرات المتداولة (ETFs)</span>
       </h1>
 
       <!-- Supporting Subheading -->
-      <p class="max-w-2xl mx-auto text-base sm:text-lg text-slate-600 leading-relaxed mb-10" data-i18n="hero_sub">
+      <p class="max-w-2xl mx-auto text-base sm:text-lg text-slate-600 leading-relaxed mb-10 font-normal" data-i18n="hero_sub">
         بديل ذكي ومجدي لتآكل أموالك بفعل التضخم. نمّ ثروتك تدريجياً عبر الاستثمار التراكمي طويل الأجل في أقوى الشركات العالمية، دون تعقيدات حسابات التداول الأجنبية أو عمولات التحويل الباهظة.
       </p>
 
-      <!-- Waitlist Hero Card / Form -->
-      <div id="waitlist-card" class="max-w-xl mx-auto card-glass rounded-2xl p-6 sm:p-8 shadow-xl border border-slate-200/80 text-start relative">
-        <div class="flex items-center justify-between mb-4">
+      <!-- Waitlist Hero Card / Form (Apple Glassmorphism) -->
+      <div id="waitlist-card" class="max-w-xl mx-auto apple-glass rounded-[28px] p-6 sm:p-9 shadow-xl text-start relative">
+        <div class="flex items-center justify-between mb-5">
           <div>
-            <h3 class="text-lg font-bold text-slate-900" data-i18n="form_title">احجز مقعدك في النسخة التجريبية الأولى</h3>
-            <p class="text-xs text-slate-500" data-i18n="form_sub">سجل مجاناً واحصل على اشتراك ٣ أشهر بدون أي رسوم إدارة</p>
+            <h3 class="text-lg font-bold text-slate-900 tracking-tight" data-i18n="form_title">احجز مقعدك في النسخة التجريبية الأولى</h3>
+            <p class="text-xs text-slate-500 mt-0.5" data-i18n="form_sub">سجل مجاناً واحصل على اشتراك ٣ أشهر بدون أي رسوم إدارة</p>
           </div>
-          <span class="text-xs font-bold px-2.5 py-1 rounded-md bg-amber-100 text-amber-800 border border-amber-200 flex items-center gap-1">
-            <i data-lucide="sparkles" class="w-3.5 h-3.5"></i>
+          <span class="text-xs font-bold px-3 py-1 rounded-full bg-amber-500/10 text-amber-800 border border-amber-500/20 flex items-center gap-1.5 shrink-0 shadow-2xs">
+            <i data-lucide="sparkles" class="w-3.5 h-3.5 text-amber-600"></i>
             <span data-i18n="form_vip">أولوية مبكرة</span>
           </span>
         </div>
 
         <form id="heroWaitlistForm" class="space-y-4">
           <div>
-            <label for="fullName" class="block text-xs font-bold text-slate-700 mb-1" data-i18n="lbl_name">الاسم الكريم</label>
-            <input type="text" id="fullName" required placeholder="مثال: أحمد نزال" class="w-full px-4 py-2.5 rounded-xl border border-slate-300 text-sm focus:outline-none focus:ring-2 focus:ring-brand-500 bg-white">
+            <label for="fullName" class="block text-xs font-bold text-slate-700 mb-1.5" data-i18n="lbl_name">الاسم الكريم</label>
+            <input type="text" id="fullName" required placeholder="مثال: أحمد نزال" class="w-full px-4 py-3 rounded-xl border border-slate-200/90 text-sm focus:outline-none focus:ring-2 focus:ring-brand-500/30 focus:border-brand-500 bg-white/90 shadow-2xs transition-all placeholder:text-slate-400">
           </div>
 
           <div>
-            <label for="email" class="block text-xs font-bold text-slate-700 mb-1" data-i18n="lbl_email">البريد الإلكتروني</label>
-            <input type="email" id="email" required placeholder="name@example.com" class="w-full px-4 py-2.5 rounded-xl border border-slate-300 text-sm focus:outline-none focus:ring-2 focus:ring-brand-500 bg-white" dir="ltr">
+            <label for="email" class="block text-xs font-bold text-slate-700 mb-1.5" data-i18n="lbl_email">البريد الإلكتروني</label>
+            <input type="email" id="email" required placeholder="name@example.com" class="w-full px-4 py-3 rounded-xl border border-slate-200/90 text-sm focus:outline-none focus:ring-2 focus:ring-brand-500/30 focus:border-brand-500 bg-white/90 shadow-2xs transition-all placeholder:text-slate-400" dir="ltr">
           </div>
 
           <div>
-            <div class="flex justify-between items-center mb-1">
+            <div class="flex justify-between items-center mb-1.5">
               <label for="phone" class="block text-xs font-bold text-slate-700" data-i18n="lbl_phone">رقم الهاتف (اختياري لمكالمة الاستطلاع)</label>
               <span class="text-[11px] text-brand-600 font-medium" data-i18n="lbl_phone_note">لتسهيل التواصل وتحديد الموعد</span>
             </div>
-            <input type="tel" id="phone" placeholder="079XXXXXXX" class="w-full px-4 py-2.5 rounded-xl border border-slate-300 text-sm focus:outline-none focus:ring-2 focus:ring-brand-500 bg-white" dir="ltr">
+            <input type="tel" id="phone" placeholder="079XXXXXXX" class="w-full px-4 py-3 rounded-xl border border-slate-200/90 text-sm focus:outline-none focus:ring-2 focus:ring-brand-500/30 focus:border-brand-500 bg-white/90 shadow-2xs transition-all placeholder:text-slate-400" dir="ltr">
           </div>
 
           <!-- Discovery survey teaser checkbox -->
-          <div class="flex items-start gap-2.5 pt-1">
-            <input type="checkbox" id="interviewOptIn" checked class="mt-1 w-4 h-4 text-brand-600 rounded border-slate-300 focus:ring-brand-500">
-            <label for="interviewOptIn" class="text-xs text-slate-600 cursor-pointer" data-i18n="chk_survey_optin">
+          <div class="flex items-start gap-3 pt-1">
+            <input type="checkbox" id="interviewOptIn" checked class="mt-0.5 w-4 h-4 text-brand-600 rounded border-slate-300 focus:ring-brand-500 accent-brand-600 cursor-pointer">
+            <label for="interviewOptIn" class="text-xs text-slate-600 cursor-pointer leading-relaxed" data-i18n="chk_survey_optin">
               <strong>أنا مستعد للإجابة عن ٤ أسئلة سريعة (٤٥ ثانية)</strong> للمساعدة في توجيه المنتج والحصول على الأولوية في قائمة الانتظار.
             </label>
           </div>
 
-          <button type="submit" id="submitBtn" class="w-full py-3.5 px-6 rounded-xl font-bold text-white bg-brand-600 hover:bg-brand-700 shadow-lg shadow-brand-600/30 transition transform active:scale-98 flex items-center justify-center gap-2">
+          <button type="submit" id="submitBtn" class="apple-btn-primary w-full py-3.5 px-6 rounded-2xl font-bold text-white shadow-lg shadow-brand-600/30 flex items-center justify-center gap-2 cursor-pointer text-sm sm:text-base">
             <span data-i18n="btn_submit_waitlist">انضم الآن واحصل على الأولوية</span>
             <i data-lucide="arrow-right" class="w-4 h-4 rtl-flip"></i>
           </button>
         </form>
 
         <!-- Social Proof Stats under Form -->
-        <div class="mt-5 pt-4 border-t border-slate-200/60 flex items-center justify-between text-xs text-slate-500 font-medium">
+        <div class="mt-6 pt-4 border-t border-slate-200/60 flex items-center justify-between text-xs text-slate-500 font-medium">
           <div class="flex items-center gap-1.5">
             <i data-lucide="shield-check" class="w-4 h-4 text-emerald-600"></i>
             <span data-i18n="proof_privacy">بياناتك محمية وخصوصيتك مصونة</span>
           </div>
-          <div class="flex items-center gap-1">
-            <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+          <div class="flex items-center gap-1.5">
+            <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
             <span id="registeredCount" class="font-bold text-slate-800">142</span>
             <span data-i18n="proof_joined">مستثمر سجلوا حتى الآن</span>
           </div>
         </div>
       </div>
 
-      <!-- Trust Badges Bar -->
-      <div class="mt-12 grid grid-cols-2 md:grid-cols-4 gap-4 max-w-4xl mx-auto">
-        <div class="p-4 rounded-xl bg-white border border-slate-200 shadow-sm flex flex-col items-center text-center">
-          <div class="w-9 h-9 rounded-lg bg-emerald-50 text-emerald-700 flex items-center justify-center mb-2 font-bold text-lg">🌐</div>
-          <span class="text-xs font-bold text-slate-800" data-i18n="badge_diversification_title">تنويع استثماري عالمي</span>
-          <span class="text-[11px] text-slate-500" data-i18n="badge_diversification_desc">أقوى الشركات والقطاعات في سلة واحدة</span>
+      <!-- Trust Badges Bar (Apple Squircle Style) -->
+      <div class="mt-14 grid grid-cols-2 md:grid-cols-4 gap-4 max-w-4xl mx-auto">
+        <div class="apple-card p-5 flex flex-col items-center text-center">
+          <div class="w-11 h-11 rounded-2xl bg-emerald-500/10 text-emerald-700 flex items-center justify-center mb-2.5 text-xl font-bold shadow-2xs border border-emerald-500/15">🌐</div>
+          <span class="text-xs font-bold text-slate-900 mb-1" data-i18n="badge_diversification_title">تنويع استثماري عالمي</span>
+          <span class="text-[11px] text-slate-500 leading-normal" data-i18n="badge_diversification_desc">أقوى الشركات والقطاعات في سلة واحدة</span>
         </div>
-        <div class="p-4 rounded-xl bg-white border border-slate-200 shadow-sm flex flex-col items-center text-center">
-          <div class="w-9 h-9 rounded-lg bg-blue-50 text-blue-700 flex items-center justify-center mb-2 font-bold text-lg">🇯🇴</div>
-          <span class="text-xs font-bold text-slate-800" data-i18n="badge_jod_title">بالدينار الأردني</span>
-          <span class="text-[11px] text-slate-500" data-i18n="badge_jod_desc">ابدأ بـ 100 دينار دون رسوم تحويل دولية</span>
+        <div class="apple-card p-5 flex flex-col items-center text-center">
+          <div class="w-11 h-11 rounded-2xl bg-blue-500/10 text-blue-700 flex items-center justify-center mb-2.5 text-xl font-bold shadow-2xs border border-blue-500/15">🇯🇴</div>
+          <span class="text-xs font-bold text-slate-900 mb-1" data-i18n="badge_jod_title">بالدينار الأردني</span>
+          <span class="text-[11px] text-slate-500 leading-normal" data-i18n="badge_jod_desc">ابدأ بـ 100 دينار دون رسوم تحويل دولية</span>
         </div>
-        <div class="p-4 rounded-xl bg-white border border-slate-200 shadow-sm flex flex-col items-center text-center">
-          <div class="w-9 h-9 rounded-lg bg-purple-50 text-purple-700 flex items-center justify-center mb-2 font-bold text-lg">📊</div>
-          <span class="text-xs font-bold text-slate-800" data-i18n="badge_etf_title">صناديق مؤشرات عالمية</span>
-          <span class="text-[11px] text-slate-500" data-i18n="badge_etf_desc">توزيع للمخاطر على مئات الشركات</span>
+        <div class="apple-card p-5 flex flex-col items-center text-center">
+          <div class="w-11 h-11 rounded-2xl bg-purple-500/10 text-purple-700 flex items-center justify-center mb-2.5 text-xl font-bold shadow-2xs border border-purple-500/15">📊</div>
+          <span class="text-xs font-bold text-slate-900 mb-1" data-i18n="badge_etf_title">صناديق مؤشرات عالمية</span>
+          <span class="text-[11px] text-slate-500 leading-normal" data-i18n="badge_etf_desc">توزيع للمخاطر على مئات الشركات</span>
         </div>
-        <div class="p-4 rounded-xl bg-white border border-slate-200 shadow-sm flex flex-col items-center text-center">
-          <div class="w-9 h-9 rounded-lg bg-amber-50 text-amber-700 flex items-center justify-center mb-2 font-bold text-lg">⚖️</div>
-          <span class="text-xs font-bold text-slate-800" data-i18n="badge_reg_title">مسار تنظيمي واضح</span>
-          <span class="text-[11px] text-slate-500" data-i18n="badge_reg_desc">بالشراكة مع وسطاء مرخصين من JSC</span>
+        <div class="apple-card p-5 flex flex-col items-center text-center">
+          <div class="w-11 h-11 rounded-2xl bg-amber-500/10 text-amber-700 flex items-center justify-center mb-2.5 text-xl font-bold shadow-2xs border border-amber-500/15">⚖️</div>
+          <span class="text-xs font-bold text-slate-900 mb-1" data-i18n="badge_reg_title">مسار تنظيمي واضح</span>
+          <span class="text-[11px] text-slate-500 leading-normal" data-i18n="badge_reg_desc">بالشراكة مع وسطاء مرخصين من JSC</span>
         </div>
       </div>
 
@@ -233,16 +492,16 @@
   </section>
 
   <!-- Educational Clarity Section: 3 Core Concepts -->
-  <section id="etf-explained" class="py-16 bg-white border-t border-slate-200 scroll-mt-20">
+  <section id="etf-explained" class="py-18 bg-white border-t border-slate-200/80 scroll-mt-20">
     <div class="max-w-5xl mx-auto px-4 sm:px-6">
       
       <!-- Section Header -->
       <div class="text-center max-w-2xl mx-auto mb-10">
-        <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-brand-50 border border-brand-200 text-brand-700 text-xs font-bold mb-3 shadow-sm">
+        <div class="apple-capsule mb-3 shadow-2xs mx-auto">
           <i data-lucide="book-open" class="w-3.5 h-3.5 text-brand-600"></i>
           <span data-i18n="edu_badge">دليل المستثمر الذكي</span>
         </div>
-        <h2 class="text-2xl sm:text-4xl font-extrabold text-slate-900 tracking-tight" data-i18n="edu_title">
+        <h2 class="text-2xl sm:text-4xl font-extrabold text-slate-900 tracking-tight apple-section-title" data-i18n="edu_title">
           ٣ مفاهيم أساسية تغير نظرتك للمال والاستثمار
         </h2>
         <p class="text-sm sm:text-base text-slate-600 mt-3 leading-relaxed" data-i18n="edu_sub">
@@ -250,17 +509,17 @@
         </p>
       </div>
 
-      <!-- 3 Interactive Tabs Switcher -->
-      <div role="tablist" aria-label="أقسام الدليل التعليمي" class="flex items-center justify-center gap-2 p-1.5 bg-slate-100/90 rounded-2xl max-w-xl mx-auto mb-10 border border-slate-200/80 shadow-inner">
-        <button type="button" id="tab-btn-etf" role="tab" aria-selected="true" aria-controls="tab-etf" tabindex="0" onclick="activateTabById('tab-etf')" class="edu-tab-btn active flex-1 py-2.5 px-3 rounded-xl font-bold text-xs sm:text-sm text-center transition flex items-center justify-center gap-1.5 shadow-sm bg-white text-brand-700 cursor-pointer select-none" data-tab="tab-etf">
+      <!-- 3 Interactive Tabs Switcher (Apple Segmented Control) -->
+      <div role="tablist" aria-label="أقسام الدليل التعليمي" class="apple-segmented-track max-w-xl mx-auto mb-10 shadow-inner">
+        <button type="button" id="tab-btn-etf" role="tab" aria-selected="true" aria-controls="tab-etf" tabindex="0" onclick="activateTabById('tab-etf')" class="edu-tab-btn active flex-1 py-2.5 px-3 rounded-full font-bold text-xs sm:text-sm text-center flex items-center justify-center gap-1.5 shadow-sm bg-white text-brand-700 cursor-pointer select-none" data-tab="tab-etf">
           <span>🧺</span>
           <span data-i18n="edu_tab1_label">ما هو الـ ETF؟</span>
         </button>
-        <button type="button" id="tab-btn-longterm" role="tab" aria-selected="false" aria-controls="tab-longterm" tabindex="-1" onclick="activateTabById('tab-longterm')" class="edu-tab-btn flex-1 py-2.5 px-3 rounded-xl font-bold text-xs sm:text-sm text-center transition flex items-center justify-center gap-1.5 text-slate-600 hover:text-slate-900 cursor-pointer select-none" data-tab="tab-longterm">
+        <button type="button" id="tab-btn-longterm" role="tab" aria-selected="false" aria-controls="tab-longterm" tabindex="-1" onclick="activateTabById('tab-longterm')" class="edu-tab-btn flex-1 py-2.5 px-3 rounded-full font-bold text-xs sm:text-sm text-center flex items-center justify-center gap-1.5 text-slate-600 hover:text-slate-900 cursor-pointer select-none" data-tab="tab-longterm">
           <span>⏳</span>
           <span data-i18n="edu_tab2_label">الاستثمار طويل الأجل</span>
         </button>
-        <button type="button" id="tab-btn-compounding" role="tab" aria-selected="false" aria-controls="tab-compounding" tabindex="-1" onclick="activateTabById('tab-compounding')" class="edu-tab-btn flex-1 py-2.5 px-3 rounded-xl font-bold text-xs sm:text-sm text-center transition flex items-center justify-center gap-1.5 text-slate-600 hover:text-slate-900 cursor-pointer select-none" data-tab="tab-compounding">
+        <button type="button" id="tab-btn-compounding" role="tab" aria-selected="false" aria-controls="tab-compounding" tabindex="-1" onclick="activateTabById('tab-compounding')" class="edu-tab-btn flex-1 py-2.5 px-3 rounded-full font-bold text-xs sm:text-sm text-center flex items-center justify-center gap-1.5 text-slate-600 hover:text-slate-900 cursor-pointer select-none" data-tab="tab-compounding">
           <span>📈</span>
           <span data-i18n="edu_tab3_label">سحر النمو التراكمي</span>
         </button>
@@ -282,38 +541,38 @@
               صندوق الـ ETF (اختصار لـ Exchange-Traded Fund أو صندوق المؤشرات المتداول) هو أداة استثمارية تجمع مئات أو آلاف الأسهم العالمية في سلة واحدة متوازنة تُتداول في البورصة بسهولة. بامتلاكك حصة واحدة في الـ ETF، تصبح شريكاً في كل تلك الشركات دفعة واحدة.
             </p>
 
-            <div class="space-y-3.5 pt-2">
-              <div class="flex items-start gap-3 p-3.5 rounded-xl bg-slate-50 border border-slate-200">
-                <div class="w-8 h-8 rounded-lg bg-teal-100 text-teal-700 flex items-center justify-center shrink-0 mt-0.5">
-                  <i data-lucide="layers" class="w-4 h-4"></i>
+            <div class="space-y-3 pt-2">
+              <div class="flex items-start gap-3.5 p-4 rounded-2xl bg-slate-50/80 border border-slate-200/70">
+                <div class="w-9 h-9 rounded-xl bg-teal-500/10 text-teal-700 flex items-center justify-center shrink-0 mt-0.5 border border-teal-500/20">
+                  <i data-lucide="layers" class="w-4.5 h-4.5"></i>
                 </div>
                 <div>
                   <h4 class="text-xs font-bold text-slate-900" data-i18n="edu_t1_f1_title">تنويع فوري للمخاطر:</h4>
-                  <p class="text-xs text-slate-600 mt-0.5 leading-relaxed" data-i18n="edu_t1_f1_desc">
+                  <p class="text-xs text-slate-600 mt-1 leading-relaxed" data-i18n="edu_t1_f1_desc">
                     بـ ١٠٠ دينار فقط، يتوزع استثمارك عبر مختلف القطاعات (تكنولوجيا، رعاية صحية، صناعة، طاقة). إذا تراجعت شركة واحدة، تعوضها الشركات الأخرى.
                   </p>
                 </div>
               </div>
 
-              <div class="flex items-start gap-3 p-3.5 rounded-xl bg-slate-50 border border-slate-200">
-                <div class="w-8 h-8 rounded-lg bg-teal-100 text-teal-700 flex items-center justify-center shrink-0 mt-0.5">
-                  <i data-lucide="percent" class="w-4 h-4"></i>
+              <div class="flex items-start gap-3.5 p-4 rounded-2xl bg-slate-50/80 border border-slate-200/70">
+                <div class="w-9 h-9 rounded-xl bg-teal-500/10 text-teal-700 flex items-center justify-center shrink-0 mt-0.5 border border-teal-500/20">
+                  <i data-lucide="percent" class="w-4.5 h-4.5"></i>
                 </div>
                 <div>
                   <h4 class="text-xs font-bold text-slate-900" data-i18n="edu_t1_f2_title">تكلفة إدارية شبه معدومة:</h4>
-                  <p class="text-xs text-slate-600 mt-0.5 leading-relaxed" data-i18n="edu_t1_f2_desc">
+                  <p class="text-xs text-slate-600 mt-1 leading-relaxed" data-i18n="edu_t1_f2_desc">
                     تتبع مؤشرات قياسية بشكل آلي ومنتظم، بدون مديري محافظ يتقاضون عمولات مرتفعة، مما يحفظ أرباحك الصافية لك وحدك.
                   </p>
                 </div>
               </div>
 
-              <div class="flex items-start gap-3 p-3.5 rounded-xl bg-slate-50 border border-slate-200">
-                <div class="w-8 h-8 rounded-lg bg-teal-100 text-teal-700 flex items-center justify-center shrink-0 mt-0.5">
-                  <i data-lucide="eye" class="w-4 h-4"></i>
+              <div class="flex items-start gap-3.5 p-4 rounded-2xl bg-slate-50/80 border border-slate-200/70">
+                <div class="w-9 h-9 rounded-xl bg-teal-500/10 text-teal-700 flex items-center justify-center shrink-0 mt-0.5 border border-teal-500/20">
+                  <i data-lucide="eye" class="w-4.5 h-4.5"></i>
                 </div>
                 <div>
                   <h4 class="text-xs font-bold text-slate-900" data-i18n="edu_t1_f3_title">شفافية وسيولة كاملة:</h4>
-                  <p class="text-xs text-slate-600 mt-0.5 leading-relaxed" data-i18n="edu_t1_f3_desc">
+                  <p class="text-xs text-slate-600 mt-1 leading-relaxed" data-i18n="edu_t1_f3_desc">
                     تعرف دائماً ما تحتويه محفظتك بدقة، ويمكنك شراء أو تسييل حصصك في أي وقت دون شروط حبس رأس المال.
                   </p>
                 </div>
@@ -325,15 +584,15 @@
           <div class="lg:col-span-5 space-y-4">
             
             <!-- Single Stock Card -->
-            <div class="p-5 rounded-2xl bg-rose-50/70 border border-rose-200 relative overflow-hidden">
+            <div class="p-6 rounded-[24px] bg-rose-50/60 border border-rose-200/80 relative overflow-hidden backdrop-blur-sm">
               <div class="flex justify-between items-center mb-3">
-                <span class="text-xs font-black text-rose-900 flex items-center gap-1.5">
+                <span class="text-xs font-black text-rose-950 flex items-center gap-1.5">
                   <span class="text-base">🏢</span>
                   <span data-i18n="edu_t1_card_single_title">شراء سهم شركة منفردة</span>
                 </span>
-                <span class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-rose-200/80 text-rose-800" data-i18n="edu_t1_card_single_badge">مخاطرة فردية عالية</span>
+                <span class="text-[10px] font-bold px-2.5 py-0.5 rounded-full bg-rose-200/70 text-rose-800" data-i18n="edu_t1_card_single_badge">مخاطرة فردية عالية</span>
               </div>
-              <ul class="text-xs text-slate-700 space-y-2">
+              <ul class="text-xs text-slate-700 space-y-2.5">
                 <li class="flex items-start gap-2">
                   <span class="text-rose-600 font-bold">✕</span>
                   <span data-i18n="edu_t1_card_single_p1">إذا تعثرت تلك الشركة أو هبطت أرباحها، قد تفقد جزءاً كبيراً من مدخراتك.</span>
@@ -346,15 +605,15 @@
             </div>
 
             <!-- Index ETF Basket Card -->
-            <div class="p-5 rounded-2xl bg-emerald-50/90 border-2 border-emerald-400 shadow-md relative overflow-hidden">
+            <div class="p-6 rounded-[24px] bg-emerald-50/80 border-2 border-emerald-500/80 shadow-md relative overflow-hidden backdrop-blur-sm">
               <div class="flex justify-between items-center mb-3">
                 <span class="text-xs font-black text-emerald-950 flex items-center gap-1.5">
                   <span class="text-base">🧺</span>
                   <span data-i18n="edu_t1_card_etf_title">الاستثمار عبر صناديق الـ ETF</span>
                 </span>
-                <span class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-emerald-200 text-emerald-900" data-i18n="edu_t1_card_etf_badge">أمان وتوزيع مدروس</span>
+                <span class="text-[10px] font-bold px-2.5 py-0.5 rounded-full bg-emerald-200 text-emerald-900" data-i18n="edu_t1_card_etf_badge">أمان وتوزيع مدروس</span>
               </div>
-              <ul class="text-xs text-slate-700 space-y-2 mb-3.5">
+              <ul class="text-xs text-slate-700 space-y-2.5 mb-4">
                 <li class="flex items-start gap-2">
                   <span class="text-emerald-700 font-bold">✓</span>
                   <span data-i18n="edu_t1_card_etf_p1">سهم واحد يمنحك ملكية في 500+ شركة رائدة عالمياً (Apple, Microsoft, Nvidia وغيرها).</span>
@@ -365,14 +624,14 @@
                 </li>
               </ul>
               
-              <!-- Company Badges Showcase -->
+              <!-- Company Badges Showcase (Apple Pill Badges) -->
               <div class="pt-3 border-t border-emerald-200/80 flex flex-wrap gap-1.5">
-                <span class="text-[10px] px-2 py-0.5 rounded-md bg-white border border-emerald-300 font-bold text-slate-700">Apple</span>
-                <span class="text-[10px] px-2 py-0.5 rounded-md bg-white border border-emerald-300 font-bold text-slate-700">Microsoft</span>
-                <span class="text-[10px] px-2 py-0.5 rounded-md bg-white border border-emerald-300 font-bold text-slate-700">Google</span>
-                <span class="text-[10px] px-2 py-0.5 rounded-md bg-white border border-emerald-300 font-bold text-slate-700">Amazon</span>
-                <span class="text-[10px] px-2 py-0.5 rounded-md bg-white border border-emerald-300 font-bold text-slate-700">Nvidia</span>
-                <span class="text-[10px] px-2 py-0.5 rounded-md bg-emerald-100 border border-emerald-300 font-extrabold text-emerald-800" data-i18n="edu_t1_more_companies">+500 أخرى</span>
+                <span class="text-[11px] px-2.5 py-1 rounded-full bg-white/95 border border-emerald-300 font-bold text-slate-700 shadow-2xs">Apple</span>
+                <span class="text-[11px] px-2.5 py-1 rounded-full bg-white/95 border border-emerald-300 font-bold text-slate-700 shadow-2xs">Microsoft</span>
+                <span class="text-[11px] px-2.5 py-1 rounded-full bg-white/95 border border-emerald-300 font-bold text-slate-700 shadow-2xs">Google</span>
+                <span class="text-[11px] px-2.5 py-1 rounded-full bg-white/95 border border-emerald-300 font-bold text-slate-700 shadow-2xs">Amazon</span>
+                <span class="text-[11px] px-2.5 py-1 rounded-full bg-white/95 border border-emerald-300 font-bold text-slate-700 shadow-2xs">Nvidia</span>
+                <span class="text-[11px] px-2.5 py-1 rounded-full bg-emerald-100 border border-emerald-300 font-extrabold text-emerald-800" data-i18n="edu_t1_more_companies">+500 أخرى</span>
               </div>
             </div>
 
@@ -397,38 +656,38 @@
               الاستثمار الحقيقي ليس مضاربة سريعة أو ملاحقة لأسعار الغد. إنه مسار هادئ لمدة ٥ إلى ٢٠ سنة يستند لحقيقة تاريخية دامغة: الشركات العالمية الناجحة والاقتصاد العالمي ينموان ويتوسعان باستمرار على المدى البعيد.
             </p>
 
-            <div class="space-y-3.5 pt-2">
-              <div class="flex items-start gap-3 p-3.5 rounded-xl bg-slate-50 border border-slate-200">
-                <div class="w-8 h-8 rounded-lg bg-teal-100 text-teal-700 flex items-center justify-center shrink-0 mt-0.5">
-                  <i data-lucide="calendar-check-2" class="w-4 h-4"></i>
+            <div class="space-y-3 pt-2">
+              <div class="flex items-start gap-3.5 p-4 rounded-2xl bg-slate-50/80 border border-slate-200/70">
+                <div class="w-9 h-9 rounded-xl bg-teal-500/10 text-teal-700 flex items-center justify-center shrink-0 mt-0.5 border border-teal-500/20">
+                  <i data-lucide="calendar-check-2" class="w-4.5 h-4.5"></i>
                 </div>
                 <div>
                   <h4 class="text-xs font-bold text-slate-900" data-i18n="edu_t2_f1_title">متوسط التكلفة الدوري (DCA):</h4>
-                  <p class="text-xs text-slate-600 mt-0.5 leading-relaxed" data-i18n="edu_t2_f1_desc">
+                  <p class="text-xs text-slate-600 mt-1 leading-relaxed" data-i18n="edu_t2_f1_desc">
                     استثمار ١٠٠ دينار بانتظام كل شهر يجعلك تشتري في القمم والقيعان تلقائياً؛ فتحصل على أفضل متوسط سعر دون حاجة لمراقبة السوق.
                   </p>
                 </div>
               </div>
 
-              <div class="flex items-start gap-3 p-3.5 rounded-xl bg-slate-50 border border-slate-200">
-                <div class="w-8 h-8 rounded-lg bg-teal-100 text-teal-700 flex items-center justify-center shrink-0 mt-0.5">
-                  <i data-lucide="trending-down" class="w-4 h-4"></i>
+              <div class="flex items-start gap-3.5 p-4 rounded-2xl bg-slate-50/80 border border-slate-200/70">
+                <div class="w-9 h-9 rounded-xl bg-teal-500/10 text-teal-700 flex items-center justify-center shrink-0 mt-0.5 border border-teal-500/20">
+                  <i data-lucide="trending-down" class="w-4.5 h-4.5"></i>
                 </div>
                 <div>
                   <h4 class="text-xs font-bold text-slate-900" data-i18n="edu_t2_f2_title">الهبوط المؤقت فرصة للشراء:</h4>
-                  <p class="text-xs text-slate-600 mt-0.5 leading-relaxed" data-i18n="edu_t2_f2_desc">
+                  <p class="text-xs text-slate-600 mt-1 leading-relaxed" data-i18n="edu_t2_f2_desc">
                     عندما ينخفض السوق، تشتري الـ ١٠٠ دينار حصصاً أكثر بسعر أرخص. وعندما يتعافى السوق، تتضاعف مكاسبك على كل تلك الحصص.
                   </p>
                 </div>
               </div>
 
-              <div class="flex items-start gap-3 p-3.5 rounded-xl bg-slate-50 border border-slate-200">
-                <div class="w-8 h-8 rounded-lg bg-teal-100 text-teal-700 flex items-center justify-center shrink-0 mt-0.5">
-                  <i data-lucide="shield-check" class="w-4 h-4"></i>
+              <div class="flex items-start gap-3.5 p-4 rounded-2xl bg-slate-50/80 border border-slate-200/70">
+                <div class="w-9 h-9 rounded-xl bg-teal-500/10 text-teal-700 flex items-center justify-center shrink-0 mt-0.5 border border-teal-500/20">
+                  <i data-lucide="shield-check" class="w-4.5 h-4.5"></i>
                 </div>
                 <div>
                   <h4 class="text-xs font-bold text-slate-900" data-i18n="edu_t2_f3_title">راحة البال وتجنب التوتر:</h4>
-                  <p class="text-xs text-slate-600 mt-0.5 leading-relaxed" data-i18n="edu_t2_f3_desc">
+                  <p class="text-xs text-slate-600 mt-1 leading-relaxed" data-i18n="edu_t2_f3_desc">
                     تتجاهل الضجيج والأخبار السلبية اليومية، وتركز على حياتك وعملك بينما تعمل أموالك من أجلك بهدوء على المدى البعيد.
                   </p>
                 </div>
@@ -439,15 +698,15 @@
           <!-- Column 2: Day Trading vs Long-Term Card -->
           <div class="lg:col-span-5 space-y-4">
             
-            <div class="p-5 rounded-2xl bg-amber-50/70 border border-amber-200">
+            <div class="p-6 rounded-[24px] bg-amber-50/60 border border-amber-200/80 backdrop-blur-sm">
               <div class="flex justify-between items-center mb-3">
                 <span class="text-xs font-black text-amber-950 flex items-center gap-1.5">
                   <i data-lucide="zap" class="w-4 h-4 text-amber-600"></i>
                   <span data-i18n="edu_t2_card_trade_title">المضاربة والتداول السريع</span>
                 </span>
-                <span class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-amber-200 text-amber-900" data-i18n="edu_t2_card_trade_badge">توتر وخسائر متكررة</span>
+                <span class="text-[10px] font-bold px-2.5 py-0.5 rounded-full bg-amber-200 text-amber-900" data-i18n="edu_t2_card_trade_badge">توتر وخسائر متكررة</span>
               </div>
-              <ul class="text-xs text-slate-700 space-y-2">
+              <ul class="text-xs text-slate-700 space-y-2.5">
                 <li class="flex items-start gap-2">
                   <span class="text-amber-600 font-bold">✕</span>
                   <span data-i18n="edu_t2_card_trade_p1">محاولة تخمين صعود وهبوط الأسعار يومياً؛ وتثبت الدراسات أن 90% من المتداولين الأفراد يخسرون أموالهم.</span>
@@ -459,15 +718,15 @@
               </ul>
             </div>
 
-            <div class="p-5 rounded-2xl bg-brand-50/90 border-2 border-brand-500 shadow-md">
+            <div class="p-6 rounded-[24px] bg-brand-50/80 border-2 border-brand-500 shadow-md backdrop-blur-sm">
               <div class="flex justify-between items-center mb-3">
                 <span class="text-xs font-black text-brand-950 flex items-center gap-1.5">
                   <i data-lucide="trending-up" class="w-4 h-4 text-brand-600"></i>
                   <span data-i18n="edu_t2_card_passive_title">الاستثمار السلبي التراكمي (ETF-P)</span>
                 </span>
-                <span class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-brand-200 text-brand-900" data-i18n="edu_t2_card_passive_badge">هدوء ونمو مستدام</span>
+                <span class="text-[10px] font-bold px-2.5 py-0.5 rounded-full bg-brand-200 text-brand-900" data-i18n="edu_t2_card_passive_badge">هدوء ونمو مستدام</span>
               </div>
-              <ul class="text-xs text-slate-700 space-y-2">
+              <ul class="text-xs text-slate-700 space-y-2.5">
                 <li class="flex items-start gap-2">
                   <span class="text-brand-700 font-bold">✓</span>
                   <span data-i18n="edu_t2_card_passive_p1">استثمار شهري تلقائي هادئ يستفيد من التوسع الطبيعي لأقوى اقتصادات العالم.</span>
@@ -500,89 +759,89 @@
               النمو التراكمي هو أعجوبة المال الحقيقية. عندما تستثمر، تحقق أرباحاً في سنتك الأولى. وفي السنوات التالية، لا تنمو أموالك الأصلية فقط، بل تنمو أيضاً الأرباح السابقة لتولّد أرباحاً جديدة فوقها دون أن تدفع فلساً إضافياً!
             </p>
 
-            <div class="space-y-3.5 pt-2">
-              <div class="p-3.5 rounded-xl bg-slate-50 border border-slate-200">
-                <h4 class="text-xs font-bold text-slate-900 flex items-center gap-2">
-                  <span class="w-5 h-5 rounded-full bg-slate-200 text-slate-700 flex items-center justify-center text-[11px] font-bold">1</span>
+            <div class="space-y-3 pt-2">
+              <div class="p-4 rounded-2xl bg-slate-50/80 border border-slate-200/70">
+                <h4 class="text-xs font-bold text-slate-900 flex items-center gap-2.5">
+                  <span class="w-6 h-6 rounded-full bg-slate-200 text-slate-700 flex items-center justify-center text-[11px] font-bold">1</span>
                   <span data-i18n="edu_t3_phase1_title">١. مرحلة البناء (١ - ٤ سنوات):</span>
                 </h4>
-                <p class="text-xs text-slate-600 mt-1 leading-relaxed" data-i18n="edu_t3_phase1_desc">
+                <p class="text-xs text-slate-600 mt-1.5 leading-relaxed" data-i18n="edu_t3_phase1_desc">
                   مدخراتك الشهرية تشكل الجزء الأكبر من الرصيد. هنا تبني عادة الادخار المنتظم وتضع حجر الأساس.
                 </p>
               </div>
 
-              <div class="p-3.5 rounded-xl bg-slate-50 border border-slate-200">
-                <h4 class="text-xs font-bold text-slate-900 flex items-center gap-2">
-                  <span class="w-5 h-5 rounded-full bg-teal-200 text-teal-800 flex items-center justify-center text-[11px] font-bold">2</span>
+              <div class="p-4 rounded-2xl bg-slate-50/80 border border-slate-200/70">
+                <h4 class="text-xs font-bold text-slate-900 flex items-center gap-2.5">
+                  <span class="w-6 h-6 rounded-full bg-teal-200 text-teal-800 flex items-center justify-center text-[11px] font-bold">2</span>
                   <span data-i18n="edu_t3_phase2_title">٢. مرحلة التسارع (٥ - ١٠ سنوات):</span>
                 </h4>
-                <p class="text-xs text-slate-600 mt-1 leading-relaxed" data-i18n="edu_t3_phase2_desc">
+                <p class="text-xs text-slate-600 mt-1.5 leading-relaxed" data-i18n="edu_t3_phase2_desc">
                   الأرباح السنوية التي يولدها الصندوق تبدأ بمعادلة ما تدفعه من جيبك سنوياً. تشعر بأن المال بدأ يعمل بجد لحسابه.
                 </p>
               </div>
 
-              <div class="p-3.5 rounded-xl bg-slate-50 border border-slate-200">
-                <h4 class="text-xs font-bold text-slate-900 flex items-center gap-2">
-                  <span class="w-5 h-5 rounded-full bg-emerald-200 text-emerald-800 flex items-center justify-center text-[11px] font-bold">3</span>
+              <div class="p-4 rounded-2xl bg-slate-50/80 border border-slate-200/70">
+                <h4 class="text-xs font-bold text-slate-900 flex items-center gap-2.5">
+                  <span class="w-6 h-6 rounded-full bg-emerald-200 text-emerald-800 flex items-center justify-center text-[11px] font-bold">3</span>
                   <span data-i18n="edu_t3_phase3_title">٣. مرحلة الانفجار المالي (١٥+ سنة):</span>
                 </h4>
-                <p class="text-xs text-slate-600 mt-1 leading-relaxed" data-i18n="edu_t3_phase3_desc">
+                <p class="text-xs text-slate-600 mt-1.5 leading-relaxed" data-i18n="edu_t3_phase3_desc">
                   تصبح الأرباح المركبة هي المساهم الأكبر بنسبة ٧٠% فأكثر من إجمالي ثروتك، متجاوزة مجموع كل ما دفعته من جيبك بأضعاف!
                 </p>
               </div>
             </div>
 
             <div>
-              <a href="#calculator" class="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-brand-600 hover:bg-brand-700 text-white font-bold text-xs shadow-md transition active:scale-95">
+              <a href="#calculator" class="apple-btn-primary inline-flex items-center gap-2 px-5 py-3 rounded-2xl text-white font-bold text-xs shadow-md transition active:scale-95">
                 <span data-i18n="edu_t3_cta_btn">احسب خطتك الشخصية في الحاسبة التفاعلية بالأسفل ↓</span>
                 <i data-lucide="calculator" class="w-4 h-4"></i>
               </a>
             </div>
           </div>
 
-          <!-- Column 2: Timeline Demonstration Card -->
+          <!-- Column 2: Timeline Demonstration Card (Apple Dark Pro Styling) -->
           <div class="lg:col-span-5">
-            <div class="p-6 rounded-2xl bg-slate-900 text-white border border-slate-800 shadow-xl space-y-4">
+            <div class="p-6 sm:p-7 rounded-[28px] apple-dark-card text-white shadow-xl space-y-4">
               <div class="flex items-center gap-2 text-xs font-bold text-emerald-400">
                 <i data-lucide="sparkles" class="w-4 h-4"></i>
                 <span data-i18n="edu_t3_timeline_title">مثال حقيقي بـ ١٠٠ دينار شهرياً (بعائد سنوي 8.5%):</span>
               </div>
 
-              <div class="space-y-3 text-xs">
+              <div class="space-y-3.5 text-xs">
                 <!-- 5 Years -->
-                <div class="p-3 rounded-xl bg-slate-800/90 border border-slate-700/80">
+                <div class="p-3.5 rounded-2xl bg-white/5 border border-white/10">
                   <div class="flex justify-between items-center font-bold text-slate-300 mb-1">
                     <span data-i18n="edu_t3_time_5yr">بعد ٥ سنوات:</span>
-                    <span class="text-emerald-400 font-extrabold" data-i18n="edu_t3_sum_5yr">7,444 د.أ</span>
+                    <span class="text-emerald-400 font-extrabold text-sm" data-i18n="edu_t3_sum_5yr">7,444 د.أ</span>
                   </div>
                   <p class="text-[11px] text-slate-400" data-i18n="edu_t3_val_5yr">دفعت: 6,000 د.أ ← رصيدك: 7,444 د.أ (أرباح: +1,444 د.أ)</p>
-                  <div class="w-full h-1.5 bg-slate-700 rounded-full mt-2 overflow-hidden flex">
+                  <div class="w-full h-2 bg-white/10 rounded-full mt-2.5 overflow-hidden flex">
                     <div class="h-full bg-slate-400" style="width: 81%"></div>
                     <div class="h-full bg-emerald-400" style="width: 19%"></div>
                   </div>
                 </div>
 
                 <!-- 15 Years -->
-                <div class="p-3 rounded-xl bg-slate-800/90 border border-slate-700/80">
+                <div class="p-3.5 rounded-2xl bg-white/5 border border-white/10">
                   <div class="flex justify-between items-center font-bold text-slate-300 mb-1">
                     <span data-i18n="edu_t3_time_15yr">بعد ١٥ سنة:</span>
-                    <span class="text-emerald-400 font-extrabold" data-i18n="edu_t3_sum_15yr">36,180 د.أ</span>
+                    <span class="text-emerald-400 font-extrabold text-sm" data-i18n="edu_t3_sum_15yr">36,180 د.أ</span>
                   </div>
                   <p class="text-[11px] text-slate-400" data-i18n="edu_t3_val_15yr">دفعت: 18,000 د.أ ← رصيدك: 36,180 د.أ (أرباح: +18,180 د.أ — الأرباح تجاوزت مدفوعاتك!)</p>
-                  <div class="w-full h-1.5 bg-slate-700 rounded-full mt-2 overflow-hidden flex">
+                  <div class="w-full h-2 bg-white/10 rounded-full mt-2.5 overflow-hidden flex">
                     <div class="h-full bg-slate-400" style="width: 50%"></div>
                     <div class="h-full bg-emerald-400" style="width: 50%"></div>
                   </div>
                 </div>
 
                 <!-- 25 Years -->
-                <div class="p-3 rounded-xl bg-slate-800/90 border border-emerald-500/40 ring-1 ring-emerald-400/20">
+                <div class="p-3.5 rounded-2xl bg-emerald-950/40 border border-emerald-500/40 ring-1 ring-emerald-400/20">
                   <div class="flex justify-between items-center font-bold text-emerald-300 mb-1">
                     <span data-i18n="edu_t3_time_25yr">بعد ٢٥ سنة:</span>
-                    <span class="text-emerald-300 font-black text-sm" data-i18n="edu_t3_sum_25yr">103,200 د.أ</span>
+                    <span class="text-emerald-300 font-black text-base" data-i18n="edu_t3_sum_25yr">103,200 د.أ</span>
                   </div>
                   <p class="text-[11px] text-slate-300" data-i18n="edu_t3_val_25yr">دفعت: 30,000 د.أ ← رصيدك: 103,200 د.أ (أرباح: +73,200 د.أ — 71% من الثروة جاءت من التراكم!)</p>
-                  <div class="w-full h-1.5 bg-slate-700 rounded-full mt-2 overflow-hidden flex">
+                  <div class="w-full h-2.5 bg-white/10 rounded-full mt-2.5 overflow-hidden flex">
                     <div class="h-full bg-slate-400" style="width: 29%"></div>
                     <div class="h-full bg-emerald-400" style="width: 71%"></div>
                   </div>
@@ -598,62 +857,62 @@
     </div>
   </section>
 
-  <!-- Problem vs Solution Section -->
-  <section id="about" class="py-16 bg-slate-50 border-t border-slate-200">
+  <!-- Problem vs Solution Section (Apple Comparison Cards) -->
+  <section id="about" class="py-18 bg-[#f5f5f7] border-t border-slate-200/80">
     <div class="max-w-5xl mx-auto px-4 sm:px-6">
       <div class="text-center max-w-2xl mx-auto mb-12">
-        <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900 mb-3" data-i18n="problem_title">لماذا يحتاج المستثمر في الأردن إلى ETF-P؟</h2>
+        <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900 mb-3 tracking-tight apple-section-title" data-i18n="problem_title">لماذا يحتاج المستثمر في الأردن إلى ETF-P؟</h2>
         <p class="text-sm sm:text-base text-slate-600" data-i18n="problem_sub">الفارق بين إبقاء مدخراتك في البنك وبين الاستثمار طويل الأجل في صناديق المؤشرات (ETFs)</p>
       </div>
 
       <div class="grid md:grid-cols-2 gap-8">
         <!-- The Current Struggles -->
-        <div class="p-6 rounded-2xl bg-red-50/50 border border-red-200/80">
-          <div class="flex items-center gap-2 text-red-700 font-bold text-base mb-4">
-            <i data-lucide="alert-circle" class="w-5 h-5"></i>
+        <div class="p-7 sm:p-8 rounded-[28px] bg-rose-50/50 border border-rose-200/80 shadow-2xs backdrop-blur-sm">
+          <div class="inline-flex items-center gap-2 text-rose-800 font-bold text-sm px-3.5 py-1.5 rounded-full bg-rose-100/70 border border-rose-200 mb-5">
+            <i data-lucide="alert-circle" class="w-4 h-4 text-rose-600"></i>
             <span data-i18n="pain_title">الواقع الحالي في الأردن:</span>
           </div>
-          <ul class="space-y-3.5 text-sm text-slate-700">
-            <li class="flex items-start gap-2.5">
-              <span class="text-red-500 font-bold mt-0.5">✕</span>
+          <ul class="space-y-4 text-xs sm:text-sm text-slate-700">
+            <li class="flex items-start gap-3">
+              <span class="text-rose-500 font-bold mt-0.5 text-sm">✕</span>
               <span data-i18n="pain_1"><strong>التضخم يأكل المدخرات:</strong> الودائع البنكية تعطي عوائد ضئيلة لا تجاري ارتفاع تكاليف المعيشة وتآكل القوة الشرائية سنوياً.</span>
             </li>
-            <li class="flex items-start gap-2.5">
-              <span class="text-red-500 font-bold mt-0.5">✕</span>
+            <li class="flex items-start gap-3">
+              <span class="text-rose-500 font-bold mt-0.5 text-sm">✕</span>
               <span data-i18n="pain_2"><strong>تكاليف الحوالات الباهظة:</strong> إرسال مبالغ صغيرة (١٠٠ دينار) لمنصات أجنبية يلتهم ٣٠-٤٠ دينار عمولات سويفت وفروقات صرف.</span>
             </li>
-            <li class="flex items-start gap-2.5">
-              <span class="text-red-500 font-bold mt-0.5">✕</span>
+            <li class="flex items-start gap-3">
+              <span class="text-rose-500 font-bold mt-0.5 text-sm">✕</span>
               <span data-i18n="pain_3"><strong>مخاطر الأسهم الفردية والمضاربة:</strong> صعوبة اختيار أسهم رابحة بمفردك، ومخاطر تقلبات الأسعار اليومية والتوتر النفسي.</span>
             </li>
-            <li class="flex items-start gap-2.5">
-              <span class="text-red-500 font-bold mt-0.5">✕</span>
+            <li class="flex items-start gap-3">
+              <span class="text-rose-500 font-bold mt-0.5 text-sm">✕</span>
               <span data-i18n="pain_4"><strong>المخاطرة العالية:</strong> الانجرار خلف تداول العملات الرقمية أو الفوركس والمضاربة التي أضرت بالكثيرين.</span>
             </li>
           </ul>
         </div>
 
         <!-- The ETF-P Solution -->
-        <div class="p-6 rounded-2xl bg-emerald-50/60 border border-emerald-200">
-          <div class="flex items-center gap-2 text-emerald-800 font-bold text-base mb-4">
-            <i data-lucide="check-circle-2" class="w-5 h-5 text-emerald-600"></i>
+        <div class="p-7 sm:p-8 rounded-[28px] bg-emerald-50/70 border border-emerald-300/80 shadow-md backdrop-blur-sm">
+          <div class="inline-flex items-center gap-2 text-emerald-900 font-bold text-sm px-3.5 py-1.5 rounded-full bg-emerald-100 border border-emerald-200 mb-5">
+            <i data-lucide="check-circle-2" class="w-4 h-4 text-emerald-600"></i>
             <span data-i18n="sol_title">الحل المبتكر مع ETF-P:</span>
           </div>
-          <ul class="space-y-3.5 text-sm text-slate-700">
-            <li class="flex items-start gap-2.5">
-              <span class="text-emerald-600 font-bold mt-0.5">✓</span>
+          <ul class="space-y-4 text-xs sm:text-sm text-slate-700">
+            <li class="flex items-start gap-3">
+              <span class="text-emerald-600 font-bold mt-0.5 text-sm">✓</span>
               <span data-i18n="sol_1"><strong>استثمار تلقائي من ١٠٠ دينار:</strong> اشترك شهرياً باقتطاع مرن دون الحاجة لآلاف الدنانير.</span>
             </li>
-            <li class="flex items-start gap-2.5">
-              <span class="text-emerald-600 font-bold mt-0.5">✓</span>
+            <li class="flex items-start gap-3">
+              <span class="text-emerald-600 font-bold mt-0.5 text-sm">✓</span>
               <span data-i18n="sol_2"><strong>صناديق مؤشرات عالمية رائدة:</strong> نعتمد مؤشرات عالمية رائدة (مثل S&P 500 و MSCI World) توزع استثمارك عبر أقوى قطاعات الاقتصاد العالمي.</span>
             </li>
-            <li class="flex items-start gap-2.5">
-              <span class="text-emerald-600 font-bold mt-0.5">✓</span>
+            <li class="flex items-start gap-3">
+              <span class="text-emerald-600 font-bold mt-0.5 text-sm">✓</span>
               <span data-i18n="sol_3"><strong>تنويع احترافي للمخاطر:</strong> بدلاً من شراء سهم واحد، ١٠٠ دينار تتوزع على مئات الشركات العالمية الناجحة.</span>
             </li>
-            <li class="flex items-start gap-2.5">
-              <span class="text-emerald-600 font-bold mt-0.5">✓</span>
+            <li class="flex items-start gap-3">
+              <span class="text-emerald-600 font-bold mt-0.5 text-sm">✓</span>
               <span data-i18n="sol_4"><strong>تجربة محلية سهلة بالدينار:</strong> إيداع فوري وسهل، دعم باللغة العربية، وتقارير واضحة.</span>
             </li>
           </ul>
@@ -662,27 +921,27 @@
     </div>
   </section>
 
-  <!-- Interactive Compound Wealth Calculator -->
-  <section id="calculator" class="py-16 bg-slate-50 border-t border-slate-200">
+  <!-- Interactive Compound Wealth Calculator (Apple Fluid Sliders & Pro Preview) -->
+  <section id="calculator" class="py-18 bg-[#f5f5f7] border-t border-slate-200/80">
     <div class="max-w-4xl mx-auto px-4 sm:px-6">
       <div class="text-center max-w-2xl mx-auto mb-10">
-        <span class="text-xs font-bold text-brand-600 uppercase tracking-wider" data-i18n="calc_badge">أداة تفاعلية</span>
-        <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900 mt-1" data-i18n="calc_title">حاسبة نمو الاستثمار الشهري التراكمي</h2>
+        <span class="apple-capsule mb-2 shadow-2xs mx-auto" data-i18n="calc_badge">أداة تفاعلية</span>
+        <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900 mt-2 tracking-tight apple-section-title" data-i18n="calc_title">حاسبة نمو الاستثمار الشهري التراكمي</h2>
         <p class="text-sm text-slate-600 mt-2" data-i18n="calc_sub">شاهد كيف يمكن لـ ١٠٠ دينار شهرياً أن تصنع فارقاً حقيقياً في مستقبلك المالي</p>
       </div>
 
-      <div class="card-glass rounded-2xl p-6 sm:p-8 shadow-md border border-slate-200">
-        <div class="grid md:grid-cols-2 gap-8 items-center">
+      <div class="apple-glass rounded-[32px] p-6 sm:p-10 shadow-xl border border-white/90">
+        <div class="grid md:grid-cols-2 gap-8 lg:gap-10 items-center">
           
-          <!-- Sliders Form -->
-          <div class="space-y-6">
+          <!-- Sliders Form (Tactile Apple Sliders) -->
+          <div class="space-y-7">
             <div>
-              <div class="flex justify-between items-center mb-2">
+              <div class="flex justify-between items-center mb-2.5">
                 <label for="calcAmount" class="text-xs font-bold text-slate-700" data-i18n="calc_lbl_amount">مبلغ الاستثمار الشهري:</label>
-                <span class="text-base font-extrabold text-brand-600"><span id="valAmount">100</span> <span data-i18n="currency_jod">دينار أردني</span></span>
+                <span class="text-base font-extrabold text-brand-600 font-mono tracking-tight"><span id="valAmount">100</span> <span data-i18n="currency_jod">دينار أردني</span></span>
               </div>
-              <input type="range" id="calcAmount" min="25" max="500" step="25" value="100" class="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-brand-600">
-              <div class="flex justify-between text-[10px] text-slate-400 mt-1">
+              <input type="range" id="calcAmount" min="25" max="500" step="25" value="100" class="w-full">
+              <div class="flex justify-between text-[11px] text-slate-400 mt-1.5 font-medium">
                 <span data-i18n="calc_amt_min">25 د.أ</span>
                 <span data-i18n="calc_amt_mid">250 د.أ</span>
                 <span data-i18n="calc_amt_max">500 د.أ</span>
@@ -690,58 +949,58 @@
             </div>
 
             <div>
-              <div class="flex justify-between items-center mb-2">
+              <div class="flex justify-between items-center mb-2.5">
                 <label for="calcYears" class="text-xs font-bold text-slate-700" data-i18n="calc_lbl_years">المدة الزمنية (بالسنوات):</label>
-                <span class="text-base font-extrabold text-brand-600"><span id="valYears">5</span> <span id="valYearsUnit" data-i18n="calc_years_unit">سنوات</span></span>
+                <span class="text-base font-extrabold text-brand-600 font-mono tracking-tight"><span id="valYears">5</span> <span id="valYearsUnit" data-i18n="calc_years_unit">سنوات</span></span>
               </div>
-              <input type="range" id="calcYears" min="1" max="30" step="1" value="5" class="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-brand-600">
-              <div class="flex justify-between text-[10px] text-slate-400 mt-1">
+              <input type="range" id="calcYears" min="1" max="30" step="1" value="5" class="w-full">
+              <div class="flex justify-between text-[11px] text-slate-400 mt-1.5 font-medium">
                 <span data-i18n="calc_year_min">سنة واحدة</span>
                 <span data-i18n="calc_year_mid">١٥ سنة</span>
                 <span data-i18n="calc_year_max">٣٠ سنة</span>
               </div>
             </div>
 
-            <div class="p-3 bg-brand-50/70 rounded-xl border border-brand-100 text-xs text-brand-800">
-              <span class="font-bold" data-i18n="calc_assumption_title">الفرضية المعتمدة:</span> 
+            <div class="p-4 bg-brand-500/5 rounded-2xl border border-brand-500/15 text-xs text-slate-600 leading-relaxed">
+              <span class="font-bold text-brand-800" data-i18n="calc_assumption_title">الفرضية المعتمدة:</span> 
               <span data-i18n="calc_assumption_text">متوسط نمو سنوي مركب 8.5% (بناءً على الأداء التاريخي طويل الأجل لمؤشرات الأسهم العالمية مثل S&P 500 و MSCI World على مدى عقود). الاستثمار ينطوي على مخاطر تقلب السوق.</span>
             </div>
           </div>
 
-          <!-- Dynamic Output Card (High Contrast Accessible Design) -->
-          <div class="bg-slate-900 border-2 border-emerald-500/50 rounded-2xl p-6 text-white shadow-2xl flex flex-col justify-between relative overflow-hidden ring-1 ring-emerald-400/20">
+          <!-- Dynamic Output Card (Apple Dark Pro Aesthetic) -->
+          <div class="apple-dark-card p-6 sm:p-7 text-white shadow-2xl flex flex-col justify-between relative overflow-hidden">
             
-            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-950/90 border border-emerald-500/40 text-emerald-300 font-bold text-xs self-start">
+            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-950/80 border border-emerald-500/30 text-emerald-300 font-bold text-xs self-start">
               <i data-lucide="trending-up" class="w-3.5 h-3.5 text-emerald-400"></i>
               <span data-i18n="calc_result_header">القيمة التقديرية لمحفظتك</span>
             </div>
             
             <div class="my-5">
-              <div class="text-3xl sm:text-4xl font-black text-white tracking-tight flex items-baseline gap-2">
+              <div class="text-4xl sm:text-5xl font-black text-white tracking-tight flex items-baseline gap-2 font-mono">
                 <span id="totalPortfolioValue" class="text-white">7,444</span> 
-                <span class="text-xl font-extrabold text-emerald-400" data-i18n="currency_jod_short">د.أ</span>
+                <span class="text-xl font-bold text-emerald-400" data-i18n="currency_jod_short">د.أ</span>
               </div>
               
-              <div class="mt-3 p-2.5 rounded-xl bg-emerald-950/70 border border-emerald-500/50 flex items-center justify-between">
+              <div class="mt-3 p-3 rounded-2xl bg-emerald-950/60 border border-emerald-500/40 flex items-center justify-between">
                 <span class="text-xs font-bold text-emerald-100" data-i18n="calc_gain_label">إجمالي الأرباح المركبة المتوقعة:</span> 
-                <span id="totalGains" class="text-sm font-black text-emerald-300">+1,444 د.أ</span>
+                <span id="totalGains" class="text-sm font-black text-emerald-300 font-mono">+1,444 د.أ</span>
               </div>
             </div>
 
             <!-- Compounding Ratio Breakdown Bar -->
-            <div class="p-3 rounded-xl bg-slate-800/80 border border-slate-700/80 mb-4">
-              <div class="flex justify-between items-center text-xs mb-1.5 font-bold">
+            <div class="p-3.5 rounded-2xl bg-white/5 border border-white/10 mb-4">
+              <div class="flex justify-between items-center text-xs mb-2 font-bold">
                 <span class="text-slate-300" data-i18n="calc_ratio_title">تركيبة المحفظة (أثر التراكم):</span>
-                <span class="text-emerald-400 font-extrabold flex items-center gap-1">
+                <span class="text-emerald-400 font-extrabold flex items-center gap-1 font-mono">
                   <span id="calcGainsRatioText">19%</span>
                   <span data-i18n="calc_ratio_gains_badge">أرباح تراكمية</span>
                 </span>
               </div>
-              <div class="w-full h-3 bg-slate-950 rounded-full overflow-hidden flex border border-slate-700">
-                <div id="calcInvestedRatioBar" class="h-full bg-slate-400 transition-all duration-300" style="width: 81%;" title="أصل المدخرات"></div>
-                <div id="calcGainsRatioBar" class="h-full bg-gradient-to-r from-emerald-500 to-teal-400 transition-all duration-300" style="width: 19%;" title="الأرباح التراكمية"></div>
+              <div class="w-full h-3 bg-black/40 rounded-full overflow-hidden flex border border-white/10 p-0.5">
+                <div id="calcInvestedRatioBar" class="h-full bg-slate-400 rounded-full transition-all duration-300" style="width: 81%;" title="أصل المدخرات"></div>
+                <div id="calcGainsRatioBar" class="h-full bg-gradient-to-r from-emerald-500 to-teal-400 rounded-full transition-all duration-300" style="width: 19%;" title="الأرباح التراكمية"></div>
               </div>
-              <div class="flex justify-between text-[11px] text-slate-400 mt-1.5 font-medium">
+              <div class="flex justify-between text-[11px] text-slate-400 mt-2 font-medium">
                 <span class="flex items-center gap-1">
                   <span class="w-2 h-2 rounded-full bg-slate-400"></span>
                   <span data-i18n="calc_ratio_principal">مدفوعاتك</span>
@@ -755,18 +1014,18 @@
               </div>
             </div>
 
-            <div class="space-y-2.5 text-xs border-t border-slate-700/90 pt-4">
-              <div class="flex justify-between items-center bg-slate-800/90 p-2.5 rounded-xl border border-slate-700">
-                <span class="font-bold text-slate-100" data-i18n="calc_invested_label">إجمالي ما دفعته من جيبك:</span>
-                <span id="totalInvestedAmount" class="font-extrabold text-white text-sm">6,000 د.أ</span>
+            <div class="space-y-2.5 text-xs border-t border-white/10 pt-4">
+              <div class="flex justify-between items-center bg-white/5 p-2.5 rounded-xl border border-white/10">
+                <span class="font-bold text-slate-200" data-i18n="calc_invested_label">إجمالي ما دفعته من جيبك:</span>
+                <span id="totalInvestedAmount" class="font-extrabold text-white text-sm font-mono">6,000 د.أ</span>
               </div>
-              <div class="flex justify-between items-center bg-rose-950/50 p-2.5 rounded-xl border border-rose-800/60">
+              <div class="flex justify-between items-center bg-rose-950/40 p-2.5 rounded-xl border border-rose-800/50">
                 <span class="font-bold text-rose-200" data-i18n="calc_bank_diff">لو تركتها في حساب بنكي عادي:</span>
                 <span id="bankCashValue" class="font-extrabold text-rose-300 text-xs">6,000 د.أ (تآكلت شرائياً)</span>
               </div>
             </div>
 
-            <a href="#waitlist-card" class="mt-6 w-full py-3 px-4 bg-emerald-400 hover:bg-emerald-300 text-slate-950 font-black text-xs sm:text-sm rounded-xl text-center transition block shadow-lg shadow-emerald-500/25 active:scale-98" data-i18n="calc_cta_btn">
+            <a href="#waitlist-card" class="mt-6 w-full py-3.5 px-4 bg-emerald-400 hover:bg-emerald-300 text-slate-950 font-black text-xs sm:text-sm rounded-xl text-center transition-all block shadow-lg shadow-emerald-500/25 active:scale-98 cursor-pointer" data-i18n="calc_cta_btn">
               ابدأ بناء هذه المحفظة الآن
             </a>
           </div>
@@ -776,129 +1035,129 @@
     </div>
   </section>
 
-  <!-- How It Works (3 Simple Steps) -->
-  <section id="how-it-works" class="py-16 bg-white border-t border-slate-200">
+  <!-- How It Works (3 Simple Steps with Apple Cards) -->
+  <section id="how-it-works" class="py-18 bg-white border-t border-slate-200/80">
     <div class="max-w-5xl mx-auto px-4 sm:px-6">
       <div class="text-center max-w-2xl mx-auto mb-12">
-        <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900" data-i18n="how_title">كيف تبدأ الاستثمار في ٣ خطوات سهلة؟</h2>
+        <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight apple-section-title" data-i18n="how_title">كيف تبدأ الاستثمار في ٣ خطوات سهلة؟</h2>
         <p class="text-sm text-slate-600 mt-2" data-i18n="how_sub">صممنا التطبيق ليكون سهلاً، شفافاً، وبدون أي تعقيد فني</p>
       </div>
 
       <div class="grid md:grid-cols-3 gap-6">
-        <div class="p-6 rounded-2xl bg-slate-50 border border-slate-200 hover:border-brand-500 transition relative">
-          <div class="w-10 h-10 rounded-xl bg-brand-600 text-white font-bold flex items-center justify-center mb-4">1</div>
+        <div class="apple-card p-7 sm:p-8 flex flex-col relative">
+          <div class="w-11 h-11 rounded-2xl bg-gradient-to-br from-brand-600 to-teal-500 text-white font-extrabold text-lg flex items-center justify-center mb-5 shadow-md shadow-brand-600/25">1</div>
           <h3 class="font-bold text-base text-slate-900 mb-2" data-i18n="step1_title">حدد مبلغك الشهري</h3>
-          <p class="text-xs text-slate-600 leading-relaxed" data-i18n="step1_desc">اختر المبلغ الذي يناسبك (يبدأ من ١٠٠ دينار) وحدد جدول الإيداع التلقائي من حسابك البنكي.</p>
+          <p class="text-xs sm:text-sm text-slate-600 leading-relaxed" data-i18n="step1_desc">اختر المبلغ الذي يناسبك (يبدأ من ١٠٠ دينار) وحدد جدول الإيداع التلقائي من حسابك البنكي.</p>
         </div>
 
-        <div class="p-6 rounded-2xl bg-slate-50 border border-slate-200 hover:border-brand-500 transition relative">
-          <div class="w-10 h-10 rounded-xl bg-brand-600 text-white font-bold flex items-center justify-center mb-4">2</div>
+        <div class="apple-card p-7 sm:p-8 flex flex-col relative">
+          <div class="w-11 h-11 rounded-2xl bg-gradient-to-br from-brand-600 to-teal-500 text-white font-extrabold text-lg flex items-center justify-center mb-5 shadow-md shadow-brand-600/25">2</div>
           <h3 class="font-bold text-base text-slate-900 mb-2" data-i18n="step2_title">نستثمر لك في صناديق المؤشرات (ETFs)</h3>
-          <p class="text-xs text-slate-600 leading-relaxed" data-i18n="step2_desc">يتم توجيه الأموال تلقائياً لشراء حصص في أفضل صناديق المؤشرات المتداولة العالمية المتنوعة ومنخفضة التكلفة.</p>
+          <p class="text-xs sm:text-sm text-slate-600 leading-relaxed" data-i18n="step2_desc">يتم توجيه الأموال تلقائياً لشراء حصص في أفضل صناديق المؤشرات المتداولة العالمية المتنوعة ومنخفضة التكلفة.</p>
         </div>
 
-        <div class="p-6 rounded-2xl bg-slate-50 border border-slate-200 hover:border-brand-500 transition relative">
-          <div class="w-10 h-10 rounded-xl bg-brand-600 text-white font-bold flex items-center justify-center mb-4">3</div>
+        <div class="apple-card p-7 sm:p-8 flex flex-col relative">
+          <div class="w-11 h-11 rounded-2xl bg-gradient-to-br from-brand-600 to-teal-500 text-white font-extrabold text-lg flex items-center justify-center mb-5 shadow-md shadow-brand-600/25">3</div>
           <h3 class="font-bold text-base text-slate-900 mb-2" data-i18n="step3_title">شاهد ثروتك تنمو وتراكم</h3>
-          <p class="text-xs text-slate-600 leading-relaxed" data-i18n="step3_desc">تابع أداء استثماراتك الشفافة لحظة بلحظة، مع إمكانية السحب أو زيادة الاستثمار في أي وقت دون قيود.</p>
+          <p class="text-xs sm:text-sm text-slate-600 leading-relaxed" data-i18n="step3_desc">تابع أداء استثماراتك الشفافة لحظة بلحظة، مع إمكانية السحب أو زيادة الاستثمار في أي وقت دون قيود.</p>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- Customer Discovery / Interview Section -->
-  <section id="interview-section" class="py-16 bg-gradient-to-b from-brand-50/60 to-white border-t border-slate-200">
+  <!-- Customer Discovery / Interview Section (Apple Glassmorphism Banner) -->
+  <section id="interview-section" class="py-18 bg-gradient-to-b from-[#f5f5f7] to-white border-t border-slate-200/80">
     <div class="max-w-4xl mx-auto px-4 sm:px-6">
-      <div class="card-glass rounded-2xl p-6 sm:p-10 border border-brand-200/80 shadow-lg text-center relative overflow-hidden">
+      <div class="apple-glass rounded-[32px] p-7 sm:p-12 border border-brand-200/70 shadow-xl text-center relative overflow-hidden">
         
-        <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-100 text-emerald-800 text-xs font-bold mb-4">
+        <div class="apple-capsule mb-4 shadow-2xs mx-auto">
           <i data-lucide="target" class="w-3.5 h-3.5"></i>
           <span data-i18n="disc_badge">استطلاع رأي المستثمر الأردني — دراسة 30-50 مقابلة</span>
         </div>
 
-        <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900 mb-3" data-i18n="disc_title">
+        <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900 mb-3 tracking-tight apple-section-title" data-i18n="disc_title">
           ساعدنا في تصميم التطبيق المناسب لك في الأردن
         </h2>
-        <p class="max-w-xl mx-auto text-sm text-slate-600 leading-relaxed mb-6" data-i18n="disc_sub">
+        <p class="max-w-xl mx-auto text-sm text-slate-600 leading-relaxed mb-8" data-i18n="disc_sub">
           نجري حالياً مقابلات استطلاعية مع ٣٠-٥٠ مستثمر أردني لمعرفة أبرز العقبات (الرسوم، التحويلات، فهم آلية الصناديق، الثقة). رأيك يصنع الفرق ويمنحك وصولاً مجانياً مميزاً مدى الحياة!
         </p>
 
-        <!-- CTA Trigger for Survey Modal -->
-        <div class="flex flex-col sm:flex-row items-center justify-center gap-3">
-          <button id="openSurveyBtn" class="w-full sm:w-auto px-6 py-3 rounded-xl bg-brand-600 hover:bg-brand-700 text-white font-bold text-sm shadow-md transition flex items-center justify-center gap-2">
+        <!-- CTA Triggers for Survey Modal -->
+        <div class="flex flex-col sm:flex-row items-center justify-center gap-3.5">
+          <button id="openSurveyBtn" class="apple-btn-primary w-full sm:w-auto px-7 py-3.5 rounded-2xl text-white font-bold text-sm shadow-md flex items-center justify-center gap-2 cursor-pointer">
             <i data-lucide="help-circle" class="w-4 h-4"></i>
             <span data-i18n="disc_btn_survey">الإجابة على ٤ أسئلة استطلاعية (٤٥ ثانية)</span>
           </button>
           
-          <button id="bookCallBtn" class="w-full sm:w-auto px-6 py-3 rounded-xl border border-slate-300 hover:bg-slate-50 text-slate-700 font-bold text-sm transition flex items-center justify-center gap-2">
+          <button id="bookCallBtn" class="apple-btn-secondary w-full sm:w-auto px-7 py-3.5 rounded-2xl text-slate-700 font-bold text-sm flex items-center justify-center gap-2 cursor-pointer">
             <i data-lucide="phone-call" class="w-4 h-4 text-brand-600"></i>
             <span data-i18n="disc_btn_founder">احجز مكالمة ١٥ دقيقة مع المؤسس</span>
           </button>
         </div>
 
         <!-- Target Tracker Bar -->
-        <div class="mt-8 pt-6 border-t border-slate-200/80 max-w-lg mx-auto">
-          <div class="flex justify-between text-xs font-bold text-slate-600 mb-1.5">
+        <div class="mt-9 pt-7 border-t border-slate-200/80 max-w-lg mx-auto">
+          <div class="flex justify-between text-xs font-bold text-slate-700 mb-2">
             <span data-i18n="disc_progress_label">هدف المقابلات الاستطلاعية:</span>
-            <span><span id="interviewsDoneCount">34</span> / 50 <span data-i18n="disc_completed">مكتملة</span></span>
+            <span class="font-mono"><span id="interviewsDoneCount">34</span> / 50 <span data-i18n="disc_completed">مكتملة</span></span>
           </div>
-          <div class="w-full h-3 bg-slate-200 rounded-full overflow-hidden">
-            <div id="interviewsProgressBar" class="h-full bg-gradient-to-r from-brand-600 to-emerald-400 rounded-full transition-all duration-1000" style="width: 68%;"></div>
+          <div class="w-full h-3 bg-slate-200/80 rounded-full overflow-hidden p-0.5">
+            <div id="interviewsProgressBar" class="h-full bg-gradient-to-r from-brand-600 via-teal-500 to-emerald-400 rounded-full transition-all duration-1000" style="width: 68%;"></div>
           </div>
-          <p class="text-[11px] text-slate-500 mt-2" data-i18n="disc_progress_note">بقي ١٦ مقعداً فقط للمشاركين في برنامج المؤسسين الأوائل</p>
+          <p class="text-[11px] text-slate-500 mt-2 font-medium" data-i18n="disc_progress_note">بقي ١٦ مقعداً فقط للمشاركين في برنامج المؤسسين الأوائل</p>
         </div>
 
       </div>
     </div>
   </section>
 
-  <!-- Market Discovery & Survey Insights Section -->
-  <section id="insights" class="py-16 bg-slate-100 border-t border-slate-200">
+  <!-- Market Discovery & Survey Insights Section (Apple Health / Metrics Style) -->
+  <section id="insights" class="py-18 bg-[#f5f5f7] border-t border-slate-200/80">
     <div class="max-w-5xl mx-auto px-4 sm:px-6">
-      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8">
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-9">
         <div>
-          <div class="inline-flex items-center gap-1 text-xs font-bold text-brand-700 bg-brand-50 px-2.5 py-0.5 rounded-md border border-brand-200 mb-1">
+          <div class="apple-capsule mb-2 shadow-2xs">
             <i data-lucide="bar-chart-2" class="w-3.5 h-3.5"></i>
             <span data-i18n="dash_tag">بيانات حية مباشرة</span>
           </div>
-          <h2 class="text-2xl font-black text-slate-900" data-i18n="dash_title">نتائج استطلاع المستثمرين في الأردن</h2>
-          <p class="text-xs text-slate-500" data-i18n="dash_sub">ملخص إجابات المستثمرين الأردنيين حول أهم الاحتياجات والعقبات</p>
+          <h2 class="text-2xl font-black text-slate-900 tracking-tight apple-section-title" data-i18n="dash_title">نتائج استطلاع المستثمرين في الأردن</h2>
+          <p class="text-xs text-slate-500 mt-0.5" data-i18n="dash_sub">ملخص إجابات المستثمرين الأردنيين حول أهم الاحتياجات والعقبات</p>
         </div>
       </div>
 
       <!-- Dashboard Grid -->
-      <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
-        <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm">
+      <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-4.5 mb-8">
+        <div class="apple-card p-6 flex flex-col justify-between">
           <span class="text-xs text-slate-500 font-semibold" data-i18n="dash_card_waitlist">المسجلون في الانتظار</span>
-          <div class="text-2xl font-black text-slate-900 mt-1" id="dashWaitlistTotal">142</div>
-          <span class="text-[11px] text-emerald-600 font-bold" data-i18n="dash_card_waitlist_trend">↑ 18 اليوم</span>
+          <div class="text-3xl font-black text-slate-900 mt-2 font-mono tracking-tight" id="dashWaitlistTotal">142</div>
+          <span class="text-[11px] text-emerald-600 font-bold mt-1" data-i18n="dash_card_waitlist_trend">↑ 18 اليوم</span>
         </div>
 
-        <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm">
+        <div class="apple-card p-6 flex flex-col justify-between">
           <span class="text-xs text-slate-500 font-semibold" data-i18n="dash_card_interviews">مقابلات واستطلاعات مكتملة</span>
-          <div class="text-2xl font-black text-brand-600 mt-1" id="dashSurveyTotal">34</div>
-          <span class="text-[11px] text-slate-400" data-i18n="dash_card_goal">من أصل ٥٠ مستهدفاً</span>
+          <div class="text-3xl font-black text-brand-600 mt-2 font-mono tracking-tight" id="dashSurveyTotal">34</div>
+          <span class="text-[11px] text-slate-400 mt-1" data-i18n="dash_card_goal">من أصل ٥٠ مستهدفاً</span>
         </div>
 
-        <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm">
+        <div class="apple-card p-6 flex flex-col justify-between">
           <span class="text-xs text-slate-500 font-semibold" data-i18n="dash_card_willingness">الاستعداد للاستثمار بـ 100 د.أ</span>
-          <div class="text-2xl font-black text-emerald-600 mt-1" id="dashWillingRate">82%</div>
-          <span class="text-[11px] text-slate-500" data-i18n="dash_card_confirmed">أكدوا الجدية والقدرة</span>
+          <div class="text-3xl font-black text-emerald-600 mt-2 font-mono tracking-tight" id="dashWillingRate">82%</div>
+          <span class="text-[11px] text-slate-500 mt-1" data-i18n="dash_card_confirmed">أكدوا الجدية والقدرة</span>
         </div>
 
-        <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm">
+        <div class="apple-card p-6 flex flex-col justify-between">
           <span class="text-xs text-slate-500 font-semibold" data-i18n="dash_card_preferred_fee">النموذج السعري المفضل</span>
-          <div class="text-2xl font-black text-amber-600 mt-1" id="dashPreferredFee">0.25%</div>
-          <span class="text-[11px] text-slate-500" data-i18n="dash_card_fee_sub">نسبة سنوية vs اشتراك شهري</span>
+          <div class="text-3xl font-black text-amber-600 mt-2 font-mono tracking-tight" id="dashPreferredFee">0.25%</div>
+          <span class="text-[11px] text-slate-500 mt-1" data-i18n="dash_card_fee_sub">نسبة سنوية vs اشتراك شهري</span>
         </div>
       </div>
 
-      <!-- Ranked Insights & Findings (From Card #3 requirements) -->
+      <!-- Ranked Insights & Findings -->
       <div class="grid md:grid-cols-2 gap-6">
         
         <!-- Ranked Pain Points -->
-        <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
-          <h3 class="text-sm font-extrabold text-slate-900 mb-4 flex items-center gap-2">
+        <div class="apple-card p-7 sm:p-8">
+          <h3 class="text-sm font-extrabold text-slate-900 mb-5 flex items-center gap-2">
             <i data-lucide="alert-triangle" class="w-4 h-4 text-amber-500"></i>
             <span data-i18n="dash_pain_ranked">ترتيب أكبر العوائق أمام المستثمر الأردني:</span>
           </h3>
@@ -908,8 +1167,8 @@
         </div>
 
         <!-- Trust & Institution Preference -->
-        <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
-          <h3 class="text-sm font-extrabold text-slate-900 mb-4 flex items-center gap-2">
+        <div class="apple-card p-7 sm:p-8">
+          <h3 class="text-sm font-extrabold text-slate-900 mb-5 flex items-center gap-2">
             <i data-lucide="shield" class="w-4 h-4 text-brand-600"></i>
             <span data-i18n="dash_trust_ranked">الجهة الأكثر ثوقاً لتقديم الخدمة:</span>
           </h3>
@@ -923,26 +1182,26 @@
     </div>
   </section>
 
-  <!-- Footer -->
-  <footer class="bg-slate-900 text-slate-400 py-12 border-t border-slate-800 text-xs">
+  <!-- Footer (Apple Minimal Dark) -->
+  <footer class="bg-[#111317] text-slate-400 py-14 border-t border-slate-800 text-xs">
     <div class="max-w-6xl mx-auto px-4 sm:px-6">
       <div class="flex flex-col md:flex-row justify-between items-center gap-6">
         
-        <div class="flex items-center gap-2.5">
-          <div class="w-8 h-8 rounded-lg bg-brand-600 flex items-center justify-center text-white font-bold text-base">🌱</div>
+        <div class="flex items-center gap-3">
+          <div class="w-9 h-9 rounded-xl bg-brand-600 flex items-center justify-center text-white font-bold text-base shadow-sm">🌱</div>
           <div>
             <span class="font-bold text-white text-sm">ETF-P Jordan</span>
-            <p class="text-[11px] text-slate-500" data-i18n="footer_rights">منصة التكنولوجيا المالية لصناديق المؤشرات المتداولة (ETFs) والاستثمار التراكمي للأفراد في الأردن</p>
+            <p class="text-[11px] text-slate-500 mt-0.5" data-i18n="footer_rights">منصة التكنولوجيا المالية لصناديق المؤشرات المتداولة (ETFs) والاستثمار التراكمي للأفراد في الأردن</p>
           </div>
         </div>
 
-        <div class="flex items-center gap-6 text-slate-400">
-          <a href="#etf-explained" class="hover:text-white transition" data-i18n="nav_etf">ما هو الـ ETF؟</a>
-          <a href="#about" class="hover:text-white transition" data-i18n="nav_about">عن المشروع</a>
-          <a href="#calculator" class="hover:text-white transition" data-i18n="nav_calc">الحاسبة</a>
-          <a href="#how-it-works" class="hover:text-white transition" data-i18n="nav_how">كيف يعمل؟</a>
-          <a href="#interview-section" class="hover:text-white transition" data-i18n="nav_interview">البحث الاستطلاعي</a>
-          <a href="https://github.com/azeeznazzal/etf-p-landing-page" target="_blank" class="hover:text-white transition flex items-center gap-1.5">
+        <div class="flex flex-wrap items-center justify-center gap-6 text-slate-400">
+          <a href="#etf-explained" class="hover:text-white transition-colors" data-i18n="nav_etf">ما هو الـ ETF؟</a>
+          <a href="#about" class="hover:text-white transition-colors" data-i18n="nav_about">عن المشروع</a>
+          <a href="#calculator" class="hover:text-white transition-colors" data-i18n="nav_calc">الحاسبة</a>
+          <a href="#how-it-works" class="hover:text-white transition-colors" data-i18n="nav_how">كيف يعمل؟</a>
+          <a href="#interview-section" class="hover:text-white transition-colors" data-i18n="nav_interview">البحث الاستطلاعي</a>
+          <a href="https://github.com/azeeznazzal/etf-p-landing-page" target="_blank" class="hover:text-white transition-colors flex items-center gap-1.5">
             <svg class="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
             <span>GitHub</span>
           </a>
@@ -950,7 +1209,7 @@
 
       </div>
 
-      <div class="mt-8 pt-6 border-t border-slate-800/80 text-center text-slate-500 text-[11px] leading-relaxed">
+      <div class="mt-9 pt-7 border-t border-slate-800/80 text-center text-slate-500 text-[11px] leading-relaxed max-w-3xl mx-auto">
         <p data-i18n="footer_disclaimer">
           إخلاء مسؤولية: هذا الموقع يمثل مرحلة التحقق والاستطلاع الأولي لمشروع ETF-P. لا يمثل استشارة مالية أو دعوة عامة للاكتتاب دون استكمال التراخيص القانونية الرسمية لدى هيئة الأوراق المالية الأردنية (JSC).
         </p>
@@ -958,21 +1217,21 @@
     </div>
   </footer>
 
-  <!-- Customer Discovery Survey Modal -->
-  <div id="surveyModal" class="fixed inset-0 z-50 bg-slate-950/60 backdrop-blur-sm hidden items-center justify-center p-4">
-    <div class="bg-white rounded-2xl max-w-lg w-full p-6 sm:p-8 shadow-2xl border border-slate-200 relative animate-in fade-in zoom-in-95 duration-200 max-h-[90vh] overflow-y-auto">
+  <!-- Customer Discovery Survey Modal (Apple iOS Sheet / Dialog) -->
+  <div id="surveyModal" class="fixed inset-0 z-50 bg-black/40 backdrop-blur-xl hidden items-center justify-center p-4 transition-all duration-300">
+    <div class="apple-glass rounded-[32px] max-w-lg w-full p-6 sm:p-9 shadow-2xl relative max-h-[90vh] overflow-y-auto border border-white/90">
       
-      <!-- Modal Close Button -->
-      <button id="closeSurveyBtn" class="absolute top-4 left-4 rtl:left-auto rtl:right-4 text-slate-400 hover:text-slate-600 p-1">
-        <i data-lucide="x" class="w-5 h-5"></i>
+      <!-- Modal Close Button (Circle Capsule) -->
+      <button id="closeSurveyBtn" class="absolute top-5 left-5 rtl:left-auto rtl:right-5 w-8 h-8 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-500 hover:text-slate-800 flex items-center justify-center transition-colors cursor-pointer" aria-label="Close survey">
+        <i data-lucide="x" class="w-4 h-4"></i>
       </button>
 
       <!-- Modal Header -->
       <div class="text-center mb-6">
-        <div class="w-12 h-12 rounded-2xl bg-brand-50 text-brand-600 flex items-center justify-center mx-auto mb-3">
+        <div class="w-12 h-12 rounded-2xl bg-brand-500/10 text-brand-600 flex items-center justify-center mx-auto mb-3 shadow-2xs border border-brand-500/20">
           <i data-lucide="sparkles" class="w-6 h-6"></i>
         </div>
-        <h3 class="text-xl font-black text-slate-900" data-i18n="modal_title">استطلاع المستثمر الأردني</h3>
+        <h3 class="text-xl font-black text-slate-900 tracking-tight" data-i18n="modal_title">استطلاع المستثمر الأردني</h3>
         <p class="text-xs text-slate-500 mt-1" data-i18n="modal_sub">٤ أسئلة سريعة تساعدنا في تصميم الخدمة وتمنحك أولوية VIP</p>
       </div>
 
@@ -984,20 +1243,20 @@
             ١. هل أنت مستعد لاستثمار ١٠٠ دينار أردني شهرياً في محفظة صناديق استثمارية (ETFs) متنوعة؟
           </label>
           <div class="space-y-2 text-xs">
-            <label class="flex items-center gap-2 p-2.5 rounded-xl border border-slate-200 hover:bg-slate-50 cursor-pointer">
-              <input type="radio" name="q_capacity" value="yes_100" checked class="text-brand-600">
+            <label class="flex items-center gap-2.5 p-3 rounded-2xl border border-slate-200/80 bg-white/70 hover:bg-white hover:border-brand-500/50 hover:shadow-2xs transition-all cursor-pointer">
+              <input type="radio" name="q_capacity" value="yes_100" checked class="text-brand-600 accent-brand-600">
               <span data-i18n="q1_opt1">نعم، ١٠٠ دينار شهرياً مبلغ مثالي ومناسب</span>
             </label>
-            <label class="flex items-center gap-2 p-2.5 rounded-xl border border-slate-200 hover:bg-slate-50 cursor-pointer">
-              <input type="radio" name="q_capacity" value="more_200" class="text-brand-600">
+            <label class="flex items-center gap-2.5 p-3 rounded-2xl border border-slate-200/80 bg-white/70 hover:bg-white hover:border-brand-500/50 hover:shadow-2xs transition-all cursor-pointer">
+              <input type="radio" name="q_capacity" value="more_200" class="text-brand-600 accent-brand-600">
               <span data-i18n="q1_opt2">أستطيع استثمار مبالغ أكبر (٢٠٠ - ٥٠٠ د.أ شهرياً)</span>
             </label>
-            <label class="flex items-center gap-2 p-2.5 rounded-xl border border-slate-200 hover:bg-slate-50 cursor-pointer">
-              <input type="radio" name="q_capacity" value="less_50" class="text-brand-600">
+            <label class="flex items-center gap-2.5 p-3 rounded-2xl border border-slate-200/80 bg-white/70 hover:bg-white hover:border-brand-500/50 hover:shadow-2xs transition-all cursor-pointer">
+              <input type="radio" name="q_capacity" value="less_50" class="text-brand-600 accent-brand-600">
               <span data-i18n="q1_opt3">أفضل البدء بمبلغ أصغر (٣٠ - ٥٠ د.أ شهرياً)</span>
             </label>
-            <label class="flex items-center gap-2 p-2.5 rounded-xl border border-slate-200 hover:bg-slate-50 cursor-pointer">
-              <input type="radio" name="q_capacity" value="not_now" class="text-brand-600">
+            <label class="flex items-center gap-2.5 p-3 rounded-2xl border border-slate-200/80 bg-white/70 hover:bg-white hover:border-brand-500/50 hover:shadow-2xs transition-all cursor-pointer">
+              <input type="radio" name="q_capacity" value="not_now" class="text-brand-600 accent-brand-600">
               <span data-i18n="q1_opt4">غير متأكد، يعتمد على الأمان وسهولة السحب</span>
             </label>
           </div>
@@ -1009,20 +1268,20 @@
             ٢. ما هو العائق الأكبر الذي يمنعك من الاستثمار في الأسهم العالمية حالياً؟
           </label>
           <div class="space-y-2 text-xs">
-            <label class="flex items-center gap-2 p-2.5 rounded-xl border border-slate-200 hover:bg-slate-50 cursor-pointer">
-              <input type="radio" name="q_blocker" value="etf_knowledge" checked class="text-brand-600">
+            <label class="flex items-center gap-2.5 p-3 rounded-2xl border border-slate-200/80 bg-white/70 hover:bg-white hover:border-brand-500/50 hover:shadow-2xs transition-all cursor-pointer">
+              <input type="radio" name="q_blocker" value="etf_knowledge" checked class="text-brand-600 accent-brand-600">
               <span data-i18n="q2_opt1">عدم وضوح ما هو الـ ETF وكيف يعمل الاستثمار طويل الأجل</span>
             </label>
-            <label class="flex items-center gap-2 p-2.5 rounded-xl border border-slate-200 hover:bg-slate-50 cursor-pointer">
-              <input type="radio" name="q_blocker" value="fees_fx" class="text-brand-600">
+            <label class="flex items-center gap-2.5 p-3 rounded-2xl border border-slate-200/80 bg-white/70 hover:bg-white hover:border-brand-500/50 hover:shadow-2xs transition-all cursor-pointer">
+              <input type="radio" name="q_blocker" value="fees_fx" class="text-brand-600 accent-brand-600">
               <span data-i18n="q2_opt2">عمولات التحويل البنكي العالية وفروقات تصريف العملة</span>
             </label>
-            <label class="flex items-center gap-2 p-2.5 rounded-xl border border-slate-200 hover:bg-slate-50 cursor-pointer">
-              <input type="radio" name="q_blocker" value="trust_loss" class="text-brand-600">
+            <label class="flex items-center gap-2.5 p-3 rounded-2xl border border-slate-200/80 bg-white/70 hover:bg-white hover:border-brand-500/50 hover:shadow-2xs transition-all cursor-pointer">
+              <input type="radio" name="q_blocker" value="trust_loss" class="text-brand-600 accent-brand-600">
               <span data-i18n="q2_opt3">الخوف من الخسارة وقلة الثقة في المنصات الأجنبية</span>
             </label>
-            <label class="flex items-center gap-2 p-2.5 rounded-xl border border-slate-200 hover:bg-slate-50 cursor-pointer">
-              <input type="radio" name="q_blocker" value="complexity" class="text-brand-600">
+            <label class="flex items-center gap-2.5 p-3 rounded-2xl border border-slate-200/80 bg-white/70 hover:bg-white hover:border-brand-500/50 hover:shadow-2xs transition-all cursor-pointer">
+              <input type="radio" name="q_blocker" value="complexity" class="text-brand-600 accent-brand-600">
               <span data-i18n="q2_opt4">تعقيد منصات التداول وصعوبة فهم آلية عمل الصناديق</span>
             </label>
           </div>
@@ -1034,16 +1293,16 @@
             ٣. من هي الجهة التي ستثق بوضع أموالك معها أكثر؟
           </label>
           <div class="space-y-2 text-xs">
-            <label class="flex items-center gap-2 p-2.5 rounded-xl border border-slate-200 hover:bg-slate-50 cursor-pointer">
-              <input type="radio" name="q_trust" value="jordan_fintech" checked class="text-brand-600">
+            <label class="flex items-center gap-2.5 p-3 rounded-2xl border border-slate-200/80 bg-white/70 hover:bg-white hover:border-brand-500/50 hover:shadow-2xs transition-all cursor-pointer">
+              <input type="radio" name="q_trust" value="jordan_fintech" checked class="text-brand-600 accent-brand-600">
               <span data-i18n="q3_opt1">تطبيق أردني متخصص (Fintech) مرخص من هيئة الأوراق المالية</span>
             </label>
-            <label class="flex items-center gap-2 p-2.5 rounded-xl border border-slate-200 hover:bg-slate-50 cursor-pointer">
-              <input type="radio" name="q_trust" value="traditional_bank" class="text-brand-600">
+            <label class="flex items-center gap-2.5 p-3 rounded-2xl border border-slate-200/80 bg-white/70 hover:bg-white hover:border-brand-500/50 hover:shadow-2xs transition-all cursor-pointer">
+              <input type="radio" name="q_trust" value="traditional_bank" class="text-brand-600 accent-brand-600">
               <span data-i18n="q3_opt2">بنك أردني تقليدي معروف</span>
             </label>
-            <label class="flex items-center gap-2 p-2.5 rounded-xl border border-slate-200 hover:bg-slate-50 cursor-pointer">
-              <input type="radio" name="q_trust" value="intl_broker" class="text-brand-600">
+            <label class="flex items-center gap-2.5 p-3 rounded-2xl border border-slate-200/80 bg-white/70 hover:bg-white hover:border-brand-500/50 hover:shadow-2xs transition-all cursor-pointer">
+              <input type="radio" name="q_trust" value="intl_broker" class="text-brand-600 accent-brand-600">
               <span data-i18n="q3_opt3">وسيط أجنبي دولي مرخص في أمريكا أو أوروبا</span>
             </label>
           </div>
@@ -1055,46 +1314,46 @@
             ٤. أي من هذه النماذج السعرية تفضل؟
           </label>
           <div class="space-y-2 text-xs">
-            <label class="flex items-center gap-2 p-2.5 rounded-xl border border-slate-200 hover:bg-slate-50 cursor-pointer">
-              <input type="radio" name="q_pricing" value="percent_025" checked class="text-brand-600">
+            <label class="flex items-center gap-2.5 p-3 rounded-2xl border border-slate-200/80 bg-white/70 hover:bg-white hover:border-brand-500/50 hover:shadow-2xs transition-all cursor-pointer">
+              <input type="radio" name="q_pricing" value="percent_025" checked class="text-brand-600 accent-brand-600">
               <span data-i18n="q4_opt1">عمولة سنوية رمزية ٠.٢٥٪ من إجمالي المحفظة</span>
             </label>
-            <label class="flex items-center gap-2 p-2.5 rounded-xl border border-slate-200 hover:bg-slate-50 cursor-pointer">
-              <input type="radio" name="q_pricing" value="sub_monthly" class="text-brand-600">
+            <label class="flex items-center gap-2.5 p-3 rounded-2xl border border-slate-200/80 bg-white/70 hover:bg-white hover:border-brand-500/50 hover:shadow-2xs transition-all cursor-pointer">
+              <input type="radio" name="q_pricing" value="sub_monthly" class="text-brand-600 accent-brand-600">
               <span data-i18n="q4_opt2">اشتراك شهري ثابت (٢ - ٣ دنانير شهرياً) بغض النظر عن الأرباح</span>
             </label>
           </div>
         </div>
 
         <!-- Optional Contact Information for Direct Modal Entries / 15-Min Call -->
-        <div id="modalContactInfo" class="p-3.5 bg-brand-50/60 rounded-xl border border-brand-200/80 space-y-2.5">
+        <div id="modalContactInfo" class="p-4 bg-brand-500/5 rounded-2xl border border-brand-500/15 space-y-3">
           <div class="flex items-center justify-between">
             <span class="text-xs font-bold text-slate-800" data-i18n="modal_contact_title">بيانات التواصل (لحجز المكالمة وتأكيد أولوية الانتظار):</span>
-            <span class="text-[10px] text-brand-600 font-medium" data-i18n="modal_contact_note">اختياري</span>
+            <span class="text-[10px] text-brand-600 font-semibold" data-i18n="modal_contact_note">اختياري</span>
           </div>
-          <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
             <div>
               <label for="modalEmail" class="block text-[11px] font-semibold text-slate-600 mb-1" data-i18n="lbl_email">البريد الإلكتروني</label>
-              <input type="email" id="modalEmail" placeholder="name@example.com" class="w-full px-3 py-2 rounded-lg border border-slate-300 text-xs focus:ring-2 focus:ring-brand-500 bg-white" dir="ltr">
+              <input type="email" id="modalEmail" placeholder="name@example.com" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 text-xs focus:ring-2 focus:ring-brand-500/30 focus:border-brand-500 bg-white" dir="ltr">
             </div>
             <div>
               <label for="modalPhone" class="block text-[11px] font-semibold text-slate-600 mb-1" data-i18n="lbl_phone_short">رقم الهاتف</label>
-              <input type="tel" id="modalPhone" placeholder="079XXXXXXX" class="w-full px-3 py-2 rounded-lg border border-slate-300 text-xs focus:ring-2 focus:ring-brand-500 bg-white" dir="ltr">
+              <input type="tel" id="modalPhone" placeholder="079XXXXXXX" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 text-xs focus:ring-2 focus:ring-brand-500/30 focus:border-brand-500 bg-white" dir="ltr">
             </div>
           </div>
         </div>
 
         <!-- Optional Interview Scheduling Direct CTA -->
-        <div class="p-3.5 bg-brand-50 rounded-xl border border-brand-200">
-          <label class="flex items-start gap-2 cursor-pointer text-xs">
-            <input type="checkbox" id="interviewBookConsent" checked class="mt-0.5 w-4 h-4 text-brand-600 rounded">
-            <span class="text-slate-800" data-i18n="q5_interview_chat">
+        <div class="p-3.5 bg-brand-500/5 rounded-2xl border border-brand-500/15">
+          <label class="flex items-start gap-2.5 cursor-pointer text-xs">
+            <input type="checkbox" id="interviewBookConsent" checked class="mt-0.5 w-4 h-4 text-brand-600 rounded accent-brand-600">
+            <span class="text-slate-800 leading-relaxed" data-i18n="q5_interview_chat">
               <strong>أنا مستعد لمكالمة هاتفية سريعة (١٥ دقيقة)</strong> مع مؤسس المشروع لمناقشة تجربتي وملاحظاتي.
             </span>
           </label>
         </div>
 
-        <button type="submit" id="modalSubmitBtn" class="w-full py-3 px-4 rounded-xl bg-brand-600 hover:bg-brand-700 text-white font-bold text-sm shadow-md transition" data-i18n="modal_submit_btn">
+        <button type="submit" id="modalSubmitBtn" class="apple-btn-primary w-full py-3.5 px-4 rounded-2xl text-white font-bold text-sm shadow-md cursor-pointer" data-i18n="modal_submit_btn">
           حفظ الإجابات وتفعيل أولوية الدخول
         </button>
 
@@ -1102,14 +1361,14 @@
     </div>
   </div>
 
-  <!-- Success Notification Toast -->
-  <div id="toastNotification" class="fixed bottom-5 right-5 left-5 sm:left-auto sm:w-96 z-50 bg-slate-900 text-white p-4 rounded-2xl shadow-2xl border border-slate-700 flex items-center gap-3 transform translate-y-24 transition-transform duration-300">
-    <div class="w-9 h-9 rounded-xl bg-emerald-500/20 text-emerald-400 flex items-center justify-center shrink-0">
+  <!-- Success Notification Toast (Apple Dynamic Island / Notification Pill) -->
+  <div id="toastNotification" class="fixed bottom-6 right-6 left-6 sm:left-auto sm:w-96 z-50 bg-[#1c1c1e]/90 text-white p-4 rounded-2xl shadow-2xl border border-white/15 backdrop-blur-xl flex items-center gap-3.5 transform translate-y-24 transition-transform duration-300">
+    <div class="w-9 h-9 rounded-xl bg-emerald-500/20 text-emerald-400 flex items-center justify-center shrink-0 border border-emerald-500/30">
       <i data-lucide="check-circle" class="w-5 h-5"></i>
     </div>
     <div class="flex-1">
       <h4 class="text-xs font-bold text-white" id="toastTitle">تم التسجيل بنجاح!</h4>
-      <p class="text-[11px] text-slate-300" id="toastMessage">أنت الآن رقم #143 على قائمة الانتظار</p>
+      <p class="text-[11px] text-slate-300 mt-0.5" id="toastMessage">أنت الآن رقم #143 على قائمة الانتظار</p>
     </div>
   </div>
 
@@ -1122,6 +1381,6 @@
   <script src="firebase-config.js"></script>
 
   <!-- External App Script -->
-  <script src="app.js?v=20260919.3"></script>
+  <script src="app.js?v=20260924.1"></script>
 </body>
 </html>

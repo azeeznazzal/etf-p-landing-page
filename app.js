@@ -956,8 +956,8 @@ function updateLanguage(lang) {
   document.documentElement.lang = lang;
   document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
   document.body.className = lang === 'en' 
-    ? 'bg-slate-50 text-slate-900 antialiased min-h-screen selection:bg-brand-500 selection:text-white lang-en'
-    : 'bg-slate-50 text-slate-900 antialiased min-h-screen selection:bg-brand-500 selection:text-white';
+    ? 'bg-[#f5f5f7] text-[#1d1d1f] antialiased min-h-screen selection:bg-brand-500 selection:text-white lang-en'
+    : 'bg-[#f5f5f7] text-[#1d1d1f] antialiased min-h-screen selection:bg-brand-500 selection:text-white';
 
   // Update Document Title & Description
   document.title = lang === 'ar' 
