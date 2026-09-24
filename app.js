@@ -494,6 +494,10 @@ window.activateTabById = function(targetId, setFocus = false) {
   const eduTabBtns = Array.from(document.querySelectorAll('.edu-tab-btn'));
   const eduTabPanels = Array.from(document.querySelectorAll('.edu-tab-panel'));
 
+  // Guard against non-existent tab targets to prevent hiding all panels
+  const targetExists = eduTabPanels.some(p => p.id === targetId);
+  if (!targetExists) return;
+
   eduTabBtns.forEach(b => {
     const isTarget = b.getAttribute('data-tab') === targetId;
     if (isTarget) {
@@ -690,11 +694,19 @@ function initApp() {
   // Animation lifecycle state tracking to prevent race conditions & stuck states
   let modalRafId = null;
   let modalCloseTimer = null;
+  let isClosing = false;
+  let lastActiveElement = null;
 
   // Helper to open modal cleanly (interruptible transition)
   function openModal() {
     if (!surveyModal) return;
 
+    // If modal is already fully visible and not currently closing, no-op
+    if (surveyModal.classList.contains('apple-modal-visible') && !isClosing && !modalCloseTimer) {
+      return;
+    }
+
+    // Cancel any active close timers or pending animation frames
     if (modalCloseTimer) {
       clearTimeout(modalCloseTimer);
       modalCloseTimer = null;
@@ -703,17 +715,49 @@ function initApp() {
       cancelAnimationFrame(modalRafId);
       modalRafId = null;
     }
+    isClosing = false;
+
+    // Save previous active focus element to restore on dismissal
+    if (document.activeElement && document.activeElement !== document.body) {
+      lastActiveElement = document.activeElement;
+    }
+
+    const wasAlreadyDisplayed = surveyModal.classList.contains('flex') && !surveyModal.classList.contains('hidden');
 
     surveyModal.classList.remove('hidden');
     surveyModal.classList.add('flex');
+    surveyModal.setAttribute('aria-hidden', 'false');
+    surveyModal.removeAttribute('inert');
     document.body.style.overflow = 'hidden';
 
-    modalRafId = requestAnimationFrame(() => {
+    // Reduced motion: instantaneous reveal
+    const prefersReducedMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (prefersReducedMotion) {
+      surveyModal.classList.add('apple-modal-visible');
+      if (closeSurveyBtn) closeSurveyBtn.focus();
+      if (window.lucide) window.lucide.createIcons();
+      return;
+    }
+
+    // Interruptibility: If already displayed in layout (e.g. closing was interrupted),
+    // immediately transition back to visible from current presentation state without waiting 2 RAF frames!
+    if (wasAlreadyDisplayed) {
+      surveyModal.classList.add('apple-modal-visible');
+    } else {
       modalRafId = requestAnimationFrame(() => {
-        surveyModal.classList.add('apple-modal-visible');
-        modalRafId = null;
+        modalRafId = requestAnimationFrame(() => {
+          surveyModal.classList.add('apple-modal-visible');
+          modalRafId = null;
+        });
       });
-    });
+    }
+
+    // Accessible focus management: focus close button
+    setTimeout(() => {
+      if (closeSurveyBtn && surveyModal.classList.contains('apple-modal-visible')) {
+        closeSurveyBtn.focus();
+      }
+    }, 60);
 
     if (window.lucide) window.lucide.createIcons();
   }
@@ -722,6 +766,16 @@ function initApp() {
   function closeModal() {
     if (!surveyModal) return;
 
+    // If modal is already hidden and not in layout flow, no-op
+    if (surveyModal.classList.contains('hidden') && !surveyModal.classList.contains('flex')) {
+      return;
+    }
+
+    // If already in closing phase with an active timer, avoid resetting the close timer
+    if (isClosing && modalCloseTimer) {
+      return;
+    }
+
     if (modalRafId) {
       cancelAnimationFrame(modalRafId);
       modalRafId = null;
@@ -731,16 +785,37 @@ function initApp() {
       modalCloseTimer = null;
     }
 
+    isClosing = true;
     surveyModal.classList.remove('apple-modal-visible');
+    surveyModal.setAttribute('aria-hidden', 'true');
+    surveyModal.setAttribute('inert', '');
     document.body.style.overflow = '';
 
-    modalCloseTimer = setTimeout(() => {
+    // Restore focus to triggering button
+    if (lastActiveElement && typeof lastActiveElement.focus === 'function') {
+      try {
+        lastActiveElement.focus();
+      } catch (e) {}
+      lastActiveElement = null;
+    }
+
+    const finalizeModalClose = () => {
       if (!surveyModal.classList.contains('apple-modal-visible')) {
         surveyModal.classList.add('hidden');
         surveyModal.classList.remove('flex');
       }
+      isClosing = false;
       modalCloseTimer = null;
-    }, 320);
+    };
+
+    // Reduced motion: immediate layout clearance
+    const prefersReducedMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (prefersReducedMotion) {
+      finalizeModalClose();
+      return;
+    }
+
+    modalCloseTimer = setTimeout(finalizeModalClose, 320);
   }
 
   window.openModal = openModal;
@@ -933,6 +1008,9 @@ function initApp() {
 
   // Modal Dismissal Handler
   async function handleModalDismiss() {
+    if (surveyModal && surveyModal.classList.contains('hidden') && !surveyModal.classList.contains('flex')) {
+      return;
+    }
     closeModal();
     if (pendingWaitlist) {
       const waitlistToFinalize = pendingWaitlist;
@@ -956,7 +1034,7 @@ function initApp() {
   }
 
   document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' && surveyModal && !surveyModal.classList.contains('hidden')) {
+    if (e.key === 'Escape' && surveyModal && surveyModal.classList.contains('apple-modal-visible')) {
       handleModalDismiss();
     }
   });

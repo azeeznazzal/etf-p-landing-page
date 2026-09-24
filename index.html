@@ -2,7 +2,7 @@
 <html lang="ar" dir="rtl" class="scroll-smooth">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <title>ETF-P | استثمر ١٠٠ دينار شهرياً في صناديق المؤشرات المتداولة (ETFs)</title>
   <meta name="description" content="منصة الاستثمار التراكمي طويل الأجل في صناديق المؤشرات المتداولة (ETFs) للأردنيين. ابدأ بـ 100 دينار شهرياً بكل سهولة وأمان وشفافية.">
   
@@ -108,6 +108,7 @@
       backdrop-filter: blur(20px) saturate(180%);
       -webkit-backdrop-filter: blur(20px) saturate(180%);
       border-bottom: 0.5px solid rgba(0, 0, 0, 0.08);
+      padding-top: env(safe-area-inset-top);
     }
 
     .apple-glass {
@@ -294,12 +295,15 @@
       to { opacity: 1; transform: translateY(0); }
     }
 
-    /* 7. Apple Fluid Range Sliders (Tactile 1:1 direct tracking) */
+    /* 7. Apple Fluid Range Sliders (Tactile 1:1 direct tracking & 44pt touch area) */
     input[type="range"] {
       -webkit-appearance: none;
       appearance: none;
       background: rgba(0, 0, 0, 0.08);
-      height: 8px;
+      height: 44px;
+      padding: 18px 0;
+      background-clip: content-box;
+      box-sizing: border-box;
       border-radius: 9999px;
       outline: none;
       cursor: pointer;
@@ -346,6 +350,7 @@
       backdrop-filter: blur(0px);
       -webkit-backdrop-filter: blur(0px);
       transition: opacity 0.28s var(--apple-ease), backdrop-filter 0.28s var(--apple-ease), -webkit-backdrop-filter 0.28s var(--apple-ease);
+      overscroll-behavior: contain;
     }
 
     #surveyModal.apple-modal-visible {
@@ -356,7 +361,7 @@
     }
 
     #surveyModal .apple-modal-content {
-      transform: scale(0.94) translateY(14px);
+      transform: scale(0.96) translateY(24px);
       opacity: 0;
       transition: transform 0.32s var(--apple-spring), opacity 0.26s var(--apple-ease);
       overscroll-behavior: contain;
@@ -366,6 +371,15 @@
     #surveyModal.apple-modal-visible .apple-modal-content {
       transform: scale(1) translateY(0);
       opacity: 1;
+    }
+
+    @media (max-width: 639px) {
+      #surveyModal .apple-modal-content {
+        transform: translateY(100%);
+      }
+      #surveyModal.apple-modal-visible .apple-modal-content {
+        transform: translateY(0);
+      }
     }
 
     /* RTL flip utility */
@@ -417,11 +431,11 @@
 
       <!-- Navigation links (Desktop) -->
       <nav class="hidden md:flex items-center gap-7 text-[13.5px] font-medium text-slate-600">
-        <a href="#etf-explained" class="hover:text-slate-900 transition-colors" data-i18n="nav_etf">ما هو الـ ETF؟</a>
-        <a href="#about" class="hover:text-slate-900 transition-colors" data-i18n="nav_why">لماذا الآن؟</a>
-        <a href="#calculator" class="hover:text-slate-900 transition-colors" data-i18n="nav_calc">حاسبة العوائد</a>
-        <a href="#how-it-works" class="hover:text-slate-900 transition-colors" data-i18n="nav_how">كيف يعمل؟</a>
-        <a href="#interview-section" class="hover:text-slate-900 transition-colors flex items-center gap-2 text-emerald-700 font-semibold">
+        <a href="#etf-explained" class="hover:text-slate-900 transition-colors min-h-[44px] inline-flex items-center" data-i18n="nav_etf">ما هو الـ ETF؟</a>
+        <a href="#about" class="hover:text-slate-900 transition-colors min-h-[44px] inline-flex items-center" data-i18n="nav_why">لماذا الآن؟</a>
+        <a href="#calculator" class="hover:text-slate-900 transition-colors min-h-[44px] inline-flex items-center" data-i18n="nav_calc">حاسبة العوائد</a>
+        <a href="#how-it-works" class="hover:text-slate-900 transition-colors min-h-[44px] inline-flex items-center" data-i18n="nav_how">كيف يعمل؟</a>
+        <a href="#interview-section" class="hover:text-slate-900 transition-colors min-h-[44px] inline-flex items-center gap-2 text-emerald-700 font-semibold">
           <span data-i18n="nav_interview">استطلاع المستثمرين</span>
           <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
         </a>
@@ -481,12 +495,12 @@
         <form id="heroWaitlistForm" class="space-y-4">
           <div>
             <label for="fullName" class="block text-xs font-bold text-slate-700 mb-1.5" data-i18n="lbl_name">الاسم الكريم</label>
-            <input type="text" id="fullName" required placeholder="مثال: أحمد نزال" class="w-full px-4 py-3 rounded-xl border border-slate-200/90 text-sm focus:outline-none focus:ring-2 focus:ring-brand-500/30 focus:border-brand-500 bg-white/90 shadow-2xs transition-all placeholder:text-slate-400">
+            <input type="text" id="fullName" autocomplete="name" required placeholder="مثال: أحمد نزال" class="w-full min-h-[44px] px-4 py-3 rounded-xl border border-slate-200/90 text-base sm:text-sm focus:outline-none focus:ring-2 focus:ring-brand-500/30 focus:border-brand-500 bg-white/90 shadow-2xs transition-all placeholder:text-slate-400">
           </div>
 
           <div>
             <label for="email" class="block text-xs font-bold text-slate-700 mb-1.5" data-i18n="lbl_email">البريد الإلكتروني</label>
-            <input type="email" id="email" required placeholder="name@example.com" class="w-full px-4 py-3 rounded-xl border border-slate-200/90 text-sm focus:outline-none focus:ring-2 focus:ring-brand-500/30 focus:border-brand-500 bg-white/90 shadow-2xs transition-all placeholder:text-slate-400" dir="ltr">
+            <input type="email" id="email" autocomplete="email" required placeholder="name@example.com" class="w-full min-h-[44px] px-4 py-3 rounded-xl border border-slate-200/90 text-base sm:text-sm focus:outline-none focus:ring-2 focus:ring-brand-500/30 focus:border-brand-500 bg-white/90 shadow-2xs transition-all placeholder:text-slate-400" dir="ltr">
           </div>
 
           <div>
@@ -494,16 +508,16 @@
               <label for="phone" class="block text-xs font-bold text-slate-700" data-i18n="lbl_phone">رقم الهاتف (اختياري لمكالمة الاستطلاع)</label>
               <span class="text-[11px] text-brand-600 font-medium" data-i18n="lbl_phone_note">لتسهيل التواصل وتحديد الموعد</span>
             </div>
-            <input type="tel" id="phone" placeholder="079XXXXXXX" class="w-full px-4 py-3 rounded-xl border border-slate-200/90 text-sm focus:outline-none focus:ring-2 focus:ring-brand-500/30 focus:border-brand-500 bg-white/90 shadow-2xs transition-all placeholder:text-slate-400" dir="ltr">
+            <input type="tel" id="phone" autocomplete="tel" placeholder="079XXXXXXX" class="w-full min-h-[44px] px-4 py-3 rounded-xl border border-slate-200/90 text-base sm:text-sm focus:outline-none focus:ring-2 focus:ring-brand-500/30 focus:border-brand-500 bg-white/90 shadow-2xs transition-all placeholder:text-slate-400" dir="ltr">
           </div>
 
-          <!-- Discovery survey teaser checkbox -->
-          <div class="flex items-start gap-3 pt-1">
-            <input type="checkbox" id="interviewOptIn" checked class="mt-0.5 w-4 h-4 text-brand-600 rounded border-slate-300 focus:ring-brand-500 accent-brand-600 cursor-pointer">
-            <label for="interviewOptIn" class="text-xs text-slate-600 cursor-pointer leading-relaxed" data-i18n="chk_survey_optin">
+          <!-- Discovery survey teaser checkbox (44pt touch area) -->
+          <label for="interviewOptIn" class="flex items-start gap-3 p-2.5 rounded-xl border border-slate-200/60 bg-white/60 hover:bg-white min-h-[44px] cursor-pointer transition-colors">
+            <input type="checkbox" id="interviewOptIn" checked class="mt-0.5 w-5 h-5 text-brand-600 rounded border-slate-300 focus:ring-brand-500 accent-brand-600 cursor-pointer shrink-0">
+            <span class="text-xs text-slate-600 cursor-pointer leading-relaxed" data-i18n="chk_survey_optin">
               <strong>أنا مستعد للإجابة عن ٤ أسئلة سريعة (٤٥ ثانية)</strong> للمساعدة في توجيه المنتج والحصول على الأولوية في قائمة الانتظار.
-            </label>
-          </div>
+            </span>
+          </label>
 
           <button type="submit" id="submitBtn" class="apple-btn-primary w-full py-3.5 px-6 rounded-2xl font-bold text-white shadow-lg shadow-brand-600/30 flex items-center justify-center gap-2 cursor-pointer text-sm sm:text-base">
             <span data-i18n="btn_submit_waitlist">انضم الآن واحصل على الأولوية</span>
@@ -1256,13 +1270,13 @@
           </div>
         </div>
 
-        <div class="flex flex-wrap items-center justify-center gap-6 text-slate-400">
-          <a href="#etf-explained" class="hover:text-white transition-colors" data-i18n="nav_etf">ما هو الـ ETF؟</a>
-          <a href="#about" class="hover:text-white transition-colors" data-i18n="nav_about">عن المشروع</a>
-          <a href="#calculator" class="hover:text-white transition-colors" data-i18n="nav_calc">الحاسبة</a>
-          <a href="#how-it-works" class="hover:text-white transition-colors" data-i18n="nav_how">كيف يعمل؟</a>
-          <a href="#interview-section" class="hover:text-white transition-colors" data-i18n="nav_interview">البحث الاستطلاعي</a>
-          <a href="https://github.com/azeeznazzal/etf-p-landing-page" target="_blank" class="hover:text-white transition-colors flex items-center gap-1.5">
+        <div class="flex flex-wrap items-center justify-center gap-4 sm:gap-6 text-slate-400">
+          <a href="#etf-explained" class="min-h-[44px] inline-flex items-center hover:text-white transition-colors py-2 px-1" data-i18n="nav_etf">ما هو الـ ETF؟</a>
+          <a href="#about" class="min-h-[44px] inline-flex items-center hover:text-white transition-colors py-2 px-1" data-i18n="nav_about">عن المشروع</a>
+          <a href="#calculator" class="min-h-[44px] inline-flex items-center hover:text-white transition-colors py-2 px-1" data-i18n="nav_calc">الحاسبة</a>
+          <a href="#how-it-works" class="min-h-[44px] inline-flex items-center hover:text-white transition-colors py-2 px-1" data-i18n="nav_how">كيف يعمل؟</a>
+          <a href="#interview-section" class="min-h-[44px] inline-flex items-center hover:text-white transition-colors py-2 px-1" data-i18n="nav_interview">البحث الاستطلاعي</a>
+          <a href="https://github.com/azeeznazzal/etf-p-landing-page" target="_blank" class="min-h-[44px] inline-flex items-center hover:text-white transition-colors py-2 px-1 gap-1.5">
             <svg class="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
             <span>GitHub</span>
           </a>
@@ -1279,9 +1293,12 @@
   </footer>
 
   <!-- Customer Discovery Survey Modal (Apple iOS Sheet / Dialog) -->
-  <div id="surveyModal" class="fixed inset-0 z-50 bg-black/40 hidden items-center justify-center p-3 sm:p-4">
-    <div class="apple-glass apple-modal-content rounded-[28px] sm:rounded-[32px] max-w-lg w-full p-5 sm:p-9 shadow-2xl relative max-h-[88dvh] overflow-y-auto border border-white/90">
+  <div id="surveyModal" class="fixed inset-0 z-50 bg-black/40 hidden items-end sm:items-center justify-center p-0 sm:p-4" role="dialog" aria-modal="true" aria-labelledby="modalTitle" aria-hidden="true" inert>
+    <div class="apple-glass apple-modal-content rounded-t-[32px] sm:rounded-[32px] max-w-lg w-full p-5 sm:p-9 shadow-2xl relative max-h-[88dvh] overflow-y-auto border border-white/90 pb-[max(1.5rem,env(safe-area-inset-bottom))]">
       
+      <!-- Apple iOS Sheet Pull Indicator (Mobile Only) -->
+      <div class="w-10 h-1 bg-slate-300/80 rounded-full mx-auto mb-4 sm:hidden"></div>
+
       <!-- Modal Close Button (Circle Capsule, 44x44pt Apple HIG touch target) -->
       <button id="closeSurveyBtn" class="absolute top-4 left-4 rtl:left-auto rtl:right-4 w-11 h-11 rounded-full bg-slate-100/90 hover:bg-slate-200 active:scale-95 text-slate-500 hover:text-slate-800 flex items-center justify-center transition-all cursor-pointer shadow-2xs" aria-label="Close survey">
         <i data-lucide="x" class="w-5 h-5"></i>
@@ -1292,7 +1309,7 @@
         <div class="w-12 h-12 rounded-2xl bg-brand-500/10 text-brand-600 flex items-center justify-center mx-auto mb-3 shadow-2xs border border-brand-500/20">
           <i data-lucide="sparkles" class="w-6 h-6"></i>
         </div>
-        <h3 class="text-xl font-black text-slate-900 tracking-tight" data-i18n="modal_title">استطلاع المستثمر الأردني</h3>
+        <h3 id="modalTitle" class="text-xl font-black text-slate-900 tracking-tight" data-i18n="modal_title">استطلاع المستثمر الأردني</h3>
         <p class="text-xs text-slate-500 mt-1" data-i18n="modal_sub">٤ أسئلة سريعة تساعدنا في تصميم الخدمة وتمنحك أولوية VIP</p>
       </div>
 
@@ -1304,20 +1321,20 @@
             ١. هل أنت مستعد لاستثمار ١٠٠ دينار أردني شهرياً في محفظة صناديق استثمارية (ETFs) متنوعة؟
           </label>
           <div class="space-y-2 text-xs">
-            <label class="flex items-center gap-2.5 p-3 rounded-2xl border border-slate-200/80 bg-white/70 hover:bg-white hover:border-brand-500/50 hover:shadow-2xs transition-all cursor-pointer">
-              <input type="radio" name="q_capacity" value="yes_100" checked class="text-brand-600 accent-brand-600">
+            <label class="flex items-center min-h-[48px] gap-2.5 px-3.5 py-3 rounded-2xl border border-slate-200/80 bg-white/70 hover:bg-white hover:border-brand-500/50 hover:shadow-2xs transition-all cursor-pointer">
+              <input type="radio" name="q_capacity" value="yes_100" checked class="text-brand-600 accent-brand-600 w-4 h-4">
               <span data-i18n="q1_opt1">نعم، ١٠٠ دينار شهرياً مبلغ مثالي ومناسب</span>
             </label>
-            <label class="flex items-center gap-2.5 p-3 rounded-2xl border border-slate-200/80 bg-white/70 hover:bg-white hover:border-brand-500/50 hover:shadow-2xs transition-all cursor-pointer">
-              <input type="radio" name="q_capacity" value="more_200" class="text-brand-600 accent-brand-600">
+            <label class="flex items-center min-h-[48px] gap-2.5 px-3.5 py-3 rounded-2xl border border-slate-200/80 bg-white/70 hover:bg-white hover:border-brand-500/50 hover:shadow-2xs transition-all cursor-pointer">
+              <input type="radio" name="q_capacity" value="more_200" class="text-brand-600 accent-brand-600 w-4 h-4">
               <span data-i18n="q1_opt2">أستطيع استثمار مبالغ أكبر (٢٠٠ - ٥٠٠ د.أ شهرياً)</span>
             </label>
-            <label class="flex items-center gap-2.5 p-3 rounded-2xl border border-slate-200/80 bg-white/70 hover:bg-white hover:border-brand-500/50 hover:shadow-2xs transition-all cursor-pointer">
-              <input type="radio" name="q_capacity" value="less_50" class="text-brand-600 accent-brand-600">
+            <label class="flex items-center min-h-[48px] gap-2.5 px-3.5 py-3 rounded-2xl border border-slate-200/80 bg-white/70 hover:bg-white hover:border-brand-500/50 hover:shadow-2xs transition-all cursor-pointer">
+              <input type="radio" name="q_capacity" value="less_50" class="text-brand-600 accent-brand-600 w-4 h-4">
               <span data-i18n="q1_opt3">أفضل البدء بمبلغ أصغر (٣٠ - ٥٠ د.أ شهرياً)</span>
             </label>
-            <label class="flex items-center gap-2.5 p-3 rounded-2xl border border-slate-200/80 bg-white/70 hover:bg-white hover:border-brand-500/50 hover:shadow-2xs transition-all cursor-pointer">
-              <input type="radio" name="q_capacity" value="not_now" class="text-brand-600 accent-brand-600">
+            <label class="flex items-center min-h-[48px] gap-2.5 px-3.5 py-3 rounded-2xl border border-slate-200/80 bg-white/70 hover:bg-white hover:border-brand-500/50 hover:shadow-2xs transition-all cursor-pointer">
+              <input type="radio" name="q_capacity" value="not_now" class="text-brand-600 accent-brand-600 w-4 h-4">
               <span data-i18n="q1_opt4">غير متأكد، يعتمد على الأمان وسهولة السحب</span>
             </label>
           </div>
@@ -1329,20 +1346,20 @@
             ٢. ما هو العائق الأكبر الذي يمنعك من الاستثمار في الأسهم العالمية حالياً؟
           </label>
           <div class="space-y-2 text-xs">
-            <label class="flex items-center gap-2.5 p-3 rounded-2xl border border-slate-200/80 bg-white/70 hover:bg-white hover:border-brand-500/50 hover:shadow-2xs transition-all cursor-pointer">
-              <input type="radio" name="q_blocker" value="etf_knowledge" checked class="text-brand-600 accent-brand-600">
+            <label class="flex items-center min-h-[48px] gap-2.5 px-3.5 py-3 rounded-2xl border border-slate-200/80 bg-white/70 hover:bg-white hover:border-brand-500/50 hover:shadow-2xs transition-all cursor-pointer">
+              <input type="radio" name="q_blocker" value="etf_knowledge" checked class="text-brand-600 accent-brand-600 w-4 h-4">
               <span data-i18n="q2_opt1">عدم وضوح ما هو الـ ETF وكيف يعمل الاستثمار طويل الأجل</span>
             </label>
-            <label class="flex items-center gap-2.5 p-3 rounded-2xl border border-slate-200/80 bg-white/70 hover:bg-white hover:border-brand-500/50 hover:shadow-2xs transition-all cursor-pointer">
-              <input type="radio" name="q_blocker" value="fees_fx" class="text-brand-600 accent-brand-600">
+            <label class="flex items-center min-h-[48px] gap-2.5 px-3.5 py-3 rounded-2xl border border-slate-200/80 bg-white/70 hover:bg-white hover:border-brand-500/50 hover:shadow-2xs transition-all cursor-pointer">
+              <input type="radio" name="q_blocker" value="fees_fx" class="text-brand-600 accent-brand-600 w-4 h-4">
               <span data-i18n="q2_opt2">عمولات التحويل البنكي العالية وفروقات تصريف العملة</span>
             </label>
-            <label class="flex items-center gap-2.5 p-3 rounded-2xl border border-slate-200/80 bg-white/70 hover:bg-white hover:border-brand-500/50 hover:shadow-2xs transition-all cursor-pointer">
-              <input type="radio" name="q_blocker" value="trust_loss" class="text-brand-600 accent-brand-600">
+            <label class="flex items-center min-h-[48px] gap-2.5 px-3.5 py-3 rounded-2xl border border-slate-200/80 bg-white/70 hover:bg-white hover:border-brand-500/50 hover:shadow-2xs transition-all cursor-pointer">
+              <input type="radio" name="q_blocker" value="trust_loss" class="text-brand-600 accent-brand-600 w-4 h-4">
               <span data-i18n="q2_opt3">الخوف من الخسارة وقلة الثقة في المنصات الأجنبية</span>
             </label>
-            <label class="flex items-center gap-2.5 p-3 rounded-2xl border border-slate-200/80 bg-white/70 hover:bg-white hover:border-brand-500/50 hover:shadow-2xs transition-all cursor-pointer">
-              <input type="radio" name="q_blocker" value="complexity" class="text-brand-600 accent-brand-600">
+            <label class="flex items-center min-h-[48px] gap-2.5 px-3.5 py-3 rounded-2xl border border-slate-200/80 bg-white/70 hover:bg-white hover:border-brand-500/50 hover:shadow-2xs transition-all cursor-pointer">
+              <input type="radio" name="q_blocker" value="complexity" class="text-brand-600 accent-brand-600 w-4 h-4">
               <span data-i18n="q2_opt4">تعقيد منصات التداول وصعوبة فهم آلية عمل الصناديق</span>
             </label>
           </div>
@@ -1354,16 +1371,16 @@
             ٣. من هي الجهة التي ستثق بوضع أموالك معها أكثر؟
           </label>
           <div class="space-y-2 text-xs">
-            <label class="flex items-center gap-2.5 p-3 rounded-2xl border border-slate-200/80 bg-white/70 hover:bg-white hover:border-brand-500/50 hover:shadow-2xs transition-all cursor-pointer">
-              <input type="radio" name="q_trust" value="jordan_fintech" checked class="text-brand-600 accent-brand-600">
+            <label class="flex items-center min-h-[48px] gap-2.5 px-3.5 py-3 rounded-2xl border border-slate-200/80 bg-white/70 hover:bg-white hover:border-brand-500/50 hover:shadow-2xs transition-all cursor-pointer">
+              <input type="radio" name="q_trust" value="jordan_fintech" checked class="text-brand-600 accent-brand-600 w-4 h-4">
               <span data-i18n="q3_opt1">تطبيق أردني متخصص (Fintech) مرخص من هيئة الأوراق المالية</span>
             </label>
-            <label class="flex items-center gap-2.5 p-3 rounded-2xl border border-slate-200/80 bg-white/70 hover:bg-white hover:border-brand-500/50 hover:shadow-2xs transition-all cursor-pointer">
-              <input type="radio" name="q_trust" value="traditional_bank" class="text-brand-600 accent-brand-600">
+            <label class="flex items-center min-h-[48px] gap-2.5 px-3.5 py-3 rounded-2xl border border-slate-200/80 bg-white/70 hover:bg-white hover:border-brand-500/50 hover:shadow-2xs transition-all cursor-pointer">
+              <input type="radio" name="q_trust" value="traditional_bank" class="text-brand-600 accent-brand-600 w-4 h-4">
               <span data-i18n="q3_opt2">بنك أردني تقليدي معروف</span>
             </label>
-            <label class="flex items-center gap-2.5 p-3 rounded-2xl border border-slate-200/80 bg-white/70 hover:bg-white hover:border-brand-500/50 hover:shadow-2xs transition-all cursor-pointer">
-              <input type="radio" name="q_trust" value="intl_broker" class="text-brand-600 accent-brand-600">
+            <label class="flex items-center min-h-[48px] gap-2.5 px-3.5 py-3 rounded-2xl border border-slate-200/80 bg-white/70 hover:bg-white hover:border-brand-500/50 hover:shadow-2xs transition-all cursor-pointer">
+              <input type="radio" name="q_trust" value="intl_broker" class="text-brand-600 accent-brand-600 w-4 h-4">
               <span data-i18n="q3_opt3">وسيط أجنبي دولي مرخص في أمريكا أو أوروبا</span>
             </label>
           </div>
@@ -1375,12 +1392,12 @@
             ٤. أي من هذه النماذج السعرية تفضل؟
           </label>
           <div class="space-y-2 text-xs">
-            <label class="flex items-center gap-2.5 p-3 rounded-2xl border border-slate-200/80 bg-white/70 hover:bg-white hover:border-brand-500/50 hover:shadow-2xs transition-all cursor-pointer">
-              <input type="radio" name="q_pricing" value="percent_025" checked class="text-brand-600 accent-brand-600">
+            <label class="flex items-center min-h-[48px] gap-2.5 px-3.5 py-3 rounded-2xl border border-slate-200/80 bg-white/70 hover:bg-white hover:border-brand-500/50 hover:shadow-2xs transition-all cursor-pointer">
+              <input type="radio" name="q_pricing" value="percent_025" checked class="text-brand-600 accent-brand-600 w-4 h-4">
               <span data-i18n="q4_opt1">عمولة سنوية رمزية ٠.٢٥٪ من إجمالي المحفظة</span>
             </label>
-            <label class="flex items-center gap-2.5 p-3 rounded-2xl border border-slate-200/80 bg-white/70 hover:bg-white hover:border-brand-500/50 hover:shadow-2xs transition-all cursor-pointer">
-              <input type="radio" name="q_pricing" value="sub_monthly" class="text-brand-600 accent-brand-600">
+            <label class="flex items-center min-h-[48px] gap-2.5 px-3.5 py-3 rounded-2xl border border-slate-200/80 bg-white/70 hover:bg-white hover:border-brand-500/50 hover:shadow-2xs transition-all cursor-pointer">
+              <input type="radio" name="q_pricing" value="sub_monthly" class="text-brand-600 accent-brand-600 w-4 h-4">
               <span data-i18n="q4_opt2">اشتراك شهري ثابت (٢ - ٣ دنانير شهرياً) بغض النظر عن الأرباح</span>
             </label>
           </div>
@@ -1395,19 +1412,19 @@
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
             <div>
               <label for="modalEmail" class="block text-[11px] font-semibold text-slate-600 mb-1" data-i18n="lbl_email">البريد الإلكتروني</label>
-              <input type="email" id="modalEmail" placeholder="name@example.com" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 text-xs focus:ring-2 focus:ring-brand-500/30 focus:border-brand-500 bg-white" dir="ltr">
+              <input type="email" id="modalEmail" autocomplete="email" placeholder="name@example.com" class="w-full min-h-[44px] px-3.5 py-2.5 rounded-xl border border-slate-200 text-base sm:text-xs focus:ring-2 focus:ring-brand-500/30 focus:border-brand-500 bg-white" dir="ltr">
             </div>
             <div>
               <label for="modalPhone" class="block text-[11px] font-semibold text-slate-600 mb-1" data-i18n="lbl_phone_short">رقم الهاتف</label>
-              <input type="tel" id="modalPhone" placeholder="079XXXXXXX" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 text-xs focus:ring-2 focus:ring-brand-500/30 focus:border-brand-500 bg-white" dir="ltr">
+              <input type="tel" id="modalPhone" autocomplete="tel" placeholder="079XXXXXXX" class="w-full min-h-[44px] px-3.5 py-2.5 rounded-xl border border-slate-200 text-base sm:text-xs focus:ring-2 focus:ring-brand-500/30 focus:border-brand-500 bg-white" dir="ltr">
             </div>
           </div>
         </div>
 
-        <!-- Optional Interview Scheduling Direct CTA -->
+        <!-- Optional Interview Scheduling Direct CTA (44pt touch area) -->
         <div class="p-3.5 bg-brand-500/5 rounded-2xl border border-brand-500/15">
-          <label class="flex items-start gap-2.5 cursor-pointer text-xs">
-            <input type="checkbox" id="interviewBookConsent" checked class="mt-0.5 w-4 h-4 text-brand-600 rounded accent-brand-600">
+          <label class="flex items-center min-h-[44px] gap-2.5 cursor-pointer text-xs">
+            <input type="checkbox" id="interviewBookConsent" checked class="w-4.5 h-4.5 text-brand-600 rounded accent-brand-600 shrink-0">
             <span class="text-slate-800 leading-relaxed" data-i18n="q5_interview_chat">
               <strong>أنا مستعد لمكالمة هاتفية سريعة (١٥ دقيقة)</strong> مع مؤسس المشروع لمناقشة تجربتي وملاحظاتي.
             </span>
@@ -1442,6 +1459,6 @@
   <script src="firebase-config.js"></script>
 
   <!-- External App Script -->
-  <script src="app.js?v=20260924.1"></script>
+  <script src="app.js?v=20260924.2"></script>
 </body>
 </html>
