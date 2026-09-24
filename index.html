@@ -1,10 +1,24 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="en" dir="ltr">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ETF-P | استثمر ١٠٠ دينار شهرياً في صناديق المؤشرات المتداولة (ETFs)</title>
-  <meta name="description" content="منصة الاستثمار التراكمي طويل الأجل في صناديق المؤشرات المتداولة (ETFs) للأردنيين. ابدأ بـ 100 دينار شهرياً بكل سهولة وأمان وشفافية.">
+  <title>ETF-P | Invest 100 JOD/Month in Diversified Global ETFs</title>
+  <meta name="description" content="Retail wealth platform for long-term compound investing in global ETFs for Jordanians. Start with 100 JOD/month with zero hassle, security, and full transparency.">
+  
+  <script>
+    (function() {
+      try {
+        var saved = localStorage.getItem('etf_p_lang');
+        var lang = (saved === 'ar' || saved === 'en') ? saved : 'en';
+        document.documentElement.lang = lang;
+        document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
+        if (lang === 'en') {
+          document.documentElement.classList.add('lang-en');
+        }
+      } catch (e) {}
+    })();
+  </script>
   
   <!-- Google Fonts: Tajawal & Inter -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -75,7 +89,7 @@
     }
   </style>
 </head>
-<body class="bg-slate-50 text-slate-900 antialiased min-h-screen selection:bg-brand-500 selection:text-white">
+<body class="bg-slate-50 text-slate-900 antialiased min-h-screen selection:bg-brand-500 selection:text-white lang-en">
   
   <!-- Header / Navigation -->
   <header class="sticky top-0 z-40 w-full border-b border-slate-200/80 bg-white/90 backdrop-blur-md">
@@ -112,7 +126,7 @@
         <!-- Language Switcher Button -->
         <button id="langToggleBtn" onclick="toggleLanguage()" class="flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold rounded-lg border border-slate-200 hover:bg-slate-100 transition text-slate-700 shadow-sm cursor-pointer" aria-label="Toggle language">
           <i data-lucide="globe" class="w-3.5 h-3.5 text-brand-600"></i>
-          <span id="langLabel">English</span>
+          <span id="langLabel">العربية</span>
         </button>
 
         <!-- Waitlist Anchor Button -->
@@ -1122,6 +1136,6 @@
   <script src="firebase-config.js"></script>
 
   <!-- External App Script -->
-  <script src="app.js?v=20260919.3"></script>
+  <script src="app.js?v=20260924.default_en"></script>
 </body>
 </html>

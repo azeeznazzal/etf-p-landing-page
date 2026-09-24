@@ -448,8 +448,8 @@ for (let i = 7; i <= 34; i++) {
   });
 }
 
-// Current language & waitlist state (persisted in localStorage)
-let currentLang = 'ar';
+// Current language & waitlist state (persisted in localStorage, default is English)
+let currentLang = 'en';
 try {
   const savedLang = localStorage.getItem('etf_p_lang');
   if (savedLang === 'en' || savedLang === 'ar') {
@@ -935,10 +935,8 @@ function initApp() {
   // Initial Dashboard Render
   updateDashboard();
 
-  // Restore saved language if not default
-  if (currentLang !== 'ar') {
-    updateLanguage(currentLang);
-  }
+  // Apply current language on startup (defaults to English or user's saved preference)
+  updateLanguage(currentLang);
 }
 
 if (document.readyState === 'loading') {
