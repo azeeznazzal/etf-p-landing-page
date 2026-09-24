@@ -687,30 +687,64 @@ function initApp() {
   const discoverySurveyForm = document.getElementById('discoverySurveyForm');
   const modalSubmitBtn = document.getElementById('modalSubmitBtn');
 
-  // Helper to open modal
+  // Animation lifecycle state tracking to prevent race conditions & stuck states
+  let modalRafId = null;
+  let modalCloseTimer = null;
+
+  // Helper to open modal cleanly (interruptible transition)
   function openModal() {
     if (!surveyModal) return;
+
+    if (modalCloseTimer) {
+      clearTimeout(modalCloseTimer);
+      modalCloseTimer = null;
+    }
+    if (modalRafId) {
+      cancelAnimationFrame(modalRafId);
+      modalRafId = null;
+    }
+
     surveyModal.classList.remove('hidden');
     surveyModal.classList.add('flex');
-    requestAnimationFrame(() => {
-      surveyModal.classList.add('apple-modal-visible');
-    });
     document.body.style.overflow = 'hidden';
+
+    modalRafId = requestAnimationFrame(() => {
+      modalRafId = requestAnimationFrame(() => {
+        surveyModal.classList.add('apple-modal-visible');
+        modalRafId = null;
+      });
+    });
+
     if (window.lucide) window.lucide.createIcons();
   }
 
-  // Helper to close modal
+  // Helper to close modal cleanly (interruptible transition)
   function closeModal() {
     if (!surveyModal) return;
+
+    if (modalRafId) {
+      cancelAnimationFrame(modalRafId);
+      modalRafId = null;
+    }
+    if (modalCloseTimer) {
+      clearTimeout(modalCloseTimer);
+      modalCloseTimer = null;
+    }
+
     surveyModal.classList.remove('apple-modal-visible');
-    setTimeout(() => {
+    document.body.style.overflow = '';
+
+    modalCloseTimer = setTimeout(() => {
       if (!surveyModal.classList.contains('apple-modal-visible')) {
         surveyModal.classList.add('hidden');
         surveyModal.classList.remove('flex');
       }
-    }, 280);
-    document.body.style.overflow = '';
+      modalCloseTimer = null;
+    }, 320);
   }
+
+  window.openModal = openModal;
+  window.closeModal = closeModal;
 
   // Finalize waitlist entry and increment counter AFTER actual completion
   async function finalizeWaitlistSubmission(data) {

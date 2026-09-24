@@ -166,6 +166,10 @@
 
     /* 3. Apple Buttons with Tactile Depth (Principle #1) */
     .apple-btn-primary {
+      min-height: 44px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
       background: linear-gradient(180deg, #0d9488 0%, #0f766e 100%);
       color: #ffffff;
       font-weight: 700;
@@ -181,6 +185,10 @@
     }
 
     .apple-btn-secondary {
+      min-height: 44px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
       background: rgba(0, 0, 0, 0.04);
       color: #1f2937;
       font-weight: 600;
@@ -209,6 +217,10 @@
     .edu-tab-btn {
       border-radius: 9999px !important;
       font-weight: 500;
+      min-height: 44px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
       border: none !important;
       transition: all 0.22s var(--apple-ease);
     }
@@ -287,17 +299,18 @@
       -webkit-appearance: none;
       appearance: none;
       background: rgba(0, 0, 0, 0.08);
-      height: 7px;
+      height: 8px;
       border-radius: 9999px;
       outline: none;
       cursor: pointer;
+      touch-action: pan-y;
     }
 
     input[type="range"]::-webkit-slider-thumb {
       -webkit-appearance: none;
       appearance: none;
-      width: 26px;
-      height: 26px;
+      width: 28px;
+      height: 28px;
       border-radius: 50%;
       background: #ffffff;
       cursor: pointer;
@@ -306,13 +319,13 @@
     }
 
     input[type="range"]:active::-webkit-slider-thumb {
-      transform: scale(1.16);
+      transform: scale(1.18);
       box-shadow: 0 4px 14px rgba(13, 148, 136, 0.35), 0 2px 4px rgba(0, 0, 0, 0.15);
     }
 
     input[type="range"]::-moz-range-thumb {
-      width: 26px;
-      height: 26px;
+      width: 28px;
+      height: 28px;
       border-radius: 50%;
       background: #ffffff;
       cursor: pointer;
@@ -322,13 +335,14 @@
     }
 
     input[type="range"]:active::-moz-range-thumb {
-      transform: scale(1.16);
+      transform: scale(1.18);
       box-shadow: 0 4px 14px rgba(13, 148, 136, 0.35), 0 2px 4px rgba(0, 0, 0, 0.15);
     }
 
     /* Apple Spring Sheet Modal Transition */
     #surveyModal {
       opacity: 0;
+      pointer-events: none;
       backdrop-filter: blur(0px);
       -webkit-backdrop-filter: blur(0px);
       transition: opacity 0.28s var(--apple-ease), backdrop-filter 0.28s var(--apple-ease), -webkit-backdrop-filter 0.28s var(--apple-ease);
@@ -336,6 +350,7 @@
 
     #surveyModal.apple-modal-visible {
       opacity: 1;
+      pointer-events: auto;
       backdrop-filter: blur(20px);
       -webkit-backdrop-filter: blur(20px);
     }
@@ -344,6 +359,8 @@
       transform: scale(0.94) translateY(14px);
       opacity: 0;
       transition: transform 0.32s var(--apple-spring), opacity 0.26s var(--apple-ease);
+      overscroll-behavior: contain;
+      -webkit-overflow-scrolling: touch;
     }
 
     #surveyModal.apple-modal-visible .apple-modal-content {
@@ -413,13 +430,13 @@
       <!-- Right controls (Language Toggle + Waitlist CTA) -->
       <div class="flex items-center gap-3">
         <!-- Language Switcher Capsule Button -->
-        <button id="langToggleBtn" onclick="toggleLanguage()" class="flex items-center gap-1.5 px-3.5 py-1.5 text-xs font-semibold rounded-full bg-slate-100/90 hover:bg-slate-200/90 border border-slate-200/60 transition-all text-slate-700 shadow-2xs cursor-pointer active:scale-95" aria-label="Toggle language">
+        <button id="langToggleBtn" onclick="toggleLanguage()" class="inline-flex items-center justify-center min-h-[44px] min-w-[44px] gap-1.5 px-3.5 py-2 text-xs font-semibold rounded-full bg-slate-100/90 hover:bg-slate-200/90 border border-slate-200/60 transition-all text-slate-700 shadow-2xs cursor-pointer active:scale-95" aria-label="Toggle language">
           <i data-lucide="globe" class="w-3.5 h-3.5 text-brand-600"></i>
           <span id="langLabel">English</span>
         </button>
 
         <!-- Waitlist Capsule Anchor Button -->
-        <a href="#waitlist-card" class="apple-btn-primary hidden sm:inline-flex items-center justify-center px-4.5 py-2 text-xs font-bold rounded-full shadow-md shadow-brand-600/20 active:scale-95" data-i18n="btn_join_waitlist">
+        <a href="#waitlist-card" class="apple-btn-primary hidden sm:inline-flex items-center justify-center min-h-[44px] px-4.5 py-2 text-xs font-bold rounded-full shadow-md shadow-brand-600/20 active:scale-95" data-i18n="btn_join_waitlist">
           انضم لقائمة الانتظار
         </a>
       </div>
@@ -1262,12 +1279,12 @@
   </footer>
 
   <!-- Customer Discovery Survey Modal (Apple iOS Sheet / Dialog) -->
-  <div id="surveyModal" class="fixed inset-0 z-50 bg-black/40 hidden items-center justify-center p-4">
-    <div class="apple-glass apple-modal-content rounded-[32px] max-w-lg w-full p-6 sm:p-9 shadow-2xl relative max-h-[90vh] overflow-y-auto border border-white/90">
+  <div id="surveyModal" class="fixed inset-0 z-50 bg-black/40 hidden items-center justify-center p-3 sm:p-4">
+    <div class="apple-glass apple-modal-content rounded-[28px] sm:rounded-[32px] max-w-lg w-full p-5 sm:p-9 shadow-2xl relative max-h-[88dvh] overflow-y-auto border border-white/90">
       
-      <!-- Modal Close Button (Circle Capsule) -->
-      <button id="closeSurveyBtn" class="absolute top-5 left-5 rtl:left-auto rtl:right-5 w-8 h-8 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-500 hover:text-slate-800 flex items-center justify-center transition-colors cursor-pointer" aria-label="Close survey">
-        <i data-lucide="x" class="w-4 h-4"></i>
+      <!-- Modal Close Button (Circle Capsule, 44x44pt Apple HIG touch target) -->
+      <button id="closeSurveyBtn" class="absolute top-4 left-4 rtl:left-auto rtl:right-4 w-11 h-11 rounded-full bg-slate-100/90 hover:bg-slate-200 active:scale-95 text-slate-500 hover:text-slate-800 flex items-center justify-center transition-all cursor-pointer shadow-2xs" aria-label="Close survey">
+        <i data-lucide="x" class="w-5 h-5"></i>
       </button>
 
       <!-- Modal Header -->
