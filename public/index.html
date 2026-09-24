@@ -23,7 +23,7 @@
       theme: {
         extend: {
           fontFamily: {
-            ar: ['-apple-system', 'BlinkMacSystemFont', '"SF Pro Arabic"', '"SF Pro Display"', '"SF Pro Text"', 'Tajawal', 'system-ui', 'sans-serif'],
+            ar: ['Tajawal', '-apple-system', 'BlinkMacSystemFont', '"SF Pro Arabic"', '"SF Pro Display"', '"SF Pro Text"', 'system-ui', 'sans-serif'],
             en: ['-apple-system', 'BlinkMacSystemFont', '"SF Pro Display"', '"SF Pro Text"', 'Inter', 'system-ui', 'sans-serif']
           },
           colors: {
@@ -69,7 +69,7 @@
     :root {
       --apple-ease: cubic-bezier(0.16, 1, 0.3, 1);
       --apple-spring: cubic-bezier(0.2, 0.8, 0.2, 1);
-      --apple-font-ar: -apple-system, BlinkMacSystemFont, "SF Pro Arabic", "SF Pro Display", "SF Pro Text", "Tajawal", system-ui, sans-serif;
+      --apple-font-ar: 'Tajawal', -apple-system, BlinkMacSystemFont, "SF Pro Arabic", "SF Pro Display", "SF Pro Text", system-ui, sans-serif;
       --apple-font-en: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Inter", system-ui, sans-serif;
     }
 
@@ -239,13 +239,32 @@
 
     /* 6. Apple Typography: Optical Tracking & Leading (Principle #15) */
     .apple-display-title {
-      letter-spacing: -0.03em;
       line-height: 1.14;
+      letter-spacing: normal;
     }
 
     .apple-section-title {
-      letter-spacing: -0.025em;
       line-height: 1.2;
+      letter-spacing: normal;
+    }
+
+    body.lang-en .apple-display-title {
+      letter-spacing: -0.03em;
+    }
+
+    body.lang-en .apple-section-title {
+      letter-spacing: -0.025em;
+    }
+
+    /* RTL Arabic Typography Protection: Arabic script cursive ligatures break under tracking */
+    html[dir="rtl"] .apple-display-title,
+    html[dir="rtl"] .apple-section-title,
+    html[dir="rtl"] h1,
+    html[dir="rtl"] h2,
+    html[dir="rtl"] h3,
+    html[dir="rtl"] .tracking-tight,
+    html[dir="rtl"] .tracking-tighter {
+      letter-spacing: normal !important;
     }
 
     .apple-gradient-text {
@@ -268,43 +287,68 @@
       -webkit-appearance: none;
       appearance: none;
       background: rgba(0, 0, 0, 0.08);
-      height: 6px;
+      height: 7px;
       border-radius: 9999px;
       outline: none;
-      transition: background 0.2s ease;
+      cursor: pointer;
     }
 
     input[type="range"]::-webkit-slider-thumb {
       -webkit-appearance: none;
       appearance: none;
-      width: 24px;
-      height: 24px;
+      width: 26px;
+      height: 26px;
       border-radius: 50%;
       background: #ffffff;
       cursor: pointer;
-      box-shadow: 0 3px 8px rgba(0, 0, 0, 0.18), 0 1px 2px rgba(0, 0, 0, 0.12), 0 0 0 0.5px rgba(0, 0, 0, 0.06);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.16), 0 1px 2px rgba(0, 0, 0, 0.1), 0 0 0 0.5px rgba(0, 0, 0, 0.06);
       transition: transform 0.14s var(--apple-ease), box-shadow 0.14s ease;
     }
 
     input[type="range"]:active::-webkit-slider-thumb {
-      transform: scale(1.18);
-      box-shadow: 0 5px 14px rgba(0, 0, 0, 0.25), 0 1px 3px rgba(0, 0, 0, 0.15);
+      transform: scale(1.16);
+      box-shadow: 0 4px 14px rgba(13, 148, 136, 0.35), 0 2px 4px rgba(0, 0, 0, 0.15);
     }
 
     input[type="range"]::-moz-range-thumb {
-      width: 24px;
-      height: 24px;
+      width: 26px;
+      height: 26px;
       border-radius: 50%;
       background: #ffffff;
       cursor: pointer;
       border: none;
-      box-shadow: 0 3px 8px rgba(0, 0, 0, 0.18), 0 1px 2px rgba(0, 0, 0, 0.12), 0 0 0 0.5px rgba(0, 0, 0, 0.06);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.16), 0 1px 2px rgba(0, 0, 0, 0.1), 0 0 0 0.5px rgba(0, 0, 0, 0.06);
       transition: transform 0.14s var(--apple-ease), box-shadow 0.14s ease;
     }
 
     input[type="range"]:active::-moz-range-thumb {
-      transform: scale(1.18);
-      box-shadow: 0 5px 14px rgba(0, 0, 0, 0.25), 0 1px 3px rgba(0, 0, 0, 0.15);
+      transform: scale(1.16);
+      box-shadow: 0 4px 14px rgba(13, 148, 136, 0.35), 0 2px 4px rgba(0, 0, 0, 0.15);
+    }
+
+    /* Apple Spring Sheet Modal Transition */
+    #surveyModal {
+      opacity: 0;
+      backdrop-filter: blur(0px);
+      -webkit-backdrop-filter: blur(0px);
+      transition: opacity 0.28s var(--apple-ease), backdrop-filter 0.28s var(--apple-ease), -webkit-backdrop-filter 0.28s var(--apple-ease);
+    }
+
+    #surveyModal.apple-modal-visible {
+      opacity: 1;
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+    }
+
+    #surveyModal .apple-modal-content {
+      transform: scale(0.94) translateY(14px);
+      opacity: 0;
+      transition: transform 0.32s var(--apple-spring), opacity 0.26s var(--apple-ease);
+    }
+
+    #surveyModal.apple-modal-visible .apple-modal-content {
+      transform: scale(1) translateY(0);
+      opacity: 1;
     }
 
     /* RTL flip utility */
@@ -405,7 +449,7 @@
       </p>
 
       <!-- Waitlist Hero Card / Form (Apple Glassmorphism) -->
-      <div id="waitlist-card" class="max-w-xl mx-auto apple-glass rounded-[28px] p-6 sm:p-9 shadow-xl text-start relative">
+      <div id="waitlist-card" class="max-w-xl mx-auto apple-glass rounded-[28px] p-6 sm:p-9 shadow-xl text-start relative scroll-mt-24">
         <div class="flex items-center justify-between mb-5">
           <div>
             <h3 class="text-lg font-bold text-slate-900 tracking-tight" data-i18n="form_title">احجز مقعدك في النسخة التجريبية الأولى</h3>
@@ -492,7 +536,7 @@
   </section>
 
   <!-- Educational Clarity Section: 3 Core Concepts -->
-  <section id="etf-explained" class="py-18 bg-white border-t border-slate-200/80 scroll-mt-20">
+  <section id="etf-explained" class="py-18 bg-white border-t border-slate-200/80 scroll-mt-24">
     <div class="max-w-5xl mx-auto px-4 sm:px-6">
       
       <!-- Section Header -->
@@ -858,7 +902,7 @@
   </section>
 
   <!-- Problem vs Solution Section (Apple Comparison Cards) -->
-  <section id="about" class="py-18 bg-[#f5f5f7] border-t border-slate-200/80">
+  <section id="about" class="py-18 bg-[#f5f5f7] border-t border-slate-200/80 scroll-mt-24">
     <div class="max-w-5xl mx-auto px-4 sm:px-6">
       <div class="text-center max-w-2xl mx-auto mb-12">
         <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900 mb-3 tracking-tight apple-section-title" data-i18n="problem_title">لماذا يحتاج المستثمر في الأردن إلى ETF-P؟</h2>
@@ -922,7 +966,7 @@
   </section>
 
   <!-- Interactive Compound Wealth Calculator (Apple Fluid Sliders & Pro Preview) -->
-  <section id="calculator" class="py-18 bg-[#f5f5f7] border-t border-slate-200/80">
+  <section id="calculator" class="py-18 bg-[#f5f5f7] border-t border-slate-200/80 scroll-mt-24">
     <div class="max-w-4xl mx-auto px-4 sm:px-6">
       <div class="text-center max-w-2xl mx-auto mb-10">
         <span class="apple-capsule mb-2 shadow-2xs mx-auto" data-i18n="calc_badge">أداة تفاعلية</span>
@@ -1036,7 +1080,7 @@
   </section>
 
   <!-- How It Works (3 Simple Steps with Apple Cards) -->
-  <section id="how-it-works" class="py-18 bg-white border-t border-slate-200/80">
+  <section id="how-it-works" class="py-18 bg-white border-t border-slate-200/80 scroll-mt-24">
     <div class="max-w-5xl mx-auto px-4 sm:px-6">
       <div class="text-center max-w-2xl mx-auto mb-12">
         <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight apple-section-title" data-i18n="how_title">كيف تبدأ الاستثمار في ٣ خطوات سهلة؟</h2>
@@ -1066,7 +1110,7 @@
   </section>
 
   <!-- Customer Discovery / Interview Section (Apple Glassmorphism Banner) -->
-  <section id="interview-section" class="py-18 bg-gradient-to-b from-[#f5f5f7] to-white border-t border-slate-200/80">
+  <section id="interview-section" class="py-18 bg-gradient-to-b from-[#f5f5f7] to-white border-t border-slate-200/80 scroll-mt-24">
     <div class="max-w-4xl mx-auto px-4 sm:px-6">
       <div class="apple-glass rounded-[32px] p-7 sm:p-12 border border-brand-200/70 shadow-xl text-center relative overflow-hidden">
         
@@ -1112,7 +1156,7 @@
   </section>
 
   <!-- Market Discovery & Survey Insights Section (Apple Health / Metrics Style) -->
-  <section id="insights" class="py-18 bg-[#f5f5f7] border-t border-slate-200/80">
+  <section id="insights" class="py-18 bg-[#f5f5f7] border-t border-slate-200/80 scroll-mt-24">
     <div class="max-w-5xl mx-auto px-4 sm:px-6">
       <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-9">
         <div>
@@ -1218,8 +1262,8 @@
   </footer>
 
   <!-- Customer Discovery Survey Modal (Apple iOS Sheet / Dialog) -->
-  <div id="surveyModal" class="fixed inset-0 z-50 bg-black/40 backdrop-blur-xl hidden items-center justify-center p-4 transition-all duration-300">
-    <div class="apple-glass rounded-[32px] max-w-lg w-full p-6 sm:p-9 shadow-2xl relative max-h-[90vh] overflow-y-auto border border-white/90">
+  <div id="surveyModal" class="fixed inset-0 z-50 bg-black/40 hidden items-center justify-center p-4">
+    <div class="apple-glass apple-modal-content rounded-[32px] max-w-lg w-full p-6 sm:p-9 shadow-2xl relative max-h-[90vh] overflow-y-auto border border-white/90">
       
       <!-- Modal Close Button (Circle Capsule) -->
       <button id="closeSurveyBtn" class="absolute top-5 left-5 rtl:left-auto rtl:right-5 w-8 h-8 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-500 hover:text-slate-800 flex items-center justify-center transition-colors cursor-pointer" aria-label="Close survey">

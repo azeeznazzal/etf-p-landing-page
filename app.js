@@ -560,8 +560,22 @@ function initApp() {
   const valYears = document.getElementById('valYears');
   const valYearsUnit = document.getElementById('valYearsUnit');
 
+  // Helper to dynamically fill Apple fluid slider track according to current progress & text direction
+  function updateSliderFill(slider) {
+    if (!slider) return;
+    const min = parseFloat(slider.min) || 0;
+    const max = parseFloat(slider.max) || 100;
+    const val = parseFloat(slider.value) || 0;
+    const pct = Math.max(0, Math.min(100, ((val - min) / (max - min)) * 100));
+    const isRtl = document.documentElement.dir === 'rtl';
+    const fillDir = isRtl ? 'to left' : 'to right';
+    slider.style.background = `linear-gradient(${fillDir}, #0d9488 0%, #0d9488 ${pct}%, rgba(0, 0, 0, 0.08) ${pct}%, rgba(0, 0, 0, 0.08) 100%)`;
+  }
+
   function updateCalculator() {
     if (!calcAmount || !calcYears) return;
+    updateSliderFill(calcAmount);
+    updateSliderFill(calcYears);
     const monthly = parseFloat(calcAmount.value) || 100;
     const years = parseInt(calcYears.value, 10) || 5;
     const annualRate = 0.085; // 8.5% compound rate
@@ -678,14 +692,24 @@ function initApp() {
     if (!surveyModal) return;
     surveyModal.classList.remove('hidden');
     surveyModal.classList.add('flex');
+    requestAnimationFrame(() => {
+      surveyModal.classList.add('apple-modal-visible');
+    });
+    document.body.style.overflow = 'hidden';
     if (window.lucide) window.lucide.createIcons();
   }
 
   // Helper to close modal
   function closeModal() {
     if (!surveyModal) return;
-    surveyModal.classList.add('hidden');
-    surveyModal.classList.remove('flex');
+    surveyModal.classList.remove('apple-modal-visible');
+    setTimeout(() => {
+      if (!surveyModal.classList.contains('apple-modal-visible')) {
+        surveyModal.classList.add('hidden');
+        surveyModal.classList.remove('flex');
+      }
+    }, 280);
+    document.body.style.overflow = '';
   }
 
   // Finalize waitlist entry and increment counter AFTER actual completion
